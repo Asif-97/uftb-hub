@@ -11,13 +11,12 @@
     <style>
         /* --- Reset & Base --- */
         :root {
-            /* UFTB লোগো থেকে নেওয়া সঠিক কালার প্যালেট */
-            --sidebar-bg: #0d2a5c; /* লোগোর গাঢ় নীল */
-            --sidebar-hover: #163a7a; /* হোভারের জন্য সামান্য হালকা নীল */
-            --primary-color: #0d2a5c; /* প্রধান টেক্সট কালার (হেডার ইত্যাদি) */
-            --accent-color: #009639; /* লোগোর উজ্জ্বল সবুজ (অ্যাকসেন্ট) */
-            --text-muted: #7e8299; /* হালকা টেক্সট */
-            --bg-color: #f4f7fa; /* ব্যাকগ্রাউন্ড */
+            --sidebar-bg: #0d2a5c;
+            --sidebar-hover: #163a7a;
+            --primary-color: #0d2a5c;
+            --accent-color: #009639;
+            --text-muted: #7e8299;
+            --bg-color: #f4f7fa;
             --sidebar-width: 260px;
             --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
             --transition: all 0.3s ease;
@@ -30,10 +29,37 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        /* --- PRELOADER STYLE (গুরুত্বপূর্ণ: এটি ড্যাশবোর্ড ফ্ল্যাশ বন্ধ করবে) --- */
         body {
             background-color: var(--bg-color);
             color: #444;
+            /* শুরুতে পুরো বডি লুকিয়ে রাখা হচ্ছে */
+            visibility: hidden; 
         }
+
+        /* লোডার ডিজাইন */
+        #page-loader {
+            visibility: visible; /* শুধু লোডার দেখা যাবে */
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: var(--primary-color);
+        }
+
+        .loader-spinner {
+            font-size: 3rem;
+            color: var(--accent-color);
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* --- Layout --- */
         .dashboard-layout {
@@ -41,10 +67,10 @@
             min-height: 100vh;
         }
 
-        /* --- Sidebar (UFTB Branded) --- */
+        /* --- Sidebar --- */
         .sidebar {
             width: var(--sidebar-width);
-            background-color: var(--sidebar-bg); /* ব্র্যান্ডেড গাঢ় নীল */
+            background-color: var(--sidebar-bg);
             color: #e0e0e0;
             position: fixed;
             height: 100vh;
@@ -62,24 +88,21 @@
             align-items: center;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.08);
-            background: rgba(0,0,0,0.1); /* হেডারকে একটু আলাদা করার জন্য হালকা ছায়া */
+            background: rgba(0,0,0,0.1);
         }
         
-        /* লোগো ইমেজের স্টাইল */
         .sidebar-logo-img {
-            width: 90px; /* লোগো একটু বড় করা হয়েছে */
+            width: 90px;
             height: auto;
             margin-bottom: 12px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); /* লোগোতে হালকা শ্যাডো */
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
 
         .sidebar-header h2 {
             font-size: 1.3rem;
             font-weight: 700;
             color: #ffffff; 
-            letter-spacing: 0.5px;
             margin: 0;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .sidebar-nav {
@@ -87,15 +110,13 @@
             padding: 20px 0;
         }
 
-        .sidebar-nav li {
-            margin-bottom: 4px;
-        }
+        .sidebar-nav li { margin-bottom: 4px; }
 
         .sidebar-nav a {
             display: flex;
             align-items: center;
             padding: 14px 25px;
-            color: #b0bec5; /* ইনঅ্যাক্টিভ লিংক কালার */
+            color: #b0bec5;
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
@@ -103,16 +124,15 @@
             border-left: 4px solid transparent;
         }
 
-        /* হোভার এবং অ্যাক্টিভ ইফেক্ট (সবুজ অ্যাকসেন্ট সহ) */
         .sidebar-nav a:hover {
             background-color: var(--sidebar-hover);
             color: #ffffff;
         }
 
         .sidebar-nav a.active {
-            background: linear-gradient(90deg, rgba(0, 150, 57, 0.15) 0%, transparent 100%); /* হালকা সবুজ গ্রেডিয়েন্ট */
+            background: linear-gradient(90deg, rgba(0, 150, 57, 0.15) 0%, transparent 100%);
             color: #ffffff;
-            border-left-color: var(--accent-color); /* বামে উজ্জ্বল সবুজ বর্ডার */
+            border-left-color: var(--accent-color);
         }
 
         .sidebar-nav a i {
@@ -122,9 +142,7 @@
             transition: var(--transition);
         }
         
-        .sidebar-nav a.active i {
-            color: var(--accent-color); /* অ্যাক্টিভ আইকন সবুজ হবে */
-        }
+        .sidebar-nav a.active i { color: var(--accent-color); }
 
         /* --- Main Content --- */
         .main-content {
@@ -132,9 +150,10 @@
             flex: 1;
             padding: 30px;
             transition: var(--transition);
+            width: calc(100% - var(--sidebar-width));
         }
 
-        /* --- Header (Branded) --- */
+        /* --- Header --- */
         .header {
             display: flex;
             justify-content: space-between;
@@ -145,7 +164,6 @@
             border-radius: 12px;
             box-shadow: var(--card-shadow);
             animation: slideDown 0.5s ease;
-            /* হেডারের উপরে সবুজ বর্ডার */
             border-top: 4px solid var(--accent-color);
         }
 
@@ -161,9 +179,7 @@
         }
 
         /* --- Notification Area --- */
-        .notification-area {
-            position: relative;
-        }
+        .notification-area { position: relative; }
 
         .notification-btn {
             background: #e8eaf6;
@@ -187,7 +203,7 @@
             position: absolute;
             top: -6px;
             right: -6px;
-            background: var(--accent-color); /* সবুজ ব্যাজ */
+            background: var(--accent-color);
             color: white;
             font-size: 0.7rem;
             font-weight: bold;
@@ -224,7 +240,7 @@
 
         .dropdown-header {
             padding: 15px 20px;
-            background: var(--primary-color); /* হেডার গাঢ় নীল */
+            background: var(--primary-color);
             font-weight: 600;
             color: #fff;
         }
@@ -247,16 +263,10 @@
             color: #555;
         }
 
-        #notification-list li:hover {
-            background: #f4f9f6; /* হালকা সবুজ আভা */
-        }
+        #notification-list li:hover { background: #f4f9f6; }
+        #notification-list li i { color: var(--accent-color); margin-top: 3px; }
 
-        #notification-list li i {
-            color: var(--accent-color);
-            margin-top: 3px;
-        }
-
-        /* --- Cards Grid (Branded) --- */
+        /* --- Cards Grid --- */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -275,7 +285,6 @@
             border-radius: 12px;
             box-shadow: var(--card-shadow);
             transition: var(--transition);
-            /* ডিফল্ট হালকা বর্ডার */
             border-top: 4px solid #e9ecef; 
             position: relative;
             overflow: hidden;
@@ -284,7 +293,6 @@
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            /* হোভার করলে সবুজ বর্ডার */
             border-top-color: var(--accent-color);
         }
 
@@ -298,7 +306,6 @@
             font-weight: 700;
         }
 
-        /* আইকনের ব্যাকগ্রাউন্ডে হালকা সবুজ */
         .card h3 i {
             background: rgba(0, 150, 57, 0.1);
             color: var(--accent-color);
@@ -317,7 +324,7 @@
         .btn {
             display: inline-block;
             padding: 12px 24px;
-            background-color: var(--accent-color); /* সবুজ বাটন */
+            background-color: var(--accent-color);
             color: white;
             border: none;
             border-radius: 6px;
@@ -329,7 +336,7 @@
             text-decoration: none;
         }
         .btn:hover { 
-            background-color: #007d30; /* হোভারে একটু গাঢ় সবুজ */
+            background-color: #007d30;
             box-shadow: 0 5px 15px rgba(0, 150, 57, 0.25); 
         }
 
@@ -377,7 +384,6 @@
             color: #999;
             transition: 0.2s;
         }
-
         .modal-close:hover { color: var(--accent-color); }
 
         /* --- Mobile Responsive --- */
@@ -391,25 +397,22 @@
         }
 
         @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.active {
-                transform: translateX(0);
-            }
-            .main-content {
-                margin-left: 0;
-            }
-            .mobile-nav-toggle {
-                display: block;
-            }
-            .header h1 {
-                font-size: 1.1rem;
-            }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .mobile-nav-toggle { display: block; }
+            .header h1 { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
+
+    <div id="page-loader">
+        <i class="fa-solid fa-spinner loader-spinner"></i>
+        <h3>UFTB Hub</h3>
+        <p>Checking access...</p>
+    </div>
+
     <div class="dashboard-layout">
         
         <nav class="sidebar" id="sidebar">
@@ -443,8 +446,7 @@
                     </button>
                     <div id="notification-dropdown" class="notification-dropdown" style="display: none;">
                         <div class="dropdown-header">Recent Notifications</div>
-                        <ul id="notification-list">
-                            </ul>
+                        <ul id="notification-list"></ul>
                     </div>
                 </div>
             </header>
@@ -529,6 +531,7 @@
       const db = getFirestore(app);
 
       // DOM Elements
+      const loader = document.getElementById('page-loader');
       const welcomeHeader = document.getElementById('welcome-header');
       const announcementText = document.getElementById('announcement-text');
       const projectStatusContent = document.getElementById('project-status-content');
@@ -549,11 +552,20 @@
       let unsubscribeFeedback = null; 
       let unsubscribeMeetings = null; 
 
+      // --- AUTH CHECK WITH LOADER (গুরুত্বপূর্ণ পরিবর্তন) ---
       onAuthStateChanged(auth, async (user) => {
           if (user) {
+              // ইউজার লগইন আছে, লোডিং বন্ধ করে পেজ দেখান
               currentStudentId = user.uid;
+              
+              // ডেটা লোড শুরু
               await loadUserDataAndProjects(currentStudentId);
+              
+              // লোডার সরান এবং বডি দেখান
+              loader.style.display = 'none';
+              document.body.style.visibility = 'visible';
           } else {
+              // লগইন নেই, লোডার অবস্থায় সোজা লগইন পেজে পাঠান
               window.location.href = 'login2.html';
           }
       });
@@ -592,11 +604,10 @@
                       await approveProject(projectId);
                   });
               } else {
-                  // Status Badge Logic
-                  let statusColor = '#0288d1'; // default info (light blue)
-                  if(projectData.status === 'Approved') statusColor = 'var(--accent-color)'; // green
-                  if(projectData.status === 'Pending') statusColor = '#ffb300'; // orange
-                  if(projectData.status === 'Rejected') statusColor = '#d32f2f'; // red
+                  let statusColor = '#0288d1'; 
+                  if(projectData.status === 'Approved') statusColor = 'var(--accent-color)';
+                  if(projectData.status === 'Pending') statusColor = '#ffb300'; 
+                  if(projectData.status === 'Rejected') statusColor = '#d32f2f'; 
 
                   projectStatusContent.innerHTML = `
                       <div>
