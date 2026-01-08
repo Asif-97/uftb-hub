@@ -24,7 +24,6 @@
         .sidebar-header { padding: 30px 20px; text-align: center; background: rgba(0,0,0,0.1); }
         .sidebar-logo-img { width: 90px; margin-bottom: 12px; }
         .sidebar-header h2 { font-size: 1.3rem; font-weight: 700; color: #fff; margin: 0; }
-        .sidebar-role { font-size: 0.8rem; color: var(--accent-color); background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; margin-top: 5px; font-weight: 500; }
         .sidebar-nav { list-style: none; padding: 20px 0; }
         .sidebar-nav a { display: flex; align-items: center; padding: 14px 25px; color: #b0bec5; text-decoration: none; font-weight: 500; border-left: 4px solid transparent; transition: 0.3s; }
         .sidebar-nav a:hover { background-color: var(--sidebar-hover); color: #fff; }
@@ -186,7 +185,7 @@
                         <div style="text-align: center; color: #999; margin-top: 20px;">Start discussion...</div>
                     </div>
                     <form id="chat-form" class="chat-input-area">
-                        <input type="text" id="chat-input" class="chat-input" placeholder="Type message..." required>
+                        <input type="text" id="chat-input" class="chat-input" placeholder="Type message..." required autocomplete="off">
                         <button type="submit" class="btn-send"><i class="fa-solid fa-paper-plane"></i></button>
                     </form>
                 </div>
@@ -196,6 +195,7 @@
                 <div class="card">
                     <div style="background:#f0f9f4; padding:15px; border:2px dashed var(--accent-color); border-radius:8px; margin-bottom:20px;">
                         <h4><i class="fa-solid fa-upload"></i> Upload Correction/Resource</h4>
+                        <p style="font-size:0.8rem; color:#777;">PDF, DOCX (Max 800KB)</p>
                         <input type="file" id="sup-file-input" accept=".pdf,.doc,.docx" style="margin:10px 0;">
                         <button id="btn-sup-upload" class="btn" style="width:auto;">Upload</button>
                     </div>
@@ -343,8 +343,11 @@
                     const isOwn = msg.senderId === currentSupervisorId;
                     const div = document.createElement('div');
                     div.className = `message ${isOwn ? 'own' : 'other'}`;
+                    
+                    const time = msg.timestamp ? msg.timestamp.toDate().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
                     const sender = isOwn ? 'You' : msg.senderName;
-                    div.innerHTML = `<span class="msg-sender">${sender}</span>${msg.text}`;
+                    
+                    div.innerHTML = `<span class="msg-sender">${sender}</span>${msg.text}<span style="font-size:0.6rem; display:block; text-align:right; opacity:0.7;">${time}</span>`;
                     chatBox.appendChild(div);
                 });
                 chatBox.scrollTop = chatBox.scrollHeight;
@@ -362,7 +365,7 @@
             });
         }
 
-        // --- 3. REPOSITORY FUNCTIONS ---
+        // --- 3. REPOSITORY FUNCTIONS (Base64 Upload) ---
         function initFileRepo() {
             const q = query(collection(db, "projects", CURRENT_PROJECT_ID, "files"), orderBy("timestamp", "desc"));
             onSnapshot(q, (snapshot) => {
@@ -395,21 +398,40 @@
                 });
             });
 
-            // Supervisor Upload
+            // Supervisor Upload (Base64)
             const supFile = document.getElementById('sup-file-input');
-            document.getElementById('btn-sup-upload').addEventListener('click', () => {
+            const supUploadBtn = document.getElementById('btn-sup-upload');
+
+            supUploadBtn.addEventListener('click', () => {
                 if(!supFile.files[0]) return alert("Select file");
                 const file = supFile.files[0];
-                if(file.size > 1024*1024) return alert("File too large >1MB");
                 
+                // Size Check (800KB Limit)
+                if(file.size > 800*1024) return alert("File too large! Max 800KB allowed.");
+                
+                supUploadBtn.disabled = true;
+                supUploadBtn.textContent = "Uploading...";
+
                 const reader = new FileReader();
                 reader.onload = async (e) => {
-                    await addDoc(collection(db, "projects", CURRENT_PROJECT_ID, "files"), {
-                        name: file.name, url: e.target.result, category: "Supervisor Resource",
-                        uploaderId: currentSupervisorId, uploaderName: currentSupervisorName, timestamp: Timestamp.now()
-                    });
-                    alert("Uploaded!");
-                    supFile.value = "";
+                    try {
+                        await addDoc(collection(db, "projects", CURRENT_PROJECT_ID, "files"), {
+                            name: file.name,
+                            url: e.target.result, // Base64 string
+                            category: "Supervisor Resource",
+                            uploaderId: currentSupervisorId,
+                            uploaderName: currentSupervisorName,
+                            timestamp: Timestamp.now()
+                        });
+                        alert("File Uploaded Successfully!");
+                        supFile.value = "";
+                    } catch (err) {
+                        console.error("Upload error:", err);
+                        alert("Upload failed.");
+                    } finally {
+                        supUploadBtn.disabled = false;
+                        supUploadBtn.textContent = "Upload";
+                    }
                 };
                 reader.readAsDataURL(file);
             });
