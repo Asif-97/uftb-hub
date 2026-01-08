@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank - UFTB Hub</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- Reset & Base --- */
+        :root {
+            /* UFTB Brand Colors */
+            --brand-blue: #0d2a5c; 
+            --brand-green: #009639;
+            --bg-color: #f4f7fa;
+            --text-color: #333;
+            --sidebar-width: 260px;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- Layout --- */
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--brand-blue);
+            color: #fff;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-logo-img {
+            width: 85px;
+            height: auto;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .sidebar-nav li { margin-bottom: 4px; }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 14px 25px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .sidebar-nav a.active {
+            background: linear-gradient(90deg, rgba(0, 150, 57, 0.2) 0%, transparent 100%);
+            color: #fff;
+            border-left-color: var(--brand-green);
+        }
+
+        .sidebar-nav a i {
+            width: 25px;
+            margin-right: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .sidebar-nav a.active i { color: var(--brand-green); }
+
+        /* --- Main Content --- */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 30px;
+            transition: var(--transition);
+        }
+
+        /* --- Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            border-top: 4px solid var(--brand-green);
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            color: var(--brand-blue);
+            font-weight: 700;
+        }
+
+        /* --- Filter Section --- */
+        .filter-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .search-box {
+            flex: 2;
+            position: relative;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--brand-green);
+            box-shadow: 0 0 0 3px rgba(0, 150, 57, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .filter-dropdown {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-dropdown select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+            background-color: #fff;
+            color: #555;
+        }
+
+        .filter-dropdown select:focus {
+            border-color: var(--brand-green);
+        }
+
+        /* --- Question Grid --- */
+        .question-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .question-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border-top: 4px solid transparent;
+            cursor: pointer;
+            animation: fadeInUp 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top-color: var(--brand-blue);
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+
+        .q-icon {
+            font-size: 2rem;
+            color: rgba(13, 42, 92, 0.1);
+        }
+
+        .q-info h4 {
+            font-size: 1.05rem;
+            color: var(--brand-blue);
+            margin-bottom: 10px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .q-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #f1f3f5;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Exam Type Badges */
+        .tag.mid { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .tag.final { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+
+        .btn-view {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(13, 42, 92, 0.05);
+            color: var(--brand-blue);
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-view:hover {
+            background-color: var(--brand-blue);
+            color: #fff;
+        }
+
+        /* --- Modal (PDF Viewer) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+            display: none;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            animation: zoomIn 0.3s ease;
+            border-top: 5px solid var(--brand-green);
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 15px 25px;
+            background: #fff;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 { font-size: 1.1rem; color: var(--brand-blue); margin: 0; }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+        .modal-close:hover { color: var(--brand-green); }
+
+        .modal-body {
+            flex: 1;
+            padding: 0;
+            background: #e9ecef;
+            overflow: hidden;
+            border-radius: 0 0 12px 12px;
+        }
+        
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* --- Mobile Responsive --- */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--brand-blue);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .mobile-nav-toggle { display: block; }
+            .header h1 { font-size: 1.2rem; }
+            .filter-section { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="https://uftb.ac.bd/uploads/settings/17663114198452.png" alt="UFTB Logo" class="sidebar-logo-img">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="index.html"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="slides.html"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="question_bank.html" class="active"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="repository.html"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="my_project.html"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="profile.html"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="#" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <button class="mobile-nav-toggle" id="sidebar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h1>Question Bank</h1>
+                <div style="width: 40px;"></div> 
+            </header>
+
+            <div class="filter-section">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="search-input" placeholder="Search by course name (e.g. Physics)...">
+                </div>
+                
+                <div class="filter-dropdown">
+                    <select id="semester-filter">
+                        <option value="">All Semesters</option>
+                        <option value="L1T1">Level 1 Term 1</option>
+                        <option value="L1T2">Level 1 Term 2</option>
+                        <option value="L2T1">Level 2 Term 1</option>
+                        <option value="L2T2">Level 2 Term 2</option>
+                        <option value="L3T1">Level 3 Term 1</option>
+                    </select>
+                </div>
+
+                <div class="filter-dropdown">
+                    <select id="year-filter">
+                        <option value="">All Years</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="question-list" id="question-list">
+                <p style="text-align:center; color:#777; grid-column: 1/-1;">Loading questions...</p>
+            </div>
+
+            <div id="pdf-modal" class="modal-overlay">
+                <div class="modal-content">
+                    <header class="modal-header">
+                        <h3 id="modal-title">Question Preview</h3>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <a href="#" id="modal-download-btn" style="text-decoration: none; color: var(--brand-green); font-weight: 600; display: none;">
+                                <i class="fa-solid fa-download"></i> Save
+                            </a>
+                            <button id="modal-close-btn" class="modal-close">&times;</button>
+                        </div>
+                    </header>
+                    <div class="modal-body">
+                        <iframe id="pdf-iframe" src="about:blank"></iframe>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            toggleBtn.addEventListener('click', () => sidebar.classList.toggle('active'));
+            
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            // Modal Close Logic
+            const modal = document.getElementById('pdf-modal');
+            const closeBtn = document.getElementById('modal-close-btn');
+            const iframe = document.getElementById('pdf-iframe');
+            
+            const closeModal = () => {
+                modal.style.display = 'none';
+                iframe.src = 'about:blank';
+            };
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if(e.target === modal) closeModal();
+            });
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+        import { getFirestore, collection, query, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACtq2K0jfHyR4q538BPW37cH67DOJAx98",
+            authDomain: "uftb-hub.firebaseapp.com",
+            projectId: "uftb-hub",
+            storageBucket: "uftb-hub.firebasestorage.app",
+            messagingSenderId: "373096235837",
+            appId: "1:373096235837:web:0ec03dea7ea526c52cbb54",
+            measurementId: "G-MT5YR5NW39"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const questionListContainer = document.getElementById('question-list');
+        const searchInput = document.getElementById('search-input');
+        const semesterFilter = document.getElementById('semester-filter');
+        const yearFilter = document.getElementById('year-filter');
+
+        let allQuestions = [];
+
+        // Auth Check
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = 'login2.html';
+            } else {
+                loadQuestions();
+            }
+        });
+
+        // Load Data
+        async function loadQuestions() {
+            try {
+                // Assuming Firestore collection is 'questions'
+                // Fields: courseName, semester, year, type, pdfUrl
+                const q = query(collection(db, "questions"), orderBy("year", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                allQuestions = [];
+                querySnapshot.forEach((doc) => {
+                    allQuestions.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Fallback Data (If DB is empty)
+                if (allQuestions.length === 0) {
+                    allQuestions = [
+                        { courseName: "CSE 113 - Data Structure", semester: "L1T2", year: "2023", type: "Final", pdfUrl: "#" },
+                        { courseName: "CSE 115 - Discrete Math", semester: "L1T2", year: "2023", type: "Mid", pdfUrl: "#" },
+                        { courseName: "PROG 101 - C Programming", semester: "L1T1", year: "2022", type: "Final", pdfUrl: "#" },
+                    ];
+                }
+                
+                renderQuestions(allQuestions);
+            } catch (error) {
+                console.error("Error loading questions:", error);
+                questionListContainer.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">Error loading data.</p>';
+            }
+        }
+
+        function renderQuestions(questions) {
+            questionListContainer.innerHTML = '';
+            
+            if (questions.length === 0) {
+                questionListContainer.innerHTML = '<p style="text-align:center; color:#777; grid-column: 1/-1;">No questions found.</p>';
+                return;
+            }
+
+            questions.forEach(q => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                
+                // Semester Formatting
+                const semMap = { 'L1T1': 'Level 1 Term 1', 'L1T2': 'Level 1 Term 2', 'L2T1': 'Level 2 Term 1' };
+                const displaySem = semMap[q.semester] || q.semester;
+
+                // Exam Type Badge Class
+                const badgeClass = q.type === 'Mid' ? 'mid' : 'final';
+
+                card.innerHTML = `
+                    <div class="q-header">
+                        <i class="fa-solid fa-file-pdf q-icon"></i>
+                        <span class="tag ${badgeClass}">${q.type}</span>
+                    </div>
+                    <div class="q-info">
+                        <h4>${q.courseName}</h4>
+                        <div class="q-tags">
+                            <span class="tag"><i class="fa-solid fa-layer-group"></i> ${displaySem}</span>
+                            <span class="tag"><i class="fa-solid fa-calendar"></i> ${q.year}</span>
+                        </div>
+                    </div>
+                    <button class="btn-view">
+                        <i class="fa-solid fa-eye"></i> View Question
+                    </button>
+                `;
+                
+                card.querySelector('.btn-view').addEventListener('click', () => {
+                    openPdfModal(q.courseName, q.pdfUrl, q.year, q.type);
+                });
+                
+                // Card click works too
+                card.addEventListener('click', (e) => {
+                    if(!e.target.closest('.btn-view')) openPdfModal(q.courseName, q.pdfUrl, q.year, q.type);
+                });
+
+                questionListContainer.appendChild(card);
+            });
+        }
+
+        // Filter Logic
+        function filterQuestions() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedSem = semesterFilter.value;
+            const selectedYear = yearFilter.value;
+
+            const filtered = allQuestions.filter(q => {
+                const matchesSearch = q.courseName.toLowerCase().includes(searchTerm);
+                const matchesSem = selectedSem ? q.semester === selectedSem : true;
+                const matchesYear = selectedYear ? q.year == selectedYear : true;
+                return matchesSearch && matchesSem && matchesYear;
+            });
+
+            renderQuestions(filtered);
+        }
+
+        searchInput.addEventListener('input', filterQuestions);
+        semesterFilter.addEventListener('change', filterQuestions);
+        yearFilter.addEventListener('change', filterQuestions);
+
+        // PDF Modal Logic
+        function openPdfModal(course, url, year, type) {
+            const modal = document.getElementById('pdf-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const iframe = document.getElementById('pdf-iframe');
+            const dlBtn = document.getElementById('modal-download-btn');
+            
+            modalTitle.textContent = `${course} (${type} ${year})`;
+            
+            // Link Handling
+            if(url && url.includes('drive.google.com')) {
+                let previewUrl = url;
+                if(url.includes('/view')) previewUrl = url.replace('/view', '/preview');
+                
+                const parts = url.split('/');
+                let id = null;
+                for(let i=0; i<parts.length; i++) {
+                    if(parts[i] === 'd' && parts[i+1]) { id = parts[i+1]; break; }
+                }
+                
+                iframe.src = previewUrl;
+                if(id) dlBtn.href = `https://drive.google.com/uc?id=${id}`;
+                else dlBtn.href = url;
+            } else {
+                iframe.src = url;
+                dlBtn.href = url;
+            }
+            
+            dlBtn.style.display = 'inline-flex';
+            modal.style.display = 'flex';
+        }
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => window.location.href = 'login2.html');
+        });
+    </script>
+</body>
+</html>

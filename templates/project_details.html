@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('dashboard') }}"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('slides') }}"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="{{ url_for('question_bank') }}"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="{{ url_for('repository') }}" class="active"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="{{ url_for('my_project') }}"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <nav class="breadcrumb">
+                <a href="{{ url_for('repository') }}">Repository</a> &gt; <span>Project Details</span>
+            </nav>
+
+            <header class="header">
+                <h1>AI-Powered Student Support System</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+
+            <div class="project-details-container">
+                <div class="project-main-content">
+                    <h2>Abstract</h2>
+                    <p>This project introduces an AI-powered support system designed to assist students with their academic queries. The system utilizes a sophisticated chatbot that leverages Natural Language Processing (NLP) to understand and respond to student questions in real-time, covering topics from course-specific material to university administrative procedures. The platform aims to reduce the workload on faculty advisors and provide students with immediate, 24/7 assistance, thereby enhancing the overall educational experience.</p>
+
+                    <h2>Keywords</h2>
+                    <p>
+                        <span class="tag">Artificial Intelligence</span>
+                        <span class="tag">Chatbot</span>
+                        <span class="tag">NLP</span>
+                        <span class="tag">Student Support</span>
+                    </p>
+                </div>
+
+                <div class="project-sidebar">
+                    <div class="metadata-card">
+                        <h3>Project Information</h3>
+                        <ul>
+                            <li><strong><i class="fa-solid fa-user-friends"></i> Authors:</strong> MD Hasib Hossen, MD Asif Sarker</li>
+                            <li><strong><i class="fa-solid fa-chalkboard-teacher"></i> Supervisor:</strong> Aditya Rajbongshi</li>
+                            <li><strong><i class="fa-solid fa-building-columns"></i> Department:</strong> Software Engineering</li>
+                            <li><strong><i class="fa-solid fa-calendar-alt"></i> Year:</strong> 2024</li>
+                        </ul>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary"><i class="fa-solid fa-file-pdf"></i> Download Report</button>
+                            <button class="btn btn-secondary"><i class="fa-solid fa-code-branch"></i> View Source Code</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

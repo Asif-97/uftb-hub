@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Viewer - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('dashboard') }}"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('slides') }}" class="active"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="{{ url_for('question_bank') }}"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="{{ url_for('repository') }}"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="{{ url_for('my_project') }}"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <nav class="breadcrumb">
+                <a href="{{ url_for('slides') }}">Slide Share</a> &gt; <a href="{{ url_for('course_details') }}">ET-300</a> &gt; <span>Lecture 01</span>
+            </nav>
+
+            <header class="header viewer-header">
+                <h1>Lecture 01: Introduction</h1>
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Download</a>
+            </header>
+
+            <div class="document-viewer-container">
+                <iframe 
+                    src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" 
+                    class="document-viewer">
+                </iframe>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

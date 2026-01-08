@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Student - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+                <p class="sidebar-role">Supervisor Panel</p>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('supervisor_dashboard') }}" class="active"><i class="fa-solid fa-users-viewfinder"></i> Student Tracking</a></li>
+                <li><a href="{{ url_for('upload_slides') }}"><i class="fa-solid fa-upload"></i> Upload Slides</a></li>
+                <li><a href="{{ url_for('add_questions') }}"><i class="fa-solid fa-plus-circle"></i> Add Questions</a></li>
+                <li><a href="{{ url_for('repository') }}"><i class="fa-solid fa-book-bookmark"></i> View Repository</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+               <li><a href="{{ url_for('announcements') }}"><i class="fa-solid fa-bullhorn"></i> Announcements</a></li>
+                <li><a href="{{ url_for('analytics') }}"><i class="fa-solid fa-chart-pie"></i> Analytics</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <nav class="breadcrumb">
+                <a href="{{ url_for('supervisor_dashboard') }}">Student Tracking</a> &gt; <span>Manage Student</span>
+            </nav>
+
+            <header class="header">
+                <h1>Manage: MD Hasib Hossen (2102012)</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+
+            <div class="my-project-layout">
+                <div class="project-main-column">
+                    <div class="card">
+                        <h3>Project Control</h3>
+                        <p style="margin-top:0;"><strong>Title:</strong> AI-Powered Student Support System</p>
+                        
+                        <form class="update-progress-form combined">
+                            <div class="status-info">
+                                <label>Current Status:</label>
+                                <span class="status-badge status-active">Active: Mid-term</span>
+                            </div>
+                            <div class="status-action">
+                                <select id="status">
+                                    <option value="pending">Pending: Proposal</option>
+                                    <option value="active" selected>Active: Mid-term</option>
+                                    <option value="final">Final Submission</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                                <button class="btn btn-sm btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Student Submissions</h3>
+                        <ul class="submission-list">
+                            <li>
+                                <i class="fa-solid fa-file-pdf icon-pdf"></i>
+                                <span>Final_Proposal_v2.pdf</span>
+                                <a href="#" class="btn-action btn-download"><i class="fa-solid fa-download"></i> Download</a>
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-file-powerpoint icon-ppt"></i>
+                                <span>Mid_Term_Presentation.pptx</span>
+                                <a href="#" class="btn-action btn-download"><i class="fa-solid fa-download"></i> Download</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-side-column">
+                    <div class="card">
+                        <h3>Provide Feedback</h3>
+                        <form class="feedback-form">
+                            <textarea placeholder="Write your feedback here..."></textarea>
+                            <button class="btn btn-primary">Submit Feedback</button>
+                        </form>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Previous Feedback</h3>
+                        <div class="feedback-list">
+                            <div class="feedback-item">
+                                <p class="comment">"The initial system architecture looks good. Let's discuss..."</p>
+                                <p class="meta">- 25 Oct 2025</p>
+                            </div>
+                            <div class="feedback-item">
+                                <p class="comment">"Your literature review is well-written. Please add more..."</p>
+                                <p class="meta">- 18 Oct 2025</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

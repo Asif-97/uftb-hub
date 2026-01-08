@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details - UFTB Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="slides.html" class="active"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="question_bank.html"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>                <li><a href="#"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="my_project.html"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="profile.html"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <nav class="breadcrumb">
+                <a href="slides.html">Slide Share</a> &gt; <span>ET-300: Capstone Project</span>
+            </nav>
+
+            <header class="header">
+                <h1>ET-300: Capstone Project</h1>
+                <button class="btn btn-primary"><i class="fa-solid fa-upload"></i> Upload New Slide</button>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+            </header>
+
+            <div class="slide-list-container">
+                <table class="slide-table">
+                    <thead>
+                        <tr>
+                            <th>Lecture Title</th>
+                            <th>Upload Date</th>
+                            <th>File Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fa-solid fa-file-powerpoint icon-ppt"></i> Lecture 01: Introduction</td>
+                            <td>10 Oct, 2025</td>
+                            <td>PPTX</td>
+                            <td>
+                                <a href="#" class="btn-action btn-view"><i class="fa-solid fa-eye"></i> View</a>
+                                <a href="#" class="btn-action btn-download"><i class="fa-solid fa-download"></i> Download</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa-solid fa-file-pdf icon-pdf"></i> Lecture 02: Project Proposal Writing</td>
+                            <td>12 Oct, 2025</td>
+                            <td>PDF</td>
+                            <td>
+                                <a href="#" class="btn-action btn-view"><i class="fa-solid fa-eye"></i> View</a>
+                                <a href="#" class="btn-action btn-download"><i class="fa-solid fa-download"></i> Download</a>
+                            </td>
+                        </tr>
+                         </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

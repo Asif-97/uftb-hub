@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('dashboard') }}" class="active"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('slides') }}"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="{{ url_for('question_bank') }}"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="{{ url_for('repository') }}"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="{{ url_for('my_project') }}"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Welcome, Asif Sarkar!</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3><i class="fa-solid fa-book-open-reader"></i> My Courses</h3>
+                    <p>Access slides and materials for your registered courses.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-bullhorn"></i> Announcements</h3>
+                    <p>New update about the project deadline from your supervisor.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-bars-progress"></i> Project Status</h3>
+                    <p>Your capstone project proposal is currently "Approved".</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fa-solid fa-bolt"></i> Quick Access</h3>
+                    <p>Go to the Interactive Question Bank to start practicing.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

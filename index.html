@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - UFTB Hub</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- Reset & Base --- */
+        :root {
+            /* UFTB লোগো থেকে নেওয়া সঠিক কালার প্যালেট */
+            --sidebar-bg: #0d2a5c; /* লোগোর গাঢ় নীল */
+            --sidebar-hover: #163a7a; /* হোভারের জন্য সামান্য হালকা নীল */
+            --primary-color: #0d2a5c; /* প্রধান টেক্সট কালার (হেডার ইত্যাদি) */
+            --accent-color: #009639; /* লোগোর উজ্জ্বল সবুজ (অ্যাকসেন্ট) */
+            --text-muted: #7e8299; /* হালকা টেক্সট */
+            --bg-color: #f4f7fa; /* ব্যাকগ্রাউন্ড */
+            --sidebar-width: 260px;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #444;
+        }
+
+        /* --- Layout --- */
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Sidebar (UFTB Branded) --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg); /* ব্র্যান্ডেড গাঢ় নীল */
+            color: #e0e0e0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.1); /* হেডারকে একটু আলাদা করার জন্য হালকা ছায়া */
+        }
+        
+        /* লোগো ইমেজের স্টাইল */
+        .sidebar-logo-img {
+            width: 90px; /* লোগো একটু বড় করা হয়েছে */
+            height: auto;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); /* লোগোতে হালকা শ্যাডো */
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff; 
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 4px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 14px 25px;
+            color: #b0bec5; /* ইনঅ্যাক্টিভ লিংক কালার */
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        /* হোভার এবং অ্যাক্টিভ ইফেক্ট (সবুজ অ্যাকসেন্ট সহ) */
+        .sidebar-nav a:hover {
+            background-color: var(--sidebar-hover);
+            color: #ffffff;
+        }
+
+        .sidebar-nav a.active {
+            background: linear-gradient(90deg, rgba(0, 150, 57, 0.15) 0%, transparent 100%); /* হালকা সবুজ গ্রেডিয়েন্ট */
+            color: #ffffff;
+            border-left-color: var(--accent-color); /* বামে উজ্জ্বল সবুজ বর্ডার */
+        }
+
+        .sidebar-nav a i {
+            width: 25px;
+            margin-right: 12px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .sidebar-nav a.active i {
+            color: var(--accent-color); /* অ্যাক্টিভ আইকন সবুজ হবে */
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 30px;
+            transition: var(--transition);
+        }
+
+        /* --- Header (Branded) --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            background: #fff;
+            padding: 18px 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            animation: slideDown 0.5s ease;
+            /* হেডারের উপরে সবুজ বর্ডার */
+            border-top: 4px solid var(--accent-color);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header h1 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* --- Notification Area --- */
+        .notification-area {
+            position: relative;
+        }
+
+        .notification-btn {
+            background: #e8eaf6;
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .notification-btn:hover {
+            background: #dce0f3;
+            color: var(--accent-color);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--accent-color); /* সবুজ ব্যাজ */
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Dropdown Styling */
+        .notification-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            width: 320px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            z-index: 100;
+            border: none;
+            overflow: hidden;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-header {
+            padding: 15px 20px;
+            background: var(--primary-color); /* হেডার গাঢ় নীল */
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #notification-list {
+            list-style: none;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #notification-list li {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            color: #555;
+        }
+
+        #notification-list li:hover {
+            background: #f4f9f6; /* হালকা সবুজ আভা */
+        }
+
+        #notification-list li i {
+            color: var(--accent-color);
+            margin-top: 3px;
+        }
+
+        /* --- Cards Grid (Branded) --- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            /* ডিফল্ট হালকা বর্ডার */
+            border-top: 4px solid #e9ecef; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            /* হোভার করলে সবুজ বর্ডার */
+            border-top-color: var(--accent-color);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        /* আইকনের ব্যাকগ্রাউন্ডে হালকা সবুজ */
+        .card h3 i {
+            background: rgba(0, 150, 57, 0.1);
+            color: var(--accent-color);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--accent-color); /* সবুজ বাটন */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn:hover { 
+            background-color: #007d30; /* হোভারে একটু গাঢ় সবুজ */
+            box-shadow: 0 5px 15px rgba(0, 150, 57, 0.25); 
+        }
+
+        /* --- Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            animation: zoomIn 0.3s ease;
+            border-top: 5px solid var(--accent-color);
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 { font-size: 1.2rem; color: var(--primary-color); font-weight: 700; }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #999;
+            transition: 0.2s;
+        }
+
+        .modal-close:hover { color: var(--accent-color); }
+
+        /* --- Mobile Responsive --- */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .mobile-nav-toggle {
+                display: block;
+            }
+            .header h1 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="https://uftb.ac.bd/uploads/settings/17663114198452.png" alt="UFTB Logo" class="sidebar-logo-img">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="index.html" class="active"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="slides.html"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="question_bank.html"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="repository.html"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="my_project.html"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="profile.html"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="#" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <button class="mobile-nav-toggle" id="sidebar-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                
+                <h1 id="welcome-header">Welcome!</h1>
+                
+                <div class="notification-area">
+                    <button id="notification-bell" class="notification-btn">
+                        <i class="fa-solid fa-bell"></i>
+                        <span id="notification-count" class="notification-badge" style="display: none;">0</span>
+                    </button>
+                    <div id="notification-dropdown" class="notification-dropdown" style="display: none;">
+                        <div class="dropdown-header">Recent Notifications</div>
+                        <ul id="notification-list">
+                            </ul>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3><i class="fa-solid fa-book-open-reader"></i> My Courses</h3>
+                    <p>Access lecture slides, materials, and resources for your registered courses.</p>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fa-solid fa-bullhorn"></i> Announcements</h3>
+                    <p id="announcement-text" style="color: var(--text-muted);">No new announcements.</p>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fa-solid fa-bars-progress"></i> Project Status</h3>
+                    <div id="project-status-content">
+                        <p id="project-status-text">Loading project status...</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fa-solid fa-bolt"></i> Quick Access</h3>
+                    <p>Go to the <strong>Interactive Question Bank</strong> to start practicing for exams.</p>
+                    <a href="question_bank.html" class="btn" style="margin-top: 15px; width: 100%;">Start Practice</a>
+                </div>
+            </div>
+            
+            <div id="feedback-modal" class="modal-overlay" style="display: none;">
+                <div class="modal-content">
+                    <header class="modal-header">
+                        <h3 id="modal-title">New Notification</h3>
+                        <button id="modal-close-btn" class="modal-close">&times;</button>
+                    </header>
+                    <div class="modal-body" style="padding: 25px; line-height: 1.6;" id="feedback-message-content">
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            
+            // Toggle sidebar on mobile
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('active')) {
+                        sidebar.classList.remove('active');
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+      import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+      import { getFirestore, collection, query, where, getDocs, onSnapshot, doc, updateDoc, getDoc, orderBy, Timestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+          apiKey: "AIzaSyACtq2K0jfHyR4q538BPW37cH67DOJAx98",
+          authDomain: "uftb-hub.firebaseapp.com",
+          projectId: "uftb-hub",
+          storageBucket: "uftb-hub.firebasestorage.app",
+          messagingSenderId: "373096235837",
+          appId: "1:373096235837:web:0ec03dea7ea526c52cbb54",
+          measurementId: "G-MT5YR5NW39"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // DOM Elements
+      const welcomeHeader = document.getElementById('welcome-header');
+      const announcementText = document.getElementById('announcement-text');
+      const projectStatusContent = document.getElementById('project-status-content');
+      const notificationBell = document.getElementById('notification-bell');
+      const notificationCount = document.getElementById('notification-count');
+      const notificationDropdown = document.getElementById('notification-dropdown');
+      const notificationList = document.getElementById('notification-list');
+      const logoutBtn = document.getElementById('logout-btn');
+      const feedbackModal = document.getElementById('feedback-modal');
+      const modalCloseBtn = document.getElementById('modal-close-btn');
+      const modalTitle = document.getElementById('modal-title');
+      const feedbackMessageContent = document.getElementById('feedback-message-content');
+
+      let currentStudentId = null;
+      let myProjectIds = []; 
+      let feedbackNotifications = []; 
+      let meetingNotifications = []; 
+      let unsubscribeFeedback = null; 
+      let unsubscribeMeetings = null; 
+
+      onAuthStateChanged(auth, async (user) => {
+          if (user) {
+              currentStudentId = user.uid;
+              await loadUserDataAndProjects(currentStudentId);
+          } else {
+              window.location.href = 'login2.html';
+          }
+      });
+
+      async function loadUserDataAndProjects(studentId) {
+          try {
+              const userDocRef = doc(db, "users", studentId);
+              const userDocSnap = await getDoc(userDocRef);
+              if (userDocSnap.exists()) {
+                  welcomeHeader.textContent = `Hello, ${userDocSnap.data().name}!`;
+              }
+              const projectsRef = collection(db, "projects");
+              const q = query(projectsRef, where("studentIds", "array-contains", studentId));
+              const projectSnap = await getDocs(q);
+              myProjectIds = [];
+              if (projectSnap.empty) {
+                  projectStatusContent.innerHTML = "<p style='color: var(--text-muted);'>You are not assigned to any project yet.</p>";
+                  return;
+              }
+              const projectDoc = projectSnap.docs[0];
+              const projectData = projectDoc.data();
+              const projectId = projectDoc.id;
+              
+              if (projectData.isApprovedByStudent === false) {
+                  projectStatusContent.innerHTML = `
+                      <div style="background: #fffde7; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
+                          <h4 style="margin-bottom: 5px; color: #f57f17;">Invitation Pending</h4>
+                          <p style="margin-bottom: 10px; font-size: 0.9rem;"><strong>Project:</strong> ${projectData.title}</p>
+                          <p style="font-size: 0.85rem;">Group Members: ${projectData.studentNames.join(', ')}</p>
+                          <button id="approve-project-btn" class="btn" style="width: 100%; margin-top: 10px; background-color: var(--accent-color);">
+                              <i class="fa-solid fa-check"></i> Accept Invitation
+                          </button>
+                      </div>
+                  `;
+                  document.getElementById('approve-project-btn').addEventListener('click', async () => {
+                      await approveProject(projectId);
+                  });
+              } else {
+                  // Status Badge Logic
+                  let statusColor = '#0288d1'; // default info (light blue)
+                  if(projectData.status === 'Approved') statusColor = 'var(--accent-color)'; // green
+                  if(projectData.status === 'Pending') statusColor = '#ffb300'; // orange
+                  if(projectData.status === 'Rejected') statusColor = '#d32f2f'; // red
+
+                  projectStatusContent.innerHTML = `
+                      <div>
+                          <p style="font-weight: 600; margin-bottom: 5px; color: var(--primary-color);">${projectData.title}</p>
+                          <span style="background: ${statusColor}; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 500;">${projectData.status || 'Active'}</span>
+                      </div>
+                  `;
+                  myProjectIds.push(projectId);
+              }
+              if (myProjectIds.length > 0) {
+                  listenForFeedback();
+                  listenForMeetings();
+              } else {
+                  if (unsubscribeFeedback) unsubscribeFeedback();
+                  if (unsubscribeMeetings) unsubscribeMeetings();
+                  updateNotificationUI(); 
+              }
+          } catch (error) {
+              console.error("Error loading user data: ", error);
+              projectStatusContent.innerHTML = "<p>Error loading project data.</p>";
+          }
+      }
+      
+      async function approveProject(projectId) {
+          const projectRef = doc(db, "projects", projectId);
+          try {
+              await updateDoc(projectRef, { isApprovedByStudent: true });
+              alert("Project approved successfully! You are now part of the group.");
+              loadUserDataAndProjects(currentStudentId); 
+          } catch (error) {
+              console.error("Error approving project: ", error);
+              alert("Failed to approve project. Please try again.");
+          }
+      }
+
+      function listenForFeedback() {
+          if (unsubscribeFeedback) unsubscribeFeedback(); 
+          const feedbackQuery = query(collection(db, "feedback"),
+                                      where("projectId", "in", myProjectIds),
+                                      where("isRead", "==", false)
+                                     );
+          unsubscribeFeedback = onSnapshot(feedbackQuery, (snapshot) => {
+              feedbackNotifications = [];
+              snapshot.forEach((doc) => {
+                  feedbackNotifications.push({ id: doc.id, ...doc.data(), type: 'feedback' });
+              });
+              updateNotificationUI();
+          }, (error) => console.error("Feedback listener error: ", error));
+      }
+      
+      function listenForMeetings() {
+          if (unsubscribeMeetings) unsubscribeMeetings();
+          const meetingQuery = query(collection(db, "meetings"),
+                                     where("studentIds", "array-contains", currentStudentId),
+                                     where("isRead", "==", false),
+                                     orderBy("meetingTime", "asc")
+                                    );
+          unsubscribeMeetings = onSnapshot(meetingQuery, (snapshot) => {
+              meetingNotifications = [];
+              snapshot.forEach((doc) => {
+                  meetingNotifications.push({ id: doc.id, ...doc.data(), type: 'meeting' });
+              });
+              updateNotificationUI();
+          }, (error) => console.error("Meeting listener error: ", error));
+      }
+
+      function updateNotificationUI() {
+          const allNotifications = [...feedbackNotifications, ...meetingNotifications];
+          allNotifications.sort((a, b) => (b.createdAt || b.meetingTime) - (a.createdAt || a.meetingTime));
+          
+          if (allNotifications.length > 0) {
+              notificationCount.textContent = allNotifications.length;
+              notificationCount.style.display = 'flex';
+              announcementText.innerHTML = `<span style="color: var(--accent-color); font-weight: 600;">You have ${allNotifications.length} new notification(s).</span> Check the bell icon.`;
+          } else {
+              notificationCount.style.display = 'none';
+              announcementText.textContent = "No new announcements at this moment.";
+          }
+          
+          notificationList.innerHTML = "";
+          if (allNotifications.length === 0) {
+              notificationList.innerHTML = '<li style="text-align: center; color: var(--text-muted); padding: 20px;">No new notifications</li>';
+              return;
+          }
+          
+          allNotifications.forEach((item) => {
+              const li = document.createElement('li');
+              li.dataset.docId = item.id;
+              li.dataset.type = item.type;
+              
+              if (item.type === 'feedback') {
+                  const message = item.message || "[No message content]";
+                  li.innerHTML = `
+                    <i class="fa-solid fa-comment-dots"></i> 
+                    <div>
+                        <strong>Feedback Received</strong>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">${message.substring(0, 30)}...</div>
+                    </div>
+                  `;
+              } else if (item.type === 'meeting') {
+                  const title = item.title || "Untitled Meeting";
+                  let dateStr = "No time set";
+                  if (item.meetingTime && typeof item.meetingTime.toDate === 'function') {
+                       dateStr = item.meetingTime.toDate().toLocaleString('en-UK', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+                  }
+                  li.innerHTML = `
+                    <i class="fa-solid fa-calendar-check"></i> 
+                    <div>
+                        <strong>Meeting Alert</strong>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">${title} - ${dateStr}</div>
+                    </div>
+                  `;
+              }
+              
+              li.addEventListener('click', () => {
+                  if (item.type === 'feedback') showFeedbackModal(item);
+                  else if (item.type === 'meeting') showMeetingModal(item);
+                  markAsRead(item.id, item.type);
+                  
+                  if (item.type === 'feedback') feedbackNotifications = feedbackNotifications.filter(n => n.id !== item.id);
+                  else meetingNotifications = meetingNotifications.filter(n => n.id !== item.id);
+                  updateNotificationUI();
+              });
+              
+              notificationList.appendChild(li);
+          });
+      }
+
+      function showFeedbackModal(feedback) {
+          modalTitle.textContent = "Supervisor Feedback";
+          feedbackMessageContent.innerHTML = `<p style="font-size: 1.05rem;">${feedback.message || "[No message content]"}</p>`;
+          feedbackModal.style.display = 'flex';
+          notificationDropdown.style.display = 'none';
+      }
+      
+      function showMeetingModal(meeting) {
+          modalTitle.textContent = "Meeting Details";
+          const date = (meeting.meetingTime && typeof meeting.meetingTime.toDate === 'function') 
+              ? meeting.meetingTime.toDate().toLocaleString('en-UK', { dateStyle: 'full', timeStyle: 'short' })
+              : "Date/Time not set";
+          
+          let googleCalLink = "#";
+          if (meeting.meetingTime && typeof meeting.meetingTime.toDate === 'function') {
+              const startTime = meeting.meetingTime.toDate();
+              const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); 
+              const isoStartTime = startTime.toISOString().replace(/-|:|\.\d+/g, ''); 
+              const isoEndTime = endTime.toISOString().replace(/-|:|\.\d+/g, '');
+              googleCalLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(meeting.title)}&dates=${isoStartTime}/${isoEndTime}&details=${encodeURIComponent(meeting.meetLink)}&location=${encodeURIComponent(meeting.meetLink)}`;
+          }
+          
+          feedbackMessageContent.innerHTML = `
+              <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                  <p><strong>Topic:</strong> ${meeting.title || "Untitled Meeting"}</p>
+                  <p><strong>When:</strong> ${date}</p>
+                  <p style="margin-top: 10px;"><strong>Link:</strong> <a href="${meeting.meetLink || '#'}" target="_blank" style="color: var(--accent-color);">${meeting.meetLink || 'No link provided'}</a></p>
+              </div>
+              <a href="${googleCalLink}" target="_blank" class="btn" style="width: 100%; display: block; box-sizing: border-box;">
+                  <i class="fa-brands fa-google"></i> Add to Google Calendar
+              </a>
+          `;
+          feedbackModal.style.display = 'flex';
+          notificationDropdown.style.display = 'none';
+      }
+
+      modalCloseBtn.addEventListener('click', () => {
+          feedbackModal.style.display = 'none';
+      });
+      notificationBell.addEventListener('click', () => {
+          const isHidden = notificationDropdown.style.display === 'none';
+          notificationDropdown.style.display = isHidden ? 'block' : 'none';
+      });
+      
+      async function markAsRead(docId, collectionName) {
+          try {
+              const itemRef = doc(db, collectionName, docId);
+              await updateDoc(itemRef, { isRead: true });
+          } catch (error) {
+              console.error(`Error marking ${collectionName} as read: `, error);
+          }
+      }
+      
+      logoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (unsubscribeFeedback) unsubscribeFeedback(); 
+          if (unsubscribeMeetings) unsubscribeMeetings(); 
+          signOut(auth).then(() => {
+              window.location.href = 'login2.html';
+          }).catch((error) => {
+              console.error("Sign out error: ", error);
+          });
+      });
+    </script>
+</body>
+</html>

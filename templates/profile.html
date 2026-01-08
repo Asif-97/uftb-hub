@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('dashboard') }}"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('slides') }}"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="{{ url_for('question_bank') }}"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="{{ url_for('repository') }}"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="{{ url_for('my_project') }}"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="{{ url_for('profile') }}" class="active"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>My Profile</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+
+            <div class="profile-layout">
+                <div class="profile-picture-card card">
+                    <img src="{{ url_for('static', filename='images/asif.jpg') }}" alt="Profile Picture" id="profileImg">
+                    <h3>Md Asif Sarkar</h3>
+                    <p>ID: 2102013</p>
+                    <label for="fileUpload" class="btn btn-secondary">Change Picture</label>
+                    <input type="file" id="fileUpload" hidden>
+                </div>
+
+                <div class="profile-details-column">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Personal Information</h3>
+                            <button class="btn btn-sm btn-primary">Edit Profile</button>
+                        </div>
+                        <ul class="info-list">
+                            <li><strong>Full Name:</strong> <span>Md Asif Sarkar</span></li>
+                            <li><strong>Email:</strong> <span>asif0003@uftb.ac.bd</span></li>
+                            <li><strong>Department:</strong> <span>Educational Technology and Engineering</span></li>
+                            <li><strong>Faculty:</strong> <span>Faculty of Digital Transformation Engineering</span></li>
+                            <li><strong>Current Status:</strong> <span>Level 3, Term 2</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                         <h3>Change Password</h3>
+                         <form class="password-form">
+                             <div class="form-group">
+                                 <input type="password" placeholder="Current Password">
+                             </div>
+                             <div class="form-group">
+                                 <input type="password" placeholder="New Password">
+                             </div>
+                             <div class="form-group">
+                                 <input type="password" placeholder="Confirm New Password">
+                             </div>
+                             <button class="btn btn-primary">Update Password</button>
+                         </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

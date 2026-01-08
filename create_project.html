@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Project - UFTB Hub</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- Reset & Base (UFTB Design System) --- */
+        :root {
+            --sidebar-bg: #0d2a5c;
+            --sidebar-hover: #163a7a;
+            --primary-color: #0d2a5c;
+            --accent-color: #009639;
+            --text-muted: #7e8299;
+            --bg-color: #f4f7fa;
+            --sidebar-width: 260px;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #444;
+        }
+
+        /* --- Layout --- */
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            color: #e0e0e0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-logo-img {
+            width: 90px;
+            height: auto;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff; 
+            margin: 0;
+        }
+        
+        .sidebar-role {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            background: rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .sidebar-nav li { margin-bottom: 4px; }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 14px 25px;
+            color: #b0bec5;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background-color: var(--sidebar-hover);
+            color: #ffffff;
+        }
+
+        .sidebar-nav a.active {
+            background: linear-gradient(90deg, rgba(0, 150, 57, 0.15) 0%, transparent 100%);
+            color: #ffffff;
+            border-left-color: var(--accent-color);
+        }
+
+        .sidebar-nav a i {
+            width: 25px;
+            margin-right: 12px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .sidebar-nav a.active i { color: var(--accent-color); }
+
+        /* --- Main Content --- */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 30px;
+            transition: var(--transition);
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        /* --- Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: #fff;
+            padding: 18px 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            animation: slideDown 0.5s ease;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header h1 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* --- Form Card --- */
+        .form-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            max-width: 700px;
+            margin: 0 auto;
+            border-top: 4px solid #e9ecef;
+            transition: var(--transition);
+            animation: fadeIn 0.6s ease;
+        }
+
+        .form-card:hover {
+            border-top-color: var(--accent-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+            background: #fdfdfd;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 150, 57, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+        }
+
+        .info-alert {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            color: #0d47a1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: 0.2s;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn:hover { 
+            background-color: #007d30;
+            box-shadow: 0 5px 15px rgba(0, 150, 57, 0.25); 
+        }
+        
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Message Box */
+        #form-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* --- Mobile Responsive --- */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            .mobile-nav-toggle { display: block; }
+            .header h1 { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="https://uftb.ac.bd/uploads/settings/17663114198452.png" alt="UFTB Logo" class="sidebar-logo-img">
+                <h2>UFTB Hub</h2>
+                <div class="sidebar-role">Supervisor Panel</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="supervisor_dashboard.html"><i class="fa-solid fa-users-viewfinder"></i> Student Tracking</a></li>
+                <li><a href="create_project.html" class="active"><i class="fa-solid fa-folder-plus"></i> Create Project</a></li>
+                <li><a href="#"><i class="fa-solid fa-upload"></i> Upload Slides</a></li>
+                <li><a href="#"><i class="fa-solid fa-plus-circle"></i> Add Questions</a></li>
+                <li><a href="#"><i class="fa-solid fa-book-bookmark"></i> View Repository</a></li>
+                <li><a href="supervisor_profile.html"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="#" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <button class="mobile-nav-toggle" id="sidebar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h1>Create Capstone Project</h1>
+                <div style="width: 24px;"></div>
+            </header>
+            
+            <div class="form-card">
+                <div class="info-alert">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <div>
+                        <strong>Note:</strong> Students must have an account on UFTB Hub before you can add them. Use their registered email addresses.
+                    </div>
+                </div>
+
+                <form id="create-project-form">
+                    <div class="form-group">
+                        <label for="project-title"><i class="fa-solid fa-heading"></i> Project Title</label>
+                        <input type="text" id="project-title" class="form-control" placeholder="Enter the final year project title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-emails"><i class="fa-solid fa-users"></i> Student Emails</label>
+                        <textarea id="student-emails" class="form-control" rows="3" placeholder="student1@uftb.edu.bd, student2@uftb.edu.bd" required></textarea>
+                        <small style="color: #888; display: block; margin-top: 5px;">Separate multiple emails with commas.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="initial-status"><i class="fa-solid fa-flag"></i> Initial Status</label>
+                        <select id="initial-status" class="form-control">
+                            <option value="Pending: Proposal">Pending: Proposal</option>
+                            <option value="Active: Proposal Approved">Active: Proposal Approved</option>
+                        </select>
+                    </div>
+
+                    <p id="form-message" style="display: none;"></p>
+
+                    <button type="submit" id="submit-btn" class="btn">
+                        <i class="fa-solid fa-paper-plane"></i> Create & Send Invitation
+                    </button>
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            toggleBtn.addEventListener('click', () => sidebar.classList.toggle('active'));
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs, addDoc, doc, getDoc, Timestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACtq2K0jfHyR4q538BPW37cH67DOJAx98",
+            authDomain: "uftb-hub.firebaseapp.com",
+            projectId: "uftb-hub",
+            storageBucket: "uftb-hub.firebasestorage.app",
+            messagingSenderId: "373096235837",
+            appId: "1:373096235837:web:0ec03dea7ea526c52cbb54",
+            measurementId: "G-MT5YR5NW39"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const projectForm = document.getElementById('create-project-form');
+        const messageEl = document.getElementById('form-message');
+        const submitBtn = document.getElementById('submit-btn');
+        let currentSupervisorId = null;
+
+        // Auth Check
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const userDocRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(userDocRef);
+                if (docSnap.exists() && docSnap.data().role === 'supervisor') {
+                    currentSupervisorId = user.uid;
+                } else {
+                    alert("Access Denied. Student account detected.");
+                    window.location.href = 'dashboard.html';
+                }
+            } else {
+                window.location.href = 'login2.html';
+            }
+        });
+
+        // Form Submit
+        projectForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentSupervisorId) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+            messageEl.style.display = 'none';
+
+            const title = document.getElementById('project-title').value;
+            const emailString = document.getElementById('student-emails').value;
+            const status = document.getElementById('initial-status').value;
+            const emailList = emailString.split(',').map(email => email.trim()).filter(email => email);
+
+            if (emailList.length === 0) {
+                showMessage("Please enter at least one student email.", "red");
+                resetBtn();
+                return;
+            }
+
+            let studentIdList = []; 
+            let studentNameList = []; 
+
+            try {
+                const usersRef = collection(db, "users");
+                // Check each email
+                for (const email of emailList) {
+                    const q = query(usersRef, where("email", "==", email), where("role", "==", "student"));
+                    const querySnapshot = await getDocs(q);
+                    
+                    if (querySnapshot.empty) {
+                        throw new Error(`No student account found with email: ${email}`);
+                    }
+                    
+                    const studentDoc = querySnapshot.docs[0];
+                    studentIdList.push(studentDoc.id); 
+                    studentNameList.push(studentDoc.data().name); 
+                }
+
+                // Create Project
+                const newProject = {
+                    title: title,
+                    status: status, 
+                    supervisorId: currentSupervisorId,
+                    studentIds: studentIdList,     
+                    studentNames: studentNameList, 
+                    lastSubmission: "N/A",
+                    createdAt: Timestamp.now(),
+                    isApprovedByStudent: false // Important for Invitation flow
+                };
+                
+                await addDoc(collection(db, "projects"), newProject);
+
+                showMessage(`Success! Invitation sent to: ${studentNameList.join(', ')}`, "green");
+                projectForm.reset();
+
+            } catch (error) {
+                console.error("Error creating project: ", error);
+                showMessage(error.message, "red");
+            } finally {
+                resetBtn();
+            }
+        });
+
+        function showMessage(msg, color) {
+            messageEl.textContent = msg;
+            messageEl.style.color = color === "green" ? "#009639" : "#d32f2f";
+            messageEl.style.background = color === "green" ? "#e8f5e9" : "#ffebee";
+            messageEl.style.display = 'block';
+        }
+
+        function resetBtn() {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Create & Send Invitation';
+        }
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => window.location.href = 'login2.html');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Project - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('dashboard') }}"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('slides') }}"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="{{ url_for('question_bank') }}"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="{{ url_for('repository') }}"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="{{ url_for('my_project') }}" class="active"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>My Capstone Project Dashboard</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+
+            <div class="my-project-layout">
+                <div class="project-main-column">
+                    <div class="card">
+                        <h3>Project Progress</h3>
+                        <ul class="progress-tracker">
+                            <li class="completed">
+                                <div class="icon"><i class="fa-solid fa-check"></i></div>
+                                <div class="details">
+                                    <h4>Proposal Submitted</h4>
+                                    <p>Date: 15 Oct, 2025</p>
+                                </div>
+                            </li>
+                            <li class="completed">
+                                 <div class="icon"><i class="fa-solid fa-check"></i></div>
+                                <div class="details">
+                                    <h4>Proposal Approved</h4>
+                                    <p>Your proposal has been reviewed and approved.</p>
+                                </div>
+                            </li>
+                            <li class="active">
+                                 <div class="icon"><i class="fa-solid fa-spinner"></i></div>
+                                <div class="details">
+                                    <h4>Mid-term Presentation</h4>
+                                    <p>Scheduled for: 20 Dec, 2025</p>
+                                </div>
+                            </li>
+                            <li>
+                                 <div class="icon"><i class="fa-solid fa-hourglass-half"></i></div>
+                                <div class="details">
+                                    <h4>Final Report Submission</h4>
+                                    <p>Deadline: 15 Feb, 2026</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>My Submissions</h3>
+                        <div class="file-upload-area">
+                            <p>Drag & drop your files here or click to browse</p>
+                            <input type="file" hidden>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-side-column">
+                    <div class="card">
+                        <h3>Supervisor Feedback</h3>
+                        <div class="feedback-list">
+                            <div class="feedback-item">
+                                <p class="comment">"Your literature review is well-written. Please add more recent papers from 2024-2025."</p>
+                                <p class="meta">- Aditya Rajbongshi, 18 Oct 2025</p>
+                            </div>
+                             <div class="feedback-item">
+                                <p class="comment">"The initial system architecture looks good. Let's discuss the database schema in our next meeting."</p>
+                                <p class="meta">- Aditya Rajbongshi, 25 Oct 2025</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

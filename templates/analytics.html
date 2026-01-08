@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+                <p class="sidebar-role">Supervisor Panel</p>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('supervisor_dashboard') }}"><i class="fa-solid fa-users-viewfinder"></i> Student Tracking</a></li>
+                <li><a href="{{ url_for('upload_slides') }}"><i class="fa-solid fa-upload"></i> Upload Slides</a></li>
+                <li><a href="{{ url_for('add_questions') }}"><i class="fa-solid fa-plus-circle"></i> Add Questions</a></li>
+                <li><a href="{{ url_for('analytics') }}" class="active"><i class="fa-solid fa-chart-pie"></i> Analytics</a></li>
+                <li><a href="{{ url_for('repository') }}"><i class="fa-solid fa-book-bookmark"></i> View Repository</a></li>
+                <li><a href="{{ url_for('announcements') }}"><i class="fa-solid fa-bullhorn"></i> Announcements</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Analytics & Insights</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+
+            <div class="chart-grid">
+                <div class="card chart-container">
+                    <h3>Student Project Status</h3>
+                    <canvas id="projectStatusChart"></canvas>
+                </div>
+                
+                <div class="card chart-container">
+                    <h3>Top 5 Downloaded Slides</h3>
+                    <canvas id="resourceUsageChart"></canvas>
+                </div>
+                
+                <div class="card chart-container">
+                    <h3>Most Practiced Quizzes</h3>
+                    <canvas id="quizActivityChart"></canvas>
+                </div>
+
+                <div class="card chart-container">
+                    <h3>Submission Timeline (Last 6 Months)</h3>
+                    <canvas id="submissionTimelineChart"></canvas>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+    
+    <script>
+        // চার্ট সম্পর্কিত JavaScript কোড অপরিবর্তিত আছে, কারণ এতে কোনো লিঙ্ক নেই
+        document.addEventListener('DOMContentLoaded', () => {
+            // চার্ট ১: Project Status (পাই চার্ট)
+            const ctxPie = document.getElementById('projectStatusChart');
+            if (ctxPie) {
+                new Chart(ctxPie, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Pending Proposal', 'Active Projects', 'Completed'],
+                        datasets: [{
+                            data: [2, 8, 2],
+                            backgroundColor: ['rgb(255, 205, 86)', 'rgb(54, 162, 235)', 'rgb(75, 192, 192)'],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+            }
+
+            // চার্ট ২: Resource Usage (বার চার্ট)
+            const ctxBar = document.getElementById('resourceUsageChart');
+            if (ctxBar) {
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Intro to Programming', 'Data Structures', 'Cyber Security', 'Robotics 101', 'Network Security'],
+                        datasets: [{
+                            label: 'Total Downloads',
+                            data: [120, 95, 80, 75, 60],
+                            backgroundColor: 'rgba(74, 108, 247, 0.6)'
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+                });
+            }
+
+            // নতুন চার্ট ৩: Quiz Activity (বার চার্ট)
+            const ctxBarQuiz = document.getElementById('quizActivityChart');
+            if (ctxBarQuiz) {
+                new Chart(ctxBarQuiz, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Intro to Programming', 'Data Structures', 'Cyber Security', 'Database Systems', 'AI Basics'],
+                        datasets: [{
+                            label: 'Total Attempts',
+                            data: [210, 180, 150, 110, 90],
+                            backgroundColor: 'rgba(217, 83, 79, 0.6)'
+                        }]
+                    },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        scales: { y: { beginAtZero: true } },
+                        indexAxis: 'y'
+                    }
+                });
+            }
+
+            // নতুন চার্ট ৪: Submission Timeline (লাইন চার্ট)
+            const ctxLine = document.getElementById('submissionTimelineChart');
+            if (ctxLine) {
+                new Chart(ctxLine, {
+                    type: 'line',
+                    data: {
+                        labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                        datasets: [{
+                            label: 'Proposals Submitted',
+                            data: [1, 2, 0, 4, 8, 3],
+                            fill: false,
+                            borderColor: 'rgb(54, 162, 235)',
+                            tension: 0.1
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+                });
+            }
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

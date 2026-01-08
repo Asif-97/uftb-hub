@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Questions - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+                <p class="sidebar-role">Supervisor Panel</p>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('supervisor_dashboard') }}"><i class="fa-solid fa-users-viewfinder"></i> Student Tracking</a></li>
+                <li><a href="{{ url_for('upload_slides') }}"><i class="fa-solid fa-upload"></i> Upload Slides</a></li>
+                <li><a href="{{ url_for('add_questions') }}" class="active"><i class="fa-solid fa-plus-circle"></i> Add Questions</a></li>
+                <li><a href="{{ url_for('repository') }}"><i class="fa-solid fa-book-bookmark"></i> View Repository</a></li>
+                <li><a href="{{ url_for('analytics') }}"><i class="fa-solid fa-chart-pie"></i> Analytics</a></li>
+                <li><a href="{{ url_for('announcements') }}"><i class="fa-solid fa-bullhorn"></i> Announcements</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Upload Question Bank File</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+
+            <div class="card">
+                <form class="upload-form">
+                    <h3>Select Course</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="faculty">Faculty</label>
+                            <select id="faculty">
+                                <option>Faculty of Software and Machine Intelligence...</option>
+                                <option>Faculty of Digital Transformation Engineering</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <select id="department">
+                                <option>Department of Software Engineering</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="semester">Semester</label>
+                            <select id="semester">
+                                <option>Level 1 Term 1</option>
+                            </select>
+                        </div>
+                         <div class="form-group">
+                            <label for="course">Course</label>
+                            <select id="course">
+                                <option>Intro to Programming (L1T1)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h3 class="form-divider">Upload Question File</h3>
+                    
+                    <div class="form-group">
+                        <label>Download Template</label>
+                        <p style="margin-top:0; color: #6c757d;">Please format your questions according to the template file (.xlsx or .csv).</p>
+                        <a href="#" class="btn btn-secondary"><i class="fa-solid fa-file-arrow-down"></i> Download Template</a>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload File</label>
+                        <div class="file-upload-area basic">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <p>Drag & drop your .xlsx or .csv file here</p>
+                            <input type="file" hidden>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Upload & Process</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

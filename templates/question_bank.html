@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('dashboard') }}"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('slides') }}"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="{{ url_for('question_bank') }}" class="active"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="{{ url_for('repository') }}"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="{{ url_for('my_project') }}"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Browse Question Bank</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+            
+            <div class="academic-structure">
+                <details class="faculty-card">
+                    <summary>
+                        <i class="fa-solid fa-brain"></i>
+                        <h3>Faculty of Software and Machine Intelligence Engineering</h3>
+                        <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="faculty-content">
+                        <details class="department-card">
+                            <summary><h4>Department of Software Engineering</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                            <div class="department-content"></div>
+                        </details>
+                        <details class="department-card">
+                            <summary><h4>Department of Data Science and Engineering</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                             <div class="department-content"></div>
+                        </details>
+                    </div>
+                </details>
+                <details class="faculty-card">
+                    <summary>
+                        <i class="fa-solid fa-microchip"></i>
+                        <h3>Faculty of Digital Transformation Engineering</h3>
+                        <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                     <div class="faculty-content">
+                        <details class="department-card">
+                            <summary><h4>Department of Educational Technology and Engineering</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                            <div class="department-content"></div>
+                        </details>
+                         <details class="department-card">
+                            <summary><h4>General Education Department</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                             <div class="department-content"></div>
+                        </details>
+                    </div>
+                </details>
+                 <details class="faculty-card">
+                    <summary>
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h3>Faculty of Security and Communication Engineering</h3>
+                        <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                     <div class="faculty-content">
+                        <details class="department-card">
+                            <summary><h4>Department of Cyber Security Engineering</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                            <div class="department-content"></div>
+                        </details>
+                    </div>
+                </details>
+                 <details class="faculty-card">
+                    <summary>
+                        <i class="fa-solid fa-robot"></i>
+                        <h3>Faculty of Cyber Physical System Engineering</h3>
+                        <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                     <div class="faculty-content">
+                        <details class="department-card">
+                            <summary><h4>Department of Internet of Things and Robotics Engineering</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                            <div class="department-content"></div>
+                        </details>
+                    </div>
+                </details>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const departments = document.querySelectorAll('.department-content');
+            const courseTemplates = {
+                'Software Engineering': ['Intro to Programming', 'Data Structures & Algorithms', 'Object-Oriented Design', 'Software Testing & QA', 'Web Technologies', 'Database Systems', 'Operating Systems', 'Computer Networks'],
+                'Data Science and Engineering': ['Foundations of Data Science', 'Machine Learning', 'Big Data Analytics', 'Statistical Methods', 'Data Visualization', 'Deep Learning', 'Natural Language Processing', 'AI Ethics'],
+                'Educational Technology and Engineering': ['Instructional Design', 'Digital Learning Tools', 'E-Learning Management', 'Technology in Education', 'Multimedia for Educators', 'Virtual Reality in Learning', 'Learning Analytics', 'Capstone Project'],
+                'Cyber Security Engineering': ['Intro to Cyber Security', 'Network Security', 'Cryptography', 'Ethical Hacking', 'Digital Forensics', 'Information Security', 'Malware Analysis', 'Secure Software Development'],
+                'Department of Internet of Things and Robotics Engineering': ['Introduction to Robotics', 'Embedded Systems', 'Sensor Technologies', 'IoT Protocols', 'Robot Kinematics', 'Control Systems Engineering', 'Machine Vision for Robots', 'Wireless Sensor Networks'],
+                'Default': ['Course 101', 'Course 102', 'Course 103', 'Course 104', 'Course 105', 'Course 106', 'Course 107', 'Course 108']
+            };
+
+            departments.forEach(dept => {
+                const deptName = dept.previousElementSibling.querySelector('h4').textContent;
+                let courses = courseTemplates[deptName] || courseTemplates['Default'];
+
+                for (let level = 1; level <= 4; level++) {
+                    for (let term = 1; term <= 2; term++) {
+                        const semesterCard = document.createElement('details');
+                        semesterCard.className = 'semester-card';
+                        const summary = document.createElement('summary');
+                        summary.textContent = `Level ${level} Term ${term}`;
+                        const semesterContent = document.createElement('div');
+                        semesterContent.className = 'semester-content';
+
+                        for (let i = 0; i < 5; i++) {
+                            const courseLink = document.createElement('a');
+                            // লিঙ্ক পরিবর্তন করা হয়েছে
+                            courseLink.href = "{{ url_for('practice_test') }}"; 
+                            courseLink.className = 'course-link';
+                            courseLink.textContent = courses[Math.floor(Math.random() * courses.length)] + ` (L${level}T${term})`;
+                            semesterContent.appendChild(courseLink);
+                        }
+                        semesterCard.appendChild(summary);
+                        semesterCard.appendChild(semesterContent);
+                        dept.appendChild(semesterCard);
+                    }
+                }
+            });
+        });
+    </script>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

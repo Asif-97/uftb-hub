@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - UFTB Hub</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- Reset & Base (UFTB Design System) --- */
+        :root {
+            --primary-color: #0d2a5c; /* UFTB Dark Blue */
+            --accent-color: #009639; /* UFTB Green */
+            --text-muted: #7e8299;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- Animated Background --- */
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Auth Container --- */
+        .auth-container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 550px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            animation: fadeInUp 0.6s ease-out forwards;
+            border-top: 5px solid var(--accent-color);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* Custom Scrollbar */
+        .auth-container::-webkit-scrollbar { width: 6px; }
+        .auth-container::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 4px; }
+
+        /* --- Branding --- */
+        .auth-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .auth-logo {
+            width: 90px;
+            height: auto;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .auth-university-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 5px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        /* --- Role Selection Buttons --- */
+        .role-choice-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .btn-role {
+            padding: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
+            cursor: pointer;
+            width: 100%;
+            border: 2px solid #f0f0f0;
+            background-color: #fff;
+            color: #444;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .btn-role i {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            background: rgba(0, 150, 57, 0.1);
+            padding: 15px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .btn-role:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 150, 57, 0.15);
+        }
+
+        .btn-role:hover i {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* --- Form Elements --- */
+        .form-group { margin-bottom: 18px; }
+        
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: all 0.3s;
+            outline: none;
+            background-color: #fcfcfc;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 150, 57, 0.1);
+        }
+        
+        select.form-control { cursor: pointer; }
+        select:disabled { background-color: #f0f0f0; cursor: not-allowed; color: #999; }
+
+        /* --- Buttons --- */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0, 150, 57, 0.25);
+        }
+        .btn:hover { 
+            background: #007d30;
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(0, 150, 57, 0.35); 
+        }
+
+        .btn-back {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .btn-back:hover { color: var(--primary-color); }
+
+        /* --- Password Toggle --- */
+        .password-wrapper { position: relative; display: flex; align-items: center; }
+        .toggle-password-icon {
+            position: absolute; right: 15px; cursor: pointer; color: #aaa; transition: 0.3s;
+        }
+        .toggle-password-icon:hover { color: var(--accent-color); }
+
+        /* --- Error Message --- */
+        .error-message {
+            display: none;
+            background-color: #ffebee;
+            color: #d32f2f;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            border-left: 4px solid #d32f2f;
+        }
+
+        /* --- Footer --- */
+        .auth-link {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .auth-link a { color: var(--accent-color); font-weight: 600; text-decoration: none; }
+        .auth-link a:hover { text-decoration: underline; color: #007d30; }
+
+        /* Animation class for views */
+        .fade-in-view {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+
+        <div class="auth-header">
+            <img src="https://uftb.ac.bd/uploads/settings/17663114198452.png" alt="UFTB Logo" class="auth-logo">
+            <h2 class="auth-university-name">University of Frontier Technology</h2>
+            <span style="font-size: 0.8rem; letter-spacing: 2px; color: #999; font-weight: 500;">BANGLADESH</span>
+        </div>
+        
+        <div id="role-selection-view" class="fade-in-view">
+            <h1>Create Account</h1>
+            <p class="subtitle">Join the UFTB Hub. Choose your designation:</p>
+            
+            <div class="role-choice-buttons">
+                <button id="show-student-form-btn" class="btn-role">
+                    <i class="fa-solid fa-user-graduate"></i> 
+                    <div>
+                        <div style="font-size: 1.1rem; color: var(--primary-color);">I am a Student</div>
+                        <div style="font-size: 0.8rem; color: #777; font-weight: 400;">Access course materials and results</div>
+                    </div>
+                </button>
+                
+                <button id="show-supervisor-form-btn" class="btn-role">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <div>
+                        <div style="font-size: 1.1rem; color: var(--primary-color);">I am a Supervisor</div>
+                        <div style="font-size: 0.8rem; color: #777; font-weight: 400;">Manage students and courses</div>
+                    </div>
+                </button>
+            </div>
+            
+            <p class="auth-link">
+                Already have an account? <a href="login2.html">Login here</a>
+            </p>
+        </div>
+
+        <div id="student-form-view" style="display: none;">
+            <button id="back-to-role-student" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Back to selection</button>
+            
+            <h1>Student Registration</h1>
+            <p class="subtitle">Please provide your academic details</p>
+            
+            <form id="student-signup-form">
+                <div class="form-group">
+                    <label for="student-name">Full Name</label>
+                    <input type="text" id="student-name" class="form-control" placeholder="e.g. Adnan Sami" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-faculty">Faculty</label>
+                    <select id="student-faculty" class="form-control" required>
+                        <option value="" disabled selected>Select your Faculty</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-department">Department</label>
+                    <select id="student-department" class="form-control" required disabled>
+                        <option value="" disabled selected>Select Faculty first</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-id">University ID (7 digits)</label>
+                    <input type="text" id="student-id" class="form-control" pattern="\d{7}" title="Please enter a 7-digit ID" placeholder="e.g. 2110054" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-level-term">Level Term</label>
+                    <select id="student-level-term" class="form-control" required>
+                        <option value="" disabled selected>Select your Level Term</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-email">Email Address</label>
+                    <input type="email" id="student-email" class="form-control" placeholder="student@uftb.edu.bd" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="student-password" class="form-control" minlength="8" placeholder="Min. 8 characters" required>
+                        <i class="fa-solid fa-eye toggle-password-icon" id="toggle-student-password"></i>
+                    </div>
+                </div>
+                
+                <div id="student-error-message" class="error-message"></div>
+                
+                <button type="submit" class="btn">Complete Registration</button>
+            </form>
+        </div>
+
+        <div id="supervisor-form-view" style="display: none;">
+            <button id="back-to-role-supervisor" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Back to selection</button>
+            
+            <h1>Supervisor Registration</h1>
+            <p class="subtitle">Create your faculty account</p>
+            
+            <form id="supervisor-signup-form">
+                <div class="form-group">
+                    <label for="supervisor-name">Full Name</label>
+                    <input type="text" id="supervisor-name" class="form-control" placeholder="e.g. Dr. Anisur Rahman" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="supervisor-faculty">Faculty</label>
+                    <select id="supervisor-faculty" class="form-control" required>
+                        <option value="" disabled selected>Select your Faculty</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="supervisor-department">Department</label>
+                    <select id="supervisor-department" class="form-control" required disabled>
+                        <option value="" disabled selected>Select Faculty first</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="supervisor-designation">Designation</label>
+                    <select id="supervisor-designation" class="form-control" required>
+                        <option value="" disabled selected>Select Designation</option>
+                        <option value="Professor">Professor</option>
+                        <option value="Associate Professor">Associate Professor</option>
+                        <option value="Assistant Professor">Assistant Professor</option>
+                        <option value="Lecturer">Lecturer</option>
+                        <option value="Teaching Assistant">Teaching Assistant</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="supervisor-email">Official Email</label>
+                    <input type="email" id="supervisor-email" class="form-control" placeholder="faculty@uftb.edu.bd" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="supervisor-password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="supervisor-password" class="form-control" minlength="8" placeholder="Min. 8 characters" required>
+                        <i class="fa-solid fa-eye toggle-password-icon" id="toggle-supervisor-password"></i>
+                    </div>
+                </div>
+                
+                <div id="supervisor-error-message" class="error-message"></div>
+                
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- View Switching Logic ---
+            const roleSelectionView = document.getElementById('role-selection-view');
+            const studentFormView = document.getElementById('student-form-view');
+            const supervisorFormView = document.getElementById('supervisor-form-view');
+            
+            const showStudentBtn = document.getElementById('show-student-form-btn');
+            const showSupervisorBtn = document.getElementById('show-supervisor-form-btn');
+            const backBtnStudent = document.getElementById('back-to-role-student');
+            const backBtnSupervisor = document.getElementById('back-to-role-supervisor');
+
+            function switchView(hideView, showView) {
+                hideView.style.display = 'none';
+                showView.style.display = 'block';
+                // Trigger animation reset
+                showView.classList.remove('fade-in-view');
+                void showView.offsetWidth; // Trigger reflow
+                showView.classList.add('fade-in-view');
+            }
+
+            showStudentBtn.addEventListener('click', () => {
+                switchView(roleSelectionView, studentFormView);
+            });
+
+            showSupervisorBtn.addEventListener('click', () => {
+                switchView(roleSelectionView, supervisorFormView);
+            });
+
+            function goBackToRole() {
+                if(studentFormView.style.display === 'block') switchView(studentFormView, roleSelectionView);
+                else if(supervisorFormView.style.display === 'block') switchView(supervisorFormView, roleSelectionView);
+            }
+
+            backBtnStudent.addEventListener('click', goBackToRole);
+            backBtnSupervisor.addEventListener('click', goBackToRole);
+
+            // --- Dynamic Dropdown Logic ---
+            const facultyDeptMap = {
+                "Faculty of Digital Transformation Engineering": [
+                    "Department of Educational Technology and Engineering",
+                    "General Education Department"
+                ],
+                "Faculty of Cyber Physical System Engineering": [
+                    "Department of Internet of Things and Robotics Engineering"
+                ],
+                "Faculty of Security and Communication Engineering": [
+                    "Department of Cyber Security Engineering"
+                ],
+                "Faculty of Software and Machine Intelligence Engineering": [
+                    "Department of Software Engineering",
+                    "Department of Data Science and Engineering"
+                ]
+            };
+
+            const levelTerms = [
+                "Level 1 Term 1", "Level 1 Term 2", "Level 2 Term 1", "Level 2 Term 2",
+                "Level 3 Term 1", "Level 3 Term 2", "Level 4 Term 1", "Level 4 Term 2"
+            ];
+
+            const studentFacultySelect = document.getElementById('student-faculty');
+            const studentDeptSelect = document.getElementById('student-department');
+            const studentLevelSelect = document.getElementById('student-level-term');
+            const supervisorFacultySelect = document.getElementById('supervisor-faculty');
+            const supervisorDeptSelect = document.getElementById('supervisor-department');
+
+            function populateDropdown(selectElement, items) {
+                items.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item;
+                    option.textContent = item;
+                    selectElement.appendChild(option);
+                });
+            }
+
+            const facultyNames = Object.keys(facultyDeptMap);
+            populateDropdown(studentFacultySelect, facultyNames);
+            populateDropdown(supervisorFacultySelect, facultyNames);
+            populateDropdown(studentLevelSelect, levelTerms);
+
+            // Handle Faculty Change (Student)
+            studentFacultySelect.addEventListener('change', (e) => {
+                const selectedFaculty = e.target.value;
+                const departments = facultyDeptMap[selectedFaculty] || [];
+                studentDeptSelect.innerHTML = '<option value="" disabled selected>Select your Department</option>';
+                populateDropdown(studentDeptSelect, departments);
+                studentDeptSelect.disabled = false;
+            });
+
+            // Handle Faculty Change (Supervisor)
+            supervisorFacultySelect.addEventListener('change', (e) => {
+                const selectedFaculty = e.target.value;
+                const departments = facultyDeptMap[selectedFaculty] || [];
+                supervisorDeptSelect.innerHTML = '<option value="" disabled selected>Select your Department</option>';
+                populateDropdown(supervisorDeptSelect, departments);
+                supervisorDeptSelect.disabled = false;
+            });
+            
+            // --- Password Show/Hide Logic ---
+            function setupPasswordToggle(inputId, toggleId) {
+                const passwordInput = document.getElementById(inputId);
+                const toggleIcon = document.getElementById(toggleId);
+
+                if (!passwordInput || !toggleIcon) return;
+
+                toggleIcon.addEventListener('click', () => {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    toggleIcon.classList.toggle('fa-eye');
+                    toggleIcon.classList.toggle('fa-eye-slash');
+                });
+            }
+
+            setupPasswordToggle('student-password', 'toggle-student-password');
+            setupPasswordToggle('supervisor-password', 'toggle-supervisor-password');
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyACtq2K0jfHyR4q538BPW37cH67DOJAx98",
+            authDomain: "uftb-hub.firebaseapp.com",
+            projectId: "uftb-hub",
+            storageBucket: "uftb-hub.firebasestorage.app",
+            messagingSenderId: "373096235837",
+            appId: "1:373096235837:web:0ec03dea7ea526c52cbb54",
+            measurementId: "G-MT5YR5NW39"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- Handle Student Signup ---
+        const studentForm = document.getElementById('student-signup-form');
+        const studentErrorMessage = document.getElementById('student-error-message');
+        const studentBtn = studentForm.querySelector('button[type="submit"]');
+
+        studentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const originalText = studentBtn.innerText;
+            studentBtn.innerText = "Creating Account...";
+            studentBtn.disabled = true;
+            studentErrorMessage.style.display = 'none';
+
+            const name = document.getElementById('student-name').value;
+            const faculty = document.getElementById('student-faculty').value;
+            const department = document.getElementById('student-department').value;
+            const studentId = document.getElementById('student-id').value;
+            const levelTerm = document.getElementById('student-level-term').value;
+            const email = document.getElementById('student-email').value;
+            const password = document.getElementById('student-password').value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                await setDoc(doc(db, "users", user.uid), {
+                    name: name, email: email, faculty: faculty,
+                    department: department, studentId: studentId,
+                    levelTerm: levelTerm, role: "student"
+                });
+
+                alert("Student account created successfully! Redirecting to login...");
+                // REDIRECT TO login2.html
+                window.location.href = "login2.html"; 
+            } catch (error) {
+                let msg = error.message;
+                if(error.code === 'auth/email-already-in-use') msg = "This email is already registered.";
+                
+                studentErrorMessage.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${msg}`;
+                studentErrorMessage.style.display = 'block';
+                studentBtn.innerText = originalText;
+                studentBtn.disabled = false;
+            }
+        });
+
+        // --- Handle Supervisor Signup ---
+        const supervisorForm = document.getElementById('supervisor-signup-form');
+        const supervisorErrorMessage = document.getElementById('supervisor-error-message');
+        const supervisorBtn = supervisorForm.querySelector('button[type="submit"]');
+
+        supervisorForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const originalText = supervisorBtn.innerText;
+            supervisorBtn.innerText = "Creating Account...";
+            supervisorBtn.disabled = true;
+            supervisorErrorMessage.style.display = 'none';
+
+            const name = document.getElementById('supervisor-name').value;
+            const faculty = document.getElementById('supervisor-faculty').value;
+            const department = document.getElementById('supervisor-department').value;
+            const designation = document.getElementById('supervisor-designation').value;
+            const email = document.getElementById('supervisor-email').value;
+            const password = document.getElementById('supervisor-password').value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                await setDoc(doc(db, "users", user.uid), {
+                    name: name, email: email, faculty: faculty,
+                    department: department, designation: designation,
+                    role: "supervisor"
+                });
+
+                alert("Supervisor account created successfully! Redirecting to login...");
+                // REDIRECT TO login2.html
+                window.location.href = "login2.html";
+            } catch (error) {
+                let msg = error.message;
+                if(error.code === 'auth/email-already-in-use') msg = "This email is already registered.";
+
+                supervisorErrorMessage.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${msg}`;
+                supervisorErrorMessage.style.display = 'block';
+                supervisorBtn.innerText = originalText;
+                supervisorBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

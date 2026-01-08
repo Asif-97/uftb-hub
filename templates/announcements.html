@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Announcement - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+                <p class="sidebar-role">Supervisor Panel</p>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('supervisor_dashboard') }}"><i class="fa-solid fa-users-viewfinder"></i> Student Tracking</a></li>
+                <li><a href="{{ url_for('upload_slides') }}"><i class="fa-solid fa-upload"></i> Upload Slides</a></li>
+                <li><a href="{{ url_for('add_questions') }}"><i class="fa-solid fa-plus-circle"></i> Add Questions</a></li>
+                <li><a href="{{ url_for('analytics') }}"><i class="fa-solid fa-chart-pie"></i> Analytics</a></li>
+                <li><a href="{{ url_for('announcements') }}" class="active"><i class="fa-solid fa-bullhorn"></i> Announcements</a></li>
+                <li><a href="{{ url_for('repository') }}"><i class="fa-solid fa-book-bookmark"></i> View Repository</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Send Announcement</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+
+            <div class="my-project-layout">
+                <div class="project-main-column">
+                    <div class="card">
+                        <form class="upload-form">
+                            <h3>New Announcement</h3>
+                            <div class="form-group">
+                                <label for="recipient">Recipient</label>
+                                <select id="recipient">
+                                    <option>All My Students</option>
+                                    <option>Students (Pending Proposal)</option>
+                                    <option>Students (Active Projects)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" placeholder="e.g., Urgent: Project Deadline Update">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" placeholder="Write your message here..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Now</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="project-side-column">
+                    <div class="card">
+                        <h3>Recently Sent</h3>
+                        <div class="feedback-list">
+                            <div class="feedback-item">
+                                <p class="comment">"Please submit your mid-term presentation slides by Friday."</p>
+                                <p class="meta">- 01 Nov 2025 (To: All My Students)</p>
+                            </div>
+                            <div class="feedback-item">
+                                <p class="comment">"Reminder: Weekly meeting rescheduled to 3 PM tomorrow."</p>
+                                <p class="meta">- 28 Oct 2025 (To: All My Students)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Project - UFTB Hub</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- Reset & Base (UFTB Design System) --- */
+        :root {
+            --sidebar-bg: #0d2a5c;
+            --sidebar-hover: #163a7a;
+            --primary-color: #0d2a5c;
+            --accent-color: #009639;
+            --text-muted: #7e8299;
+            --bg-color: #f4f7fa;
+            --sidebar-width: 260px;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #444;
+        }
+
+        /* --- Layout --- */
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            color: #e0e0e0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-logo-img {
+            width: 90px;
+            height: auto;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff; 
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .sidebar-nav li { margin-bottom: 4px; }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 14px 25px;
+            color: #b0bec5;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background-color: var(--sidebar-hover);
+            color: #ffffff;
+        }
+
+        .sidebar-nav a.active {
+            background: linear-gradient(90deg, rgba(0, 150, 57, 0.15) 0%, transparent 100%);
+            color: #ffffff;
+            border-left-color: var(--accent-color);
+        }
+
+        .sidebar-nav a i {
+            width: 25px;
+            margin-right: 12px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .sidebar-nav a.active i { color: var(--accent-color); }
+
+        /* --- Main Content --- */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 30px;
+            transition: var(--transition);
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        /* --- Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: #fff;
+            padding: 18px 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            animation: slideDown 0.5s ease;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header h1 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* --- Project Layout Grid --- */
+        .my-project-layout {
+            display: flex;
+            gap: 25px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .project-main-column { flex: 4; display: flex; flex-direction: column; gap: 20px; }
+        .project-side-column { flex: 5; }
+
+        /* --- Cards --- */
+        .card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            border-top: 4px solid #e9ecef;
+            transition: var(--transition);
+            margin-bottom: 0; /* Handled by flex gap */
+        }
+
+        .card:hover {
+            border-top-color: var(--accent-color);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-weight: 700;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        /* --- Forms & Buttons --- */
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+            background: #fdfdfd;
+            resize: vertical;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 150, 57, 0.1);
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #007d30;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 150, 57, 0.2);
+        }
+
+        /* --- Timeline Styles --- */
+        .timeline-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+            padding-left: 5px;
+        }
+        
+        /* Scrollbar styling */
+        .timeline-container::-webkit-scrollbar { width: 6px; }
+        .timeline-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
+        .timeline-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        /* Connecting Line */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 20px; /* Center of icon (40px width) */
+            top: 45px;
+            bottom: -30px;
+            width: 2px;
+            background: #f0f0f0;
+            z-index: 0;
+        }
+        .timeline-item:last-child::before { display: none; }
+
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            flex-shrink: 0;
+            z-index: 1;
+            font-size: 1rem;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        .icon-feedback { background: #0288d1; /* Blue */ }
+        .icon-meeting { background: #7b1fa2; /* Purple */ }
+        .icon-chat { background: #555; /* Default Gray */ }
+        .icon-chat-me { background: var(--accent-color); /* Green for me */ }
+
+        .timeline-content {
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #f0f0f0;
+            flex: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        /* Arrow for timeline bubble */
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 15px;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-left: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            transform: rotate(45deg);
+        }
+
+        /* Chat Styles (Me vs Others) */
+        .chat-me .timeline-content {
+            background: #f1fdf4; /* Light Green Tint */
+            border-color: #d1e7dd;
+        }
+        .chat-me .timeline-content::after {
+            background: #f1fdf4;
+            border-color: #d1e7dd;
+        }
+
+        .timeline-date {
+            font-size: 0.75rem;
+            color: #999;
+            float: right;
+            margin-left: 10px;
+        }
+
+        .timeline-content strong {
+            display: block;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .timeline-content p {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 0;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        /* Project Info Text */
+        .info-row { margin-bottom: 12px; font-size: 0.95rem; }
+        .info-row strong { color: var(--primary-color); display: inline-block; width: 140px; }
+        .status-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* --- Mobile Responsive --- */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 900px) {
+            .my-project-layout { flex-direction: column; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            .mobile-nav-toggle { display: block; }
+            .header h1 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="https://uftb.ac.bd/uploads/settings/17663114198452.png" alt="UFTB Logo" class="sidebar-logo-img">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="index.html"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="slides.html"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="question_bank.html"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="repository.html"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="my_project.html" class="active"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="profile.html"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="#" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <button class="mobile-nav-toggle" id="sidebar-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h1>My Project Logbook</h1>
+                <div style="width: 24px;"></div>
+            </header>
+            
+            <div class="my-project-layout">
+                
+                <div class="project-main-column">
+                    
+                    <div class="card">
+                        <h3><i class="fa-solid fa-circle-info" style="color: var(--accent-color);"></i> Project Details</h3>
+                        <div id="project-details-content">
+                            <h4 id="project-title-header" style="margin-bottom: 15px; color: #333;">Loading...</h4>
+                            <div class="info-row"><strong>Status:</strong> <span id="project-status-text" class="status-badge">...</span></div>
+                            <div class="info-row"><strong>Supervisor:</strong> <span id="supervisor-name-text">...</span></div>
+                            <div class="info-row"><strong>Group Members:</strong> <span id="group-members-text">...</span></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fa-regular fa-paper-plane" style="color: var(--accent-color);"></i> Group Discussion</h3>
+                        <form id="group-chat-form">
+                            <textarea id="chat-message-input" class="form-control" rows="3" placeholder="Write an update or message to your group..." required></textarea>
+                            <button type="submit" class="btn" style="width: 100%; margin-top: 15px;">
+                                <i class="fa-solid fa-reply"></i> Post Message
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="project-side-column">
+                    <div class="card" style="height: 100%;">
+                        <h3><i class="fa-solid fa-clock-rotate-left" style="color: var(--accent-color);"></i> Communication History</h3>
+                        <div class="timeline-container" id="timeline-container">
+                            <p style="text-align: center; color: #999; margin-top: 20px;">Loading history...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+      import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+      import { getFirestore, collection, query, where, getDocs, onSnapshot, doc, getDoc, orderBy, Timestamp, addDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyACtq2K0jfHyR4q538BPW37cH67DOJAx98",
+        authDomain: "uftb-hub.firebaseapp.com",
+        projectId: "uftb-hub",
+        storageBucket: "uftb-hub.firebasestorage.app",
+        messagingSenderId: "373096235837",
+        appId: "1:373096235837:web:0ec03dea7ea526c52cbb54",
+        measurementId: "G-MT5YR5NW39"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // DOM Elements
+      const projectTitleHeader = document.getElementById('project-title-header');
+      const groupMembersText = document.getElementById('group-members-text');
+      const projectStatusText = document.getElementById('project-status-text');
+      const supervisorNameText = document.getElementById('supervisor-name-text');
+      const timelineContainer = document.getElementById('timeline-container');
+      const logoutBtn = document.getElementById('logout-btn');
+      const chatForm = document.getElementById('group-chat-form');
+      const chatMessageInput = document.getElementById('chat-message-input');
+      
+      // Sidebar Mobile Logic
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.getElementById('sidebar-toggle');
+      toggleBtn.addEventListener('click', () => sidebar.classList.toggle('active'));
+      document.addEventListener('click', (e) => {
+          if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('active')) {
+              sidebar.classList.remove('active');
+          }
+      });
+
+      let currentStudentId = null;
+      let currentStudentName = null;
+      let currentProjectId = null;
+      let currentSupervisorId = null;
+
+      onAuthStateChanged(auth, async (user) => {
+          if (user) {
+              currentStudentId = user.uid;
+              await loadProjectDetails(currentStudentId);
+              
+              if (currentProjectId) {
+                  listenForFullHistory(currentProjectId, currentStudentId);
+              }
+          } else {
+              window.location.href = 'login2.html';
+          }
+      });
+      
+      async function loadProjectDetails(studentId) {
+          try {
+              const userDocRef = doc(db, "users", studentId);
+              const userDocSnap = await getDoc(userDocRef);
+              if (userDocSnap.exists()) {
+                  currentStudentName = userDocSnap.data().name;
+              }
+
+              const projectsRef = collection(db, "projects");
+              const q = query(projectsRef, where("studentIds", "array-contains", studentId));
+              const projectSnap = await getDocs(q);
+              
+              if (projectSnap.empty) {
+                  projectTitleHeader.textContent = "No Project Assigned";
+                  projectStatusText.textContent = "N/A";
+                  supervisorNameText.textContent = "N/A";
+                  groupMembersText.textContent = "N/A";
+                  timelineContainer.innerHTML = "<p style='text-align:center; padding:20px; color:#999;'>You are not part of any project group.</p>";
+                  return;
+              }
+
+              const projectDoc = projectSnap.docs[0];
+              const projectData = projectDoc.data();
+              
+              currentProjectId = projectDoc.id;
+              currentSupervisorId = projectData.supervisorId;
+
+              projectTitleHeader.textContent = projectData.title;
+              projectStatusText.textContent = projectData.status || 'Active';
+              groupMembersText.textContent = projectData.studentNames ? projectData.studentNames.join(', ') : 'None';
+
+              // Set Status Color
+              if(projectData.status === 'Approved') projectStatusText.style.background = "var(--accent-color)";
+              else if(projectData.status === 'Pending') projectStatusText.style.background = "#ffb300";
+              else if(projectData.status === 'Rejected') projectStatusText.style.background = "#d32f2f";
+
+              if (currentSupervisorId) {
+                  const supervisorRef = doc(db, "users", currentSupervisorId);
+                  const supervisorSnap = await getDoc(supervisorRef);
+                  if (supervisorSnap.exists()) {
+                      supervisorNameText.textContent = supervisorSnap.data().name;
+                  }
+              }
+          } catch (error) {
+              console.error("Error loading project details: ", error);
+          }
+      }
+
+      function listenForFullHistory(projectId, studentId) {
+          let allCommunications = [];
+          
+          // Helper to re-render when data updates
+          const updateTimeline = () => {
+              renderTimeline(allCommunications);
+          };
+          
+          // 1. Feedback
+          const feedbackQuery = query(collection(db, "feedback"), where("projectId", "==", projectId));
+          onSnapshot(feedbackQuery, (snapshot) => {
+              allCommunications = allCommunications.filter(item => item.type !== 'feedback');
+              snapshot.forEach(doc => allCommunications.push({ ...doc.data(), type: 'feedback', id: doc.id }));
+              updateTimeline();
+          });
+
+          // 2. Meetings
+          const meetingQuery = query(collection(db, "meetings"), where("studentIds", "array-contains", studentId));
+          onSnapshot(meetingQuery, (snapshot) => {
+              allCommunications = allCommunications.filter(item => item.type !== 'meeting');
+              snapshot.forEach(doc => allCommunications.push({ ...doc.data(), type: 'meeting', id: doc.id }));
+              updateTimeline();
+          });
+
+          // 3. Group Chat
+          const chatQuery = query(collection(db, "projectChat"), where("projectId", "==", projectId));
+          onSnapshot(chatQuery, (snapshot) => {
+              allCommunications = allCommunications.filter(item => item.type !== 'chat');
+              snapshot.forEach(doc => allCommunications.push({ ...doc.data(), type: 'chat', id: doc.id }));
+              updateTimeline();
+          });
+      }
+
+      function renderTimeline(items) {
+          timelineContainer.innerHTML = "";
+          if (items.length === 0) {
+              timelineContainer.innerHTML = "<p style='text-align:center; padding:20px; color:#999;'>No history found. Start a discussion!</p>";
+              return;
+          }
+          
+          // Sort by time (Oldest first for logbook style, Newest at bottom)
+          items.sort((a, b) => {
+              const timeA = a.timestamp || a.createdAt || a.meetingTime || { seconds: 0 };
+              const timeB = b.timestamp || b.createdAt || b.meetingTime || { seconds: 0 };
+              return timeA.seconds - timeB.seconds;
+          });
+          
+          items.forEach(item => {
+              const itemDiv = document.createElement('div');
+              itemDiv.className = 'timeline-item';
+              
+              let html = '';
+              const itemDateObj = item.timestamp || item.createdAt || item.meetingTime;
+              const date = itemDateObj ? itemDateObj.toDate().toLocaleString('en-UK', { dateStyle: 'medium', timeStyle: 'short' }) : 'Just now';
+
+              if (item.type === 'feedback') {
+                  html = `
+                      <div class="timeline-icon icon-feedback">
+                          <i class="fa-solid fa-comment-dots"></i>
+                      </div>
+                      <div class="timeline-content">
+                          <span class="timeline-date">${date}</span>
+                          <strong>Supervisor Feedback</strong>
+                          <p>${item.message}</p>
+                      </div>`;
+              } else if (item.type === 'meeting') {
+                  html = `
+                      <div class="timeline-icon icon-meeting">
+                          <i class="fa-solid fa-calendar-check"></i>
+                      </div>
+                      <div class="timeline-content">
+                          <span class="timeline-date">${date}</span>
+                          <strong>Meeting: ${item.title}</strong>
+                          <p>Link: <a href="${item.meetLink}" target="_blank" style="color:var(--accent-color);">${item.meetLink}</a></p>
+                      </div>`;
+              } else if (item.type === 'chat') {
+                  const isMe = (item.senderId === currentStudentId);
+                  const senderName = isMe ? "Me" : item.senderName;
+                  const chatClass = isMe ? "chat-me" : "chat-other";
+                  const iconClass = isMe ? "icon-chat-me" : "icon-chat";
+                  
+                  // Add class to main wrapper if it's me
+                  if(isMe) itemDiv.classList.add('chat-me');
+
+                  html = `
+                      <div class="timeline-icon ${iconClass}">
+                          <i class="fa-solid fa-user"></i>
+                      </div>
+                      <div class="timeline-content">
+                          <span class="timeline-date">${date}</span>
+                          <strong>${senderName}</strong>
+                          <p>${item.message}</p>
+                      </div>`;
+              }
+              
+              itemDiv.innerHTML = html;
+              timelineContainer.appendChild(itemDiv);
+          });
+          
+          // Auto scroll to bottom
+          timelineContainer.scrollTop = timelineContainer.scrollHeight;
+      }
+
+      chatForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const message = chatMessageInput.value;
+          
+          if (!message.trim() || !currentProjectId || !currentStudentId || !currentStudentName) {
+              return;
+          }
+
+          try {
+              await addDoc(collection(db, "projectChat"), {
+                  projectId: currentProjectId,
+                  senderId: currentStudentId,
+                  senderName: currentStudentName,
+                  message: message,
+                  timestamp: Timestamp.now()
+              });
+              chatMessageInput.value = ""; 
+          } catch (error) {
+              console.error("Error sending chat message: ", error);
+              alert("Failed to send message.");
+          }
+      });
+
+      logoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          signOut(auth).then(() => {
+              window.location.href = 'login2.html';
+          });
+      });
+    </script>
+</body>
+</html>

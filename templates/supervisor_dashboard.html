@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervisor Dashboard - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+                <p class="sidebar-role">Supervisor Panel</p>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('supervisor_dashboard') }}" class="active"><i class="fa-solid fa-users-viewfinder"></i> Student Tracking</a></li>
+                <li><a href="{{ url_for('upload_slides') }}"><i class="fa-solid fa-upload"></i> Upload Slides</a></li>
+                <li><a href="{{ url_for('add_questions') }}"><i class="fa-solid fa-plus-circle"></i> Add Questions</a></li>
+                <li><a href="{{ url_for('repository') }}"><i class="fa-solid fa-book-bookmark"></i> View Repository</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('analytics') }}"><i class="fa-solid fa-chart-pie"></i> Analytics</a></li>
+                <li><a href="{{ url_for('announcements') }}"><i class="fa-solid fa-bullhorn"></i> Announcements</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Capstone Project Tracking</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+            
+            <div class="card-grid">
+                <div class="card summary-card">
+                    <h3><i class="fa-solid fa-users"></i> Total Students</h3>
+                    <p class="summary-value">12</p>
+                </div>
+                <div class="card summary-card">
+                    <h3><i class="fa-solid fa-spinner"></i> Active Projects</h3>
+                    <p class="summary-value">8</p>
+                </div>
+                <div class="card summary-card">
+                    <h3><i class="fa-solid fa-hourglass-start"></i> Pending Proposals</h3>
+                    <p class="summary-value">2</p>
+                </div>
+                <div class="card summary-card">
+                    <h3><i class="fa-solid fa-check-double"></i> Completed</h3>
+                    <p class="summary-value">2</p>
+                </div>
+            </div>
+
+            <div class="student-list-container card">
+                <h3>My Students (Session: 2024-25)</h3>
+                <table class="project-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Project Title</th>
+                            <th>Current Status</th>
+                            <th>Last Submission</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MD Hasib Hossen</td>
+                            <td>AI-Powered Student Support System</td>
+                            <td><span class="status-badge status-active">Active: Mid-term</span></td>
+                            <td>18 Oct, 2025</td>
+                            <td><a href="{{ url_for('manage_student') }}" class="btn-action btn-view">Manage</a></td>
+                        </tr>
+                        <tr>
+                            <td>MD Asif Sarker</td>
+                            <td>Decentralized File Storage using Blockchain</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                            <td>15 Sep, 2025</td>
+                            <td><a href="{{ url_for('manage_student') }}" class="btn-action btn-view">View</a></td>
+                        </tr>
+                         <tr>
+                            <td>Nadia Sultana</td>
+                            <td>IoT Based Smart Agriculture Monitoring</td>
+                            <td><span class="status-badge status-pending">Pending: Proposal</span></td>
+                            <td>N/A</td>
+                            <td><a href="{{ url_for('manage_student') }}" class="btn-action btn-view">Manage</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

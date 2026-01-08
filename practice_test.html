@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test - UFTB Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="index.html"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="slides.html"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="question_bank.html" class="active"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="#"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="#"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="profile.html"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Practice Test: Intro to Programming</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+            </header>
+
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="question-counter">Question 1 of 10</div>
+                    <div class="timer">Time Left: <strong>14:30</strong></div>
+                </div>
+
+                <div class="question-body">
+                    <h2>What does "CPU" stand for?</h2>
+                    <div class="options-container">
+                        <label class="option">
+                            <input type="radio" name="question1" value="a">
+                            <span>Central Processing Unit</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="question1" value="b">
+                            <span>Computer Personal Unit</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="question1" value="c">
+                            <span>Central Program Unit</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="question1" value="d">
+                            <span>Computer Processing Unit</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-footer">
+                    <button class="btn btn-secondary">Previous</button>
+                    <button class="btn btn-primary">Next Question <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

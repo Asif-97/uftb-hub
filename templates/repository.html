@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capstone Repository - UFTB Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('dashboard') }}"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('slides') }}"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="{{ url_for('question_bank') }}"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="{{ url_for('repository') }}" class="active"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="{{ url_for('my_project') }}"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="{{ url_for('profile') }}"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Capstone & Thesis Repository</h1>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </header>
+
+            <div class="filter-bar">
+                <input type="text" placeholder="Search by title, author, or keyword...">
+                <select>
+                    <option value="">Filter by Department</option>
+                    <option value="swe">Software Engineering</option>
+                    <option value="ds">Data Science</option>
+                    <option value="cse">Cyber Security</option>
+                </select>
+                <button class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+            </div>
+
+            <div class="project-list-container">
+                <table class="project-table">
+                    <thead>
+                        <tr>
+                            <th>Project Title</th>
+                            <th>Author(s)</th>
+                            <th>Department</th>
+                            <th>Year</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AI-Powered Student Support System</td>
+                            <td>Hasib & Asif</td>
+                            <td>Software Engineering</td>
+                            <td>2024</td>
+                            <td><a href="{{ url_for('project_details') }}" class="btn-action btn-view">View Details</a></td>
+                        </tr>
+                        <tr>
+                            <td>IoT Based Smart Agriculture Monitoring</td>
+                            <td>Nadia & Samin</td>
+                            <td>IoT & Robotics</td>
+                            <td>2024</td>
+                            <td><a href="{{ url_for('project_details') }}" class="btn-action btn-view">View Details</a></td>
+                        </tr>
+                         <tr>
+                            <td>Network Intrusion Detection using ML</td>
+                            <td>Rahim & Karim</td>
+                            <td>Cyber Security</td>
+                            <td>2023</td>
+                            <td><a href="{{ url_for('project_details') }}" class="btn-action btn-view">View Details</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

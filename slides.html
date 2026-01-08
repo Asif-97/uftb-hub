@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Share - UFTB Hub</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- Reset & Base (UFTB Design System) --- */
+        :root {
+            --sidebar-bg: #0d2a5c;
+            --sidebar-hover: #163a7a;
+            --primary-color: #0d2a5c;
+            --accent-color: #009639;
+            --text-muted: #7e8299;
+            --bg-color: #f4f7fa;
+            --sidebar-width: 260px;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #444;
+        }
+
+        /* --- Layout --- */
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            color: #e0e0e0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-logo-img {
+            width: 90px;
+            height: auto;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff; 
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .sidebar-nav li { margin-bottom: 4px; }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 14px 25px;
+            color: #b0bec5;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            background-color: var(--sidebar-hover);
+            color: #ffffff;
+        }
+
+        .sidebar-nav a.active {
+            background: linear-gradient(90deg, rgba(0, 150, 57, 0.15) 0%, transparent 100%);
+            color: #ffffff;
+            border-left-color: var(--accent-color);
+        }
+
+        .sidebar-nav a i {
+            width: 25px;
+            margin-right: 12px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .sidebar-nav a.active i { color: var(--accent-color); }
+
+        /* --- Main Content --- */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 30px;
+            transition: var(--transition);
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        /* --- Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: #fff;
+            padding: 18px 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            animation: slideDown 0.5s ease;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header h1 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* --- Academic Structure (Accordions) --- */
+        .academic-structure {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Faculty Card (Styled like Dashboard Cards) */
+        .faculty-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            /* Default top border */
+            border-top: 4px solid #e9ecef; 
+            transition: var(--transition);
+        }
+
+        .faculty-card:hover {
+            border-top-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .faculty-card > summary {
+            list-style: none;
+            padding: 20px 25px;
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.05rem;
+            transition: background 0.2s;
+        }
+
+        .faculty-card > summary:hover {
+            background: #fcfcfc;
+        }
+
+        .faculty-card > summary i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            color: var(--accent-color); /* Green Icon */
+            width: 30px;
+            text-align: center;
+            background: rgba(0, 150, 57, 0.1);
+            padding: 8px;
+            border-radius: 6px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .faculty-card > summary .arrow {
+            margin-left: auto;
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .faculty-card[open] > summary .arrow {
+            transform: rotate(180deg);
+            color: var(--accent-color);
+        }
+
+        .faculty-content {
+            padding: 0 25px 25px 25px;
+            background: #fff;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        /* Department Card */
+        .department-card {
+            margin-top: 15px;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fafafa;
+        }
+
+        .department-card > summary {
+            padding: 15px;
+            background: #f8f9fa;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: #555;
+            transition: 0.2s;
+        }
+        
+        .department-card > summary:hover {
+            color: var(--primary-color);
+            background: #f1f3f5;
+        }
+
+        .department-card > summary h4 { margin: 0; font-size: 0.95rem; }
+        .department-card > summary .arrow { margin-left: auto; font-size: 0.8rem; }
+
+        .department-content {
+            padding: 15px;
+            background: #fff;
+        }
+
+        /* Semester & Courses */
+        .semester-card {
+            margin-bottom: 12px;
+        }
+        
+        .semester-card > summary {
+            padding: 8px 0;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .semester-card > summary::before {
+            content: '\f0da'; /* FontAwesome Caret Right */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--accent-color);
+            transition: 0.2s;
+        }
+        
+        .semester-card[open] > summary::before {
+            transform: rotate(90deg);
+        }
+        
+        .semester-content {
+            padding-left: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Course Buttons */
+        .course-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background-color: #fff;
+            color: #555;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .course-link:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            background: rgba(0, 150, 57, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 150, 57, 0.1);
+        }
+
+        /* --- Modal (PDF Viewer) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+            display: none;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            animation: zoomIn 0.3s ease;
+            border-top: 5px solid var(--accent-color);
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 15px 25px;
+            background: #fff;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 { font-size: 1.1rem; color: var(--primary-color); margin: 0; max-width: 70%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-weight: 700; }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            transition: 0.2s;
+        }
+        .modal-close:hover { color: var(--accent-color); }
+
+        .modal-body {
+            flex: 1;
+            padding: 0;
+            background: #f4f7fa;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #pdf-list-container { padding: 25px; overflow-y: auto; height: 100%; }
+        #pdf-viewer-container { height: 100%; display: none; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* List inside Modal */
+        #pdf-list li {
+            padding: 15px 20px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.95rem;
+            color: #444;
+        }
+        
+        #pdf-list li:hover {
+            border-color: var(--accent-color);
+            background: rgba(0, 150, 57, 0.05);
+            transform: translateX(5px);
+        }
+        
+        #pdf-list li::before {
+            content: '\f1c1';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #d32f2f; /* PDF Icon Color */
+            font-size: 1.2rem;
+        }
+
+        /* --- Mobile Responsive --- */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            .mobile-nav-toggle { display: block; }
+            .header h1 { font-size: 1.2rem; }
+            
+            .course-link { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="https://uftb.ac.bd/uploads/settings/17663114198452.png" alt="UFTB Logo" class="sidebar-logo-img">
+                <h2>UFTB Hub</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="index.html"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="slides.html" class="active"><i class="fa-solid fa-file-powerpoint"></i> Slide Share</a></li>
+                <li><a href="question_bank.html"><i class="fa-solid fa-clipboard-question"></i> Question Bank</a></li>
+                <li><a href="repository.html"><i class="fa-solid fa-book-bookmark"></i> Capstone Repo</a></li>
+                <li><a href="my_project.html"><i class="fa-solid fa-user-tie"></i> My Project</a></li>
+                <li><a href="profile.html"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="#" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <button class="mobile-nav-toggle" id="sidebar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h1>Academic Slides</h1>
+                <div style="width: 24px;"></div> 
+            </header>
+
+            <div class="academic-structure">
+                <details class="faculty-card">
+                    <summary>
+                        <i class="fa-solid fa-brain"></i>
+                        Faculty of Software and Machine Intelligence Engineering
+                        <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="faculty-content">
+                        <details class="department-card">
+                            <summary><h4>Department of Software Engineering</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                            <div class="department-content"></div> </details>
+                        <details class="department-card">
+                            <summary><h4>Department of Data Science and Engineering</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                            <div class="department-content"></div>
+                        </details>
+                    </div>
+                </details>
+
+                <details class="faculty-card">
+                    <summary>
+                        <i class="fa-solid fa-microchip"></i>
+                        Faculty of Digital Transformation Engineering
+                        <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="faculty-content">
+                        <details class="department-card">
+                            <summary><h4>Department of Educational Technology and Engineering</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                            <div class="department-content"></div>
+                        </details>
+                        <details class="department-card">
+                            <summary><h4>General Education Department</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                            <div class="department-content"></div>
+                        </details>
+                    </div>
+                </details>
+
+                <details class="faculty-card">
+                    <summary>
+                        <i class="fa-solid fa-shield-halved"></i>
+                        Faculty of Security and Communication Engineering
+                        <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="faculty-content">
+                        <details class="department-card">
+                            <summary><h4>Department of Cyber Security Engineering</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                            <div class="department-content"></div>
+                        </details>
+                    </div>
+                </details>
+
+                <details class="faculty-card">
+                    <summary>
+                        <i class="fa-solid fa-robot"></i>
+                        Faculty of Cyber Physical System Engineering
+                        <span class="arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="faculty-content">
+                        <details class="department-card">
+                            <summary><h4>Department of Internet of Things and Robotics Engineering</h4><span class="arrow"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                            <div class="department-content"></div>
+                        </details>
+                    </div>
+                </details>
+            </div>
+
+            <div id="pdf-modal" class="modal-overlay">
+                <div class="modal-content">
+                    <header class="modal-header">
+                        <h3 id="modal-title">Course Material</h3>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <button id="modal-back-btn" style="display: none; border:none; background:none; cursor:pointer; color: var(--primary-color); font-weight:600; font-size: 0.9rem;">&larr; Back</button>
+                            <a href="#" id="modal-download-btn" style="display:none; text-decoration:none; color: var(--accent-color); font-weight:600; font-size: 0.9rem;"><i class="fa-solid fa-download"></i> Save</a>
+                            <button id="modal-close-btn" class="modal-close">&times;</button>
+                        </div>
+                    </header>
+                    <div class="modal-body">
+                        <div id="pdf-list-container">
+                            <p id="modal-loading-text" style="text-align: center; color: var(--text-muted); margin-top: 20px;">Loading files...</p>
+                            <ul id="pdf-list"></ul>
+                        </div>
+                        <div id="pdf-viewer-container">
+                            <iframe id="pdf-iframe" src="about:blank"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            toggleBtn.addEventListener('click', () => sidebar.classList.toggle('active'));
+            
+            // Close sidebar on outside click (Mobile)
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACtq2K0jfHyR4q538BPW37cH67DOJAx98",
+            authDomain: "uftb-hub.firebaseapp.com",
+            projectId: "uftb-hub",
+            storageBucket: "uftb-hub.firebasestorage.app",
+            messagingSenderId: "373096235837",
+            appId: "1:373096235837:web:0ec03dea7ea526c52cbb54",
+            measurementId: "G-MT5YR5NW39"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- Course Data Structure ---
+        const courseTemplates = {
+            'Department of Software Engineering': {
+                'Level 1 Term 1': ['Intro to Programming', 'Data Structures', 'Web Technologies'],
+                'Level 1 Term 2': ['Database Systems', 'Operating Systems', 'Computer Networks'],
+            },
+            'Department of Data Science and Engineering': {
+                'Level 1 Term 1': ['Foundations of Data Science', 'Machine Learning', 'Big Data Analytics'],
+            },
+            'Department of Educational Technology and Engineering': {
+                'Level 1 Term 1': ['DS 107 Probability and Statistics', 'ET 103 Intro to Education', 'PROG 101 Structured Programming'],
+                'Level 1 Term 2': ['CSE 113 Data Structure', 'CSE 115 Discrete Math', 'PROG 111 OOP'],
+                'Level 2 Term 1': ['CSE 201 DBMS', 'CSE 203 OS', 'ET 117 Instructional Design'],
+                'Level 2 Term 2': ['ET 213 Curriculum Design', 'ET 215 Pedagogy Models', 'PROG 211 Android Dev'],
+                'Level 3 Term 1': ['ET 300 Capstone I', 'ET 305 Digital Content', 'SEC 105 Cyber Security'],
+                'Level 3 Term 2': ['ET 300 Capstone II', 'CC 483 Cloud Computing', 'ET 317 Blended Education'],
+            },
+            'Department of Cyber Security Engineering': {
+                'Level 1 Term 1': ['Intro to Cyber Security', 'Network Security', 'Ethical Hacking'],
+            },
+            'Department of Internet of Things and Robotics Engineering': {
+                'Level 1 Term 1': ['Intro to Robotics', 'Embedded Systems', 'IoT Protocols'],
+            },
+            'General Education Department': {
+                'Level 1 Term 1': ['GED 101 Bangla', 'GED 102 English'],
+            }
+        };
+
+        // --- Generate Courses in HTML ---
+        const departments = document.querySelectorAll('.department-content');
+        departments.forEach(dept => {
+            const deptName = dept.previousElementSibling.querySelector('h4').textContent.trim();
+            const deptCourses = courseTemplates[deptName] || {}; 
+            
+            for (let level = 1; level <= 4; level++) {
+                for (let term = 1; term <= 2; term++) {
+                    const levelTerm = `Level ${level} Term ${term}`; 
+                    const semesterCourses = deptCourses[levelTerm];
+                    
+                    if (semesterCourses && semesterCourses.length > 0) {
+                        const semesterCard = document.createElement('details');
+                        semesterCard.className = 'semester-card';
+                        
+                        const summary = document.createElement('summary');
+                        summary.textContent = levelTerm;
+                        
+                        const semesterContent = document.createElement('div');
+                        semesterContent.className = 'semester-content';
+                        
+                        semesterCourses.forEach(courseName => {
+                            const courseLink = document.createElement('a');
+                            courseLink.href = '#'; 
+                            courseLink.className = 'course-link';
+                            // Adding icon for styling
+                            courseLink.innerHTML = `<i class="fa-solid fa-book-open" style="color: var(--accent-color); font-size: 0.8rem;"></i> ${courseName}`;
+                            courseLink.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                openModal(deptName, levelTerm, courseName);
+                            });
+                            semesterContent.appendChild(courseLink);
+                        });
+
+                        semesterCard.appendChild(summary);
+                        semesterCard.appendChild(semesterContent);
+                        dept.appendChild(semesterCard);
+                    }
+                }
+            }
+        });
+
+        // --- Modal & Firebase Logic ---
+        const modal = document.getElementById('pdf-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const pdfListContainer = document.getElementById('pdf-list-container');
+        const pdfViewerContainer = document.getElementById('pdf-viewer-container');
+        const pdfList = document.getElementById('pdf-list');
+        const loadingText = document.getElementById('modal-loading-text');
+        const iframe = document.getElementById('pdf-iframe');
+        const backBtn = document.getElementById('modal-back-btn');
+        const downloadBtn = document.getElementById('modal-download-btn');
+        const closeBtn = document.getElementById('modal-close-btn');
+
+        let currentCourseTitle = "";
+
+        function resetModal() {
+            modal.style.display = 'none';
+            pdfViewerContainer.style.display = 'none';
+            pdfListContainer.style.display = 'block';
+            backBtn.style.display = 'none';
+            downloadBtn.style.display = 'none';
+            iframe.src = 'about:blank';
+        }
+
+        closeBtn.addEventListener('click', resetModal);
+        
+        backBtn.addEventListener('click', () => {
+            pdfViewerContainer.style.display = 'none';
+            pdfListContainer.style.display = 'block';
+            backBtn.style.display = 'none';
+            downloadBtn.style.display = 'none';
+            modalTitle.textContent = currentCourseTitle;
+        });
+
+        async function openModal(dept, sem, course) {
+            currentCourseTitle = `${course} - Slides`;
+            modalTitle.textContent = currentCourseTitle;
+            pdfList.innerHTML = '';
+            loadingText.style.display = 'block';
+            modal.style.display = 'flex';
+            
+            // Ensure we are in list view
+            pdfViewerContainer.style.display = 'none';
+            pdfListContainer.style.display = 'block';
+            backBtn.style.display = 'none';
+
+            try {
+                // Firestore Query
+                const q = query(collection(db, "slides"), 
+                    where("department", "==", dept),
+                    where("levelTerm", "==", sem),
+                    where("courseName", "==", course)
+                );
+                const snapshot = await getDocs(q);
+                loadingText.style.display = 'none';
+
+                if(snapshot.empty) {
+                    pdfList.innerHTML = '<li style="justify-content:center; color:#777; background:none; border:none;">No slides available for this course.</li>';
+                } else {
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        const li = document.createElement('li');
+                        li.textContent = data.fileName;
+                        li.addEventListener('click', () => showPdf(data));
+                        pdfList.appendChild(li);
+                    });
+                }
+            } catch (error) {
+                console.error(error);
+                loadingText.style.display = 'none';
+                pdfList.innerHTML = '<li style="color: red;">Error loading data.</li>';
+            }
+        }
+
+        function showPdf(data) {
+            // Google Drive Link Handling
+            let url = data.downloadURL;
+            let downloadLink = url;
+
+            if(url.includes('drive.google.com')) {
+                if(url.includes('/view')) url = url.replace('/view', '/preview');
+                const parts = url.split('/');
+                let id = null;
+                for(let i=0; i<parts.length; i++) {
+                    if(parts[i] === 'd' && parts[i+1]) { id = parts[i+1]; break; }
+                }
+                if(id) downloadLink = `https://drive.google.com/uc?id=${id}`;
+            }
+
+            iframe.src = url;
+            downloadBtn.href = downloadLink;
+            downloadBtn.setAttribute('download', data.fileName);
+            
+            modalTitle.textContent = data.fileName;
+            
+            pdfListContainer.style.display = 'none';
+            pdfViewerContainer.style.display = 'block';
+            backBtn.style.display = 'block';
+            downloadBtn.style.display = 'inline-flex';
+        }
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => window.location.href = 'login2.html');
+        });
+
+    </script>
+</body>
+</html>

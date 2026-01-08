@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - UFTB Hub</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- Reset & Base --- */
+        :root {
+            --primary-color: #0d2a5c; /* UFTB Dark Blue */
+            --accent-color: #009639; /* UFTB Green */
+            --text-muted: #7e8299;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- PREVIOUS VIBRANT ANIMATION --- */
+        body {
+            /* তোমার আগের কালারফুল অ্যানিমেশন */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* --- Auth Card --- */
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95); /* Slight transparency */
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.6s ease-out forwards;
+            border-top: 5px solid var(--accent-color); /* Branding Touch */
+        }
+
+        .auth-header {
+            margin-bottom: 30px;
+        }
+
+        .auth-logo {
+            width: 100px; 
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .auth-university-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        /* --- Form Elements --- */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            outline: none;
+            background-color: #fcfcfc;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 150, 57, 0.1);
+        }
+
+        /* --- Password Toggle --- */
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-password-icon {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .toggle-password-icon:hover { color: var(--primary-color); }
+
+        /* --- Buttons --- */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-color); /* Green Button */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(0, 150, 57, 0.2);
+        }
+
+        .btn:hover {
+            background: #007d30;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 150, 57, 0.3);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* --- Error Message --- */
+        .error-message {
+            display: none;
+            background-color: #ffebee;
+            color: #d32f2f;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #d32f2f;
+            text-align: left;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .shake-animation { animation: shake 0.4s; }
+
+        /* --- Footer Links --- */
+        .auth-link {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .auth-link a {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .auth-link a:hover { 
+            color: var(--accent-color);
+            text-decoration: underline; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <img src="https://uftb.ac.bd/uploads/settings/17663114198452.png" alt="UFTB Logo" class="auth-logo">
+            <h2 class="auth-university-name">University of Frontier Technology</h2>
+            <span style="font-size: 0.8rem; letter-spacing: 2px; color: #999; font-weight: 500;">BANGLADESH</span>
+        </div>
+        
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Log in to UFTB Hub Dashboard</p>
+        
+        <div id="error-message" class="error-message" style="display: none;"></div>
+
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Student Email</label>
+                <input type="email" id="email" class="form-control" placeholder="example@uftb.edu.bd" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                    <i class="fa-solid fa-eye toggle-password-icon" id="toggle-login-password"></i>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+        <p class="auth-link">
+            Don't have an account? <a href="signup.html">Register Here</a>
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleIcon = document.getElementById('toggle-login-password');
+            const passwordInput = document.getElementById('password');
+
+            if (toggleIcon && passwordInput) {
+                toggleIcon.addEventListener('click', () => {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    toggleIcon.classList.toggle('fa-eye');
+                    toggleIcon.classList.toggle('fa-eye-slash');
+                });
+            }
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACtq2K0jfHyR4q538BPW37cH67DOJAx98",
+            authDomain: "uftb-hub.firebaseapp.com",
+            projectId: "uftb-hub",
+            storageBucket: "uftb-hub.firebasestorage.app",
+            messagingSenderId: "373096235837",
+            appId: "1:373096235837:web:0ec03dea7ea526c52cbb54",
+            measurementId: "G-MT5YR5NW39"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+        const submitBtn = document.querySelector('.btn');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.innerText = "Authenticating...";
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = "0.7";
+            
+            errorMessage.style.display = 'none';
+            errorMessage.classList.remove('shake-animation');
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                const userDocRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(userDocRef);
+
+                if (docSnap.exists()) {
+                    const userData = docSnap.data();
+                    if (userData.role === 'supervisor') {
+                        window.location.href = "supervisor_dashboard.html";
+                    } else {
+                        window.location.href = "index.html";
+                    }
+                } else {
+                    window.location.href = "index.html";
+                }
+            } catch (error) {
+                console.error("Login Error:", error);
+                
+                let msg = "Invalid email or password.";
+                if(error.code === 'auth/user-not-found') msg = "No account found with this email.";
+                if(error.code === 'auth/wrong-password') msg = "Incorrect password.";
+                
+                errorMessage.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${msg}`;
+                errorMessage.style.display = 'flex';
+                void errorMessage.offsetWidth; 
+                errorMessage.classList.add('shake-animation');
+
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = "1";
+            }
+        });
+    </script>
+</body>
+</html>

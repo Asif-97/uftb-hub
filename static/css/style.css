@@ -1,0 +1,1149 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* CSS Variables for Easy Customization */
+:root {
+    --primary-color: #4a6cf7; /* Brand color */
+    --secondary-color: #2c3e50; /* Dark blue for sidebar */
+    --background-color: #f4f7fa; /* Light gray background */
+    --text-color: #333;
+    --card-bg-color: #ffffff;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* General Body Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    color: var(--text-color);
+}
+
+/* Reusable Container for Centering Content */
+.container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Login Page Styles */
+.login-card {
+    background-color: var(--card-bg-color);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-card h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.login-card p {
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #3a58d6;
+}
+
+/* Dashboard Layout */
+.dashboard-layout {
+    display: flex;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: var(--secondary-color);
+    color: white;
+    height: 100vh;
+    padding: 20px 0;
+    position: fixed; /* Keep sidebar fixed */
+}
+
+/* Replace with this */
+.sidebar-header {
+    text-align: center;
+    padding: 20px 20px 15px 20px; /* Updated padding */
+    border-bottom: 1px solid #34495e;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.sidebar-nav {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between icon and text */
+    color: #ecf0f1;
+    padding: 15px 30px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-nav a:hover, .sidebar-nav a.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.main-content {
+    margin-left: 260px; /* Space for the fixed sidebar */
+    flex-grow: 1;
+    padding: 40px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background-color: var(--card-bg-color);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: var(--secondary-color);
+}
+/* Search Bar Styles */
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+.search-bar input {
+    flex-grow: 1; /* Take up available space */
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+.search-bar .btn {
+    width: auto; /* Button width based on content */
+    padding: 0 20px;
+}
+
+/* Course Grid and Card Styles */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+.course-card {
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.course-card:hover {
+    transform: translateY(-5px); /* Lift card on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+.course-icon {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-right: 20px;
+    background-color: #eef2ff;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+.course-info h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+.course-info p {
+    margin: 5px 0 0;
+    color: #6c757d;
+}
+/* Breadcrumb Navigation */
+.breadcrumb {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #6c757d;
+}
+.breadcrumb a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Slide List Table Container */
+.slide-list-container {
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+}
+
+.slide-table {
+    width: 100%;
+    border-collapse: collapse; /* Removes space between cells */
+}
+
+.slide-table th, .slide-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eef2ff;
+}
+
+.slide-table th {
+    font-weight: 600;
+    font-size: 14px;
+    color: #6c757d;
+    text-transform: uppercase;
+}
+
+.slide-table td {
+    font-size: 15px;
+}
+.slide-table tbody tr:hover {
+    background-color: #f4f7fa; /* Highlight row on hover */
+}
+
+/* Action Buttons in Table */
+.btn-action {
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+    margin-right: 5px;
+    transition: opacity 0.3s;
+}
+.btn-action:hover {
+    opacity: 0.8;
+}
+.btn-view {
+    background-color: #eef2ff;
+    color: var(--primary-color);
+}
+.btn-download {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+/* Academic Structure Accordion Styles */
+.academic-structure {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.faculty-card, .department-card {
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.faculty-card summary, .department-card summary {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+    list-style: none; /* Remove default marker */
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.faculty-card summary i {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-right: 20px;
+    width: 30px; /* Fixed width for alignment */
+}
+
+.faculty-card summary h3, .department-card summary h4 {
+    margin: 0;
+    flex-grow: 1; /* Take available space */
+}
+
+/* Arrow Icon for Accordion */
+.arrow {
+    font-size: 16px;
+    transition: transform 0.3s;
+}
+details[open] > summary .arrow {
+    transform: rotate(180deg);
+}
+
+.faculty-content, .department-content {
+    padding: 0 20px 20px 20px;
+    border-top: 1px solid #eef2ff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.department-card {
+    background-color: #f8f9fa; /* Slightly different background */
+    box-shadow: none;
+    border: 1px solid #eef2ff;
+}
+.department-card summary {
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.course-link {
+    display: block;
+    padding: 10px 15px;
+    background-color: var(--card-bg-color);
+    border: 1px solid #eef2ff;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s;
+}
+.course-link:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateX(5px);
+}
+/* Semester Accordion Styles */
+.semester-card {
+    border: 1px solid #eef2ff;
+    border-radius: 8px;
+    margin-top: 10px;
+    background-color: #ffffff;
+}
+
+.semester-card summary {
+    padding: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    list-style: none; /* Hide default marker */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.semester-card summary::-webkit-details-marker {
+    display: none; /* Hide default arrow for Chrome/Safari */
+}
+
+.semester-card summary::after {
+    content: '\f078'; /* Font Awesome down arrow icon */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 14px;
+    transition: transform 0.3s;
+}
+
+.semester-card[open] > summary::after {
+    transform: rotate(180deg);
+}
+
+.semester-content {
+    padding: 10px 15px 15px 15px;
+    border-top: 1px solid #eef2ff;
+}
+
+/* Override course-link styles for this context */
+.semester-content .course-link {
+    background-color: #f8f9fa;
+    margin-top: 8px;
+    padding: 10px 15px;
+}
+
+.semester-content .course-link:hover {
+    transform: translateX(0); /* Disable the horizontal move effect */
+}
+/* Quiz Container Styles */
+.quiz-container {
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 30px;
+}
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eef2ff;
+    margin-bottom: 20px;
+}
+
+.question-counter {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.timer {
+    font-size: 16px;
+    color: #e74c3c;
+}
+
+.question-body h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+/* MCQ Options Styles */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.option {
+    display: block;
+    background-color: #f8f9fa;
+    border: 1px solid #eef2ff;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.option:hover {
+    border-color: var(--primary-color);
+}
+.option input[type="radio"] {
+    display: none; /* Hide the default radio button */
+}
+.option span {
+    font-size: 16px;
+}
+
+/* Style for selected option */
+.option input[type="radio"]:checked + span {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+.option input[type="radio"]:checked {
+    /* We can use the parent label to style */
+    background-color: #eef2ff;
+    border-color: var(--primary-color);
+}
+
+
+.quiz-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid #eef2ff;
+    margin-top: 30px;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+.quiz-footer .btn {
+    width: auto;
+    padding: 10px 25px;
+}
+/* Filter Bar Styles */
+.filter-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    background-color: var(--card-bg-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+.filter-bar input, .filter-bar select {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+.filter-bar .btn {
+    width: auto;
+    padding: 0 25px;
+}
+
+/* Project List Table Styles */
+.project-list-container {
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+}
+
+.project-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.project-table th, .project-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eef2ff;
+}
+
+.project-table th {
+    font-weight: 600;
+    font-size: 14px;
+    color: #6c757d;
+    text-transform: uppercase;
+}
+
+.project-table tbody tr:hover {
+    background-color: #f4f7fa;
+}
+
+.project-table .btn-action {
+    font-weight: 500;
+}
+/* Project Details Page Layout */
+.project-details-container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.project-main-content {
+    flex-grow: 1;
+    background-color: var(--card-bg-color);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+.project-main-content h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #eef2ff;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+.project-main-content p {
+    line-height: 1.8;
+}
+
+/* Keyword Tags */
+.tag {
+    display: inline-block;
+    background-color: #eef2ff;
+    color: var(--primary-color);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+/* Metadata Sidebar */
+.project-sidebar {
+    width: 350px;
+    flex-shrink: 0;
+}
+.metadata-card {
+    background-color: var(--card-bg-color);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+.metadata-card h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #eef2ff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.metadata-card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.metadata-card ul li {
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+.metadata-card ul li i {
+    color: var(--primary-color);
+    margin-right: 10px;
+    width: 20px;
+}
+
+.action-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.action-buttons .btn {
+    width: 100%;
+}
+/* My Project Page Layout */
+.my-project-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+.project-main-column {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.project-side-column {
+    width: 380px;
+    flex-shrink: 0;
+}
+
+/* Progress Tracker Styles */
+.progress-tracker {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+.progress-tracker::before { /* The vertical line */
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 2px;
+    height: calc(100% - 20px);
+    background-color: #eef2ff;
+}
+.progress-tracker li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    position: relative;
+}
+.progress-tracker .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #eef2ff;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    z-index: 1;
+    border: 2px solid #eef2ff;
+}
+.progress-tracker li.completed .icon {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border-color: #0f5132;
+}
+.progress-tracker li.active .icon {
+    background-color: #cfe2ff;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.progress-tracker .details h4 {
+    margin: 0 0 5px 0;
+    font-weight: 600;
+}
+.progress-tracker .details p {
+    margin: 0;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+/* File Upload Area Styles */
+.file-upload-area {
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.file-upload-area:hover {
+    background-color: #f8f9fa;
+}
+
+/* Supervisor Feedback Styles */
+.feedback-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.feedback-item {
+    background-color: #f8f9fa;
+    border-left: 4px solid var(--primary-color);
+    padding: 15px;
+    border-radius: 0 8px 8px 0;
+}
+.feedback-item .comment {
+    margin: 0 0 10px 0;
+}
+.feedback-item .meta {
+    margin: 0;
+    font-size: 13px;
+    color: #6c757d;
+    text-align: right;
+}
+/* Profile Page Layout */
+.profile-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr; /* Two columns */
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.profile-picture-card {
+    text-align: center;
+}
+.profile-picture-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 4px solid var(--card-bg-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.profile-picture-card h3 {
+    margin-bottom: 5px;
+}
+.profile-picture-card p {
+    color: #6c757d;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.profile-details-column {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.card-header h3 {
+    margin: 0;
+}
+.btn-sm {
+    padding: 6px 15px;
+    font-size: 14px;
+}
+
+.info-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.info-list li {
+    padding: 15px 0;
+    border-bottom: 1px solid #eef2ff;
+}
+.info-list li:last-child {
+    border-bottom: none;
+}
+.info-list li strong {
+    width: 150px;
+    display: inline-block;
+}
+
+.password-form .form-group {
+    margin-bottom: 15px;
+}
+/* Mobile Navigation Toggle Button */
+.mobile-nav-toggle {
+    display: none; /* Hide on desktop */
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1000;
+        transform: translateX(-100%); /* Hide off-screen */
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .sidebar-visible {
+        transform: translateX(0); /* Show sidebar */
+    }
+
+    .main-content {
+        margin-left: 0; /* Full width content */
+    }
+
+    .mobile-nav-toggle {
+        display: block; /* Show hamburger icon */
+    }
+
+    .header {
+        /* Ensure toggle button is aligned */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Make profile layout stack vertically */
+    .profile-layout {
+        grid-template-columns: 1fr;
+    }
+
+    /* Make project layout stack vertically */
+    .my-project-layout, .project-details-container {
+        flex-direction: column;
+    }
+    .project-side-column, .project-sidebar {
+        width: 100%;
+    }
+    
+    .filter-bar {
+        flex-direction: column;
+    }
+}
+/* Replace with this */
+.sidebar-role {
+    text-align: center;
+    font-size: 14px;
+    color: #ecf0f1;
+    opacity: 0.7;
+    margin-top: 5px;  /* Changed from -20px */
+    margin-bottom: 0; /* Padding is now handled by the header */
+}
+/* Student List Container */
+.student-list-container {
+    padding: 30px;
+}
+.student-list-container h3 {
+    margin-top: 0;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 500;
+}
+.status-badge.status-active {
+    background-color: #cfe2ff;
+    color: #0d6efd;
+}
+.status-badge.status-completed {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+.status-badge.status-pending {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+/* Update Progress Form */
+.update-progress-form {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.update-progress-form label {
+    font-weight: 500;
+}
+.update-progress-form select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    flex-grow: 1;
+}
+
+/* Submission List */
+.submission-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.submission-list li {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #eef2ff;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.submission-list li i {
+    font-size: 20px;
+    margin-right: 15px;
+}
+.submission-list li span {
+    flex-grow: 1;
+    font-weight: 500;
+}
+
+/* Feedback Form */
+.feedback-form textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+.feedback-form .btn {
+    width: 100%;
+}
+/* Supervisor Dashboard Summary Cards */
+.summary-card {
+    text-align: center;
+}
+.summary-card h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #6c757d;
+}
+.summary-card .summary-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 10px 0 0 0;
+}
+.summary-card h3 i {
+    margin-right: 8px;
+}
+
+/* Combined Progress Update Form */
+.update-progress-form.combined {
+    background-color: #f8f9fa;
+    border: 1px solid #eef2ff;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* For small screens */
+    gap: 15px;
+}
+.status-info label {
+    font-weight: 500;
+    margin-right: 10px;
+}
+.status-action {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Remove old form margin */
+.update-progress-form {
+    margin-top: 0;
+}
+/* Upload Form Styles */
+.upload-form h3 {
+    margin-top: 0;
+    font-size: 20px;
+}
+.upload-form .form-divider {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eef2ff;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 20px;
+}
+
+.upload-form .form-group {
+    margin-bottom: 0; /* Reset margin for grid */
+}
+.upload-form .form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+.upload-form .form-group input,
+.upload-form .form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+.upload-form .form-group input:focus,
+.upload-form .form-group select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* Simpler File Upload Area */
+.file-upload-area.basic {
+    padding: 20px;
+}
+.file-upload-area.basic i {
+    font-size: 36px;
+    color: var(--primary-color);
+}
+
+/* Responsive adjustment for form grid */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+}
+/* Style for textareas in forms (reusing .upload-form) */
+.upload-form .form-group textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    resize: vertical; /* Allow user to resize vertically */
+}
+
+.upload-form .form-group textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+/* Secondary Button Style */
+.btn-secondary {
+    background-color: #6c757d;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Adjust button width inside forms */
+.upload-form .btn-secondary {
+    width: auto;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+/* Chart.js Container Styles */
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 30px;
+}
+.chart-container {
+    padding: 30px;
+}
+.chart-container h3 {
+    margin-top: 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+/* ক্যানভাসকে রেসপন্সিভ রাখার জন্য */
+.chart-container canvas {
+    max-height: 350px;
+    width: 100% !important;
+}
+/* Document Viewer Styles */
+.viewer-header {
+    margin-bottom: 20px;
+}
+
+.document-viewer-container {
+    width: 100%;
+    /* vh (viewport height) থেকে হেডার এবং প্যাডিং এর উচ্চতা বাদ দেওয়া হয়েছে 
+       যাতে এটি স্ক্রিনে ফিট থাকে 
+    */
+    height: calc(100vh - 200px); 
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden; /* To keep the rounded corners */
+}
+
+.document-viewer {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+/* File Type Icons */
+.slide-table .icon-ppt { color: #d35400; }
+.slide-table .icon-pdf { color: #e74c3c; }
+.slide-table td i { margin-right: 10px; }
+
