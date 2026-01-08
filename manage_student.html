@@ -3,332 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Student Group - UFTB Hub</title>
+    <title>Manage Group - UFTB Hub</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* --- Reset & Base (UFTB Design System) --- */
+        /* --- Reset & Base --- */
         :root {
-            --sidebar-bg: #0d2a5c;
-            --sidebar-hover: #163a7a;
-            --primary-color: #0d2a5c;
-            --accent-color: #009639;
-            --text-muted: #7e8299;
-            --bg-color: #f4f7fa;
-            --sidebar-width: 260px;
-            --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            --transition: all 0.3s ease;
+            --sidebar-bg: #0d2a5c; --sidebar-hover: #163a7a; --primary-color: #0d2a5c;
+            --accent-color: #009639; --text-muted: #7e8299; --bg-color: #f4f7fa;
+            --sidebar-width: 260px; --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-color); color: #444; }
+        .dashboard-layout { display: flex; min-height: 100vh; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: #444;
-        }
-
-        /* --- Layout --- */
-        .dashboard-layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* --- Sidebar --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--sidebar-bg);
-            color: #e0e0e0;
-            position: fixed;
-            height: 100vh;
-            left: 0;
-            top: 0;
-            z-index: 1000;
-            transition: var(--transition);
-            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
-        }
-
-        .sidebar-header {
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            background: rgba(0,0,0,0.1);
-        }
-        
-        .sidebar-logo-img {
-            width: 90px;
-            height: auto;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-
-        .sidebar-header h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #ffffff; 
-            margin: 0;
-        }
-        
-        .sidebar-role {
-            font-size: 0.8rem;
-            color: var(--accent-color);
-            background: rgba(255,255,255,0.1);
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-top: 5px;
-            font-weight: 500;
-        }
-
-        .sidebar-nav {
-            list-style: none;
-            padding: 20px 0;
-        }
-
-        .sidebar-nav li { margin-bottom: 4px; }
-
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            padding: 14px 25px;
-            color: #b0bec5;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: var(--transition);
-            border-left: 4px solid transparent;
-        }
-
-        .sidebar-nav a:hover {
-            background-color: var(--sidebar-hover);
-            color: #ffffff;
-        }
-
-        .sidebar-nav a.active {
-            background: linear-gradient(90deg, rgba(0, 150, 57, 0.15) 0%, transparent 100%);
-            color: #ffffff;
-            border-left-color: var(--accent-color);
-        }
-
-        .sidebar-nav a i {
-            width: 25px;
-            margin-right: 12px;
-            font-size: 1.1rem;
-            transition: var(--transition);
-        }
-        
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-width); background-color: var(--sidebar-bg); color: #e0e0e0; position: fixed; height: 100vh; left: 0; top: 0; z-index: 1000; }
+        .sidebar-header { padding: 30px 20px; text-align: center; background: rgba(0,0,0,0.1); }
+        .sidebar-logo-img { width: 90px; margin-bottom: 12px; }
+        .sidebar-header h2 { font-size: 1.3rem; font-weight: 700; color: #fff; margin: 0; }
+        .sidebar-role { font-size: 0.8rem; color: var(--accent-color); background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; margin-top: 5px; font-weight: 500; }
+        .sidebar-nav { list-style: none; padding: 20px 0; }
+        .sidebar-nav a { display: flex; align-items: center; padding: 14px 25px; color: #b0bec5; text-decoration: none; font-weight: 500; border-left: 4px solid transparent; transition: 0.3s; }
+        .sidebar-nav a:hover { background-color: var(--sidebar-hover); color: #fff; }
+        .sidebar-nav a.active { background: linear-gradient(90deg, rgba(0, 150, 57, 0.15) 0%, transparent 100%); color: #fff; border-left-color: var(--accent-color); }
+        .sidebar-nav a i { width: 25px; margin-right: 12px; font-size: 1.1rem; }
         .sidebar-nav a.active i { color: var(--accent-color); }
+        .main-content { margin-left: var(--sidebar-width); flex: 1; padding: 30px; width: calc(100% - var(--sidebar-width)); }
 
-        /* --- Main Content --- */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            flex: 1;
-            padding: 30px;
-            transition: var(--transition);
-            width: calc(100% - var(--sidebar-width));
-        }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: #fff; padding: 18px 30px; border-radius: 12px; box-shadow: var(--card-shadow); border-top: 4px solid var(--accent-color); }
+        .header h1 { font-size: 1.3rem; color: var(--primary-color); font-weight: 700; }
 
-        /* --- Header --- */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            background: #fff;
-            padding: 18px 30px;
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-            animation: slideDown 0.5s ease;
-            border-top: 4px solid var(--accent-color);
-        }
+        /* --- TABS SYSTEM --- */
+        .tabs-container { display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; }
+        .tab-btn { padding: 10px 20px; border: none; background: none; font-size: 1rem; font-weight: 600; color: #777; cursor: pointer; position: relative; transition: 0.3s; }
+        .tab-btn.active { color: var(--accent-color); }
+        .tab-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 3px; background: var(--accent-color); border-radius: 3px 3px 0 0; }
+        .tab-content { display: none; animation: fadeIn 0.5s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes slideDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .header h1 {
-            font-size: 1.3rem;
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-        /* Breadcrumb */
-        .page-breadcrumb {
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-        .page-breadcrumb a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .page-breadcrumb a:hover { color: var(--accent-color); text-decoration: underline; }
-
-        /* --- Layout Grid --- */
-        .manage-layout {
-            display: flex;
-            gap: 25px;
-            animation: fadeIn 0.6s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .main-col { flex: 3; display: flex; flex-direction: column; gap: 25px; }
-        .side-col { flex: 2; display: flex; flex-direction: column; gap: 25px; }
-
-        /* --- Card Styles --- */
-        .card {
-            background: #fff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-            border-top: 4px solid #e9ecef;
-            transition: var(--transition);
-        }
-
-        .card:hover { border-top-color: var(--accent-color); }
-
-        .card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-            font-weight: 600;
-            border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 10px;
-        }
-
-        /* --- Forms & Inputs --- */
+        /* --- CONTROL CARD (Overview) --- */
+        .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: #fff; padding: 25px; border-radius: 12px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
+        .card h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--primary-color); border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem; color: #555; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.9rem; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
         
-        .form-control {
-            width: 100%;
-            padding: 10px 12px;
-            font-size: 0.9rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            outline: none;
-            transition: var(--transition);
-            background: #fcfcfc;
-            font-family: 'Poppins', sans-serif;
-        }
+        .btn { padding: 10px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; }
+        .btn:hover { background: #007d30; }
+
+        /* --- CHAT STYLES --- */
+        .chat-container { background: #fff; border-radius: 12px; box-shadow: var(--card-shadow); height: 500px; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-header { padding: 15px; background: var(--primary-color); color: #fff; font-weight: 600; display: flex; justify-content: space-between; }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #f5f7fb; display: flex; flex-direction: column; gap: 10px; }
+        .message { max-width: 70%; padding: 10px 15px; border-radius: 10px; font-size: 0.9rem; position: relative; word-wrap: break-word; }
+        .message.own { align-self: flex-end; background: var(--accent-color); color: #fff; }
+        .message.other { align-self: flex-start; background: #fff; border: 1px solid #ddd; color: #333; }
+        .msg-sender { font-size: 0.7rem; display: block; margin-bottom: 3px; font-weight: 600; opacity: 0.8; }
         
-        .form-control:focus {
-            border-color: var(--accent-color);
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(0, 150, 57, 0.1);
-        }
+        .chat-input-area { padding: 15px; background: #fff; border-top: 1px solid #eee; display: flex; gap: 10px; }
+        .chat-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; }
+        .btn-send { background: var(--primary-color); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
 
-        .status-update-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-        }
+        /* --- REPOSITORY --- */
+        .file-list { list-style: none; }
+        .file-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; border-bottom: 1px solid #eee; transition: 0.2s; }
+        .file-item:hover { background: #fcfcfc; }
+        .file-icon { font-size: 1.5rem; margin-right: 15px; color: var(--primary-color); }
+        .btn-download { padding: 5px 10px; background: rgba(0, 150, 57, 0.1); color: var(--accent-color); text-decoration: none; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
 
-        /* --- Buttons --- */
-        .btn {
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #fff;
-            background-color: var(--accent-color);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .btn:hover { background-color: #007d30; transform: translateY(-1px); }
-
-        /* --- Submission List --- */
-        .submission-list { list-style: none; padding: 0; }
-        .submission-list li {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            border: 1px solid #f0f0f0;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            background: #fff;
-            transition: 0.2s;
-        }
-        .submission-list li:hover { border-color: var(--accent-color); background: #fdfdfd; }
-        
-        .submission-list i { font-size: 1.5rem; color: var(--text-muted); }
-        .submission-list i.icon-pdf { color: #d32f2f; }
-        .submission-list i.icon-ppt { color: #f57c00; }
-        
-        .submission-info { flex: 1; }
-        .submission-name { font-weight: 500; font-size: 0.95rem; color: #333; display: block; }
-        .submission-meta { font-size: 0.75rem; color: #888; }
-
-        .btn-download {
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            background: rgba(13, 42, 92, 0.1);
-            color: var(--primary-color);
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-        .btn-download:hover { background: var(--primary-color); color: #fff; }
-
-        /* --- Feedback List --- */
-        .feedback-list { max-height: 300px; overflow-y: auto; }
-        .feedback-item {
-            margin-bottom: 15px;
-            padding: 12px;
-            background: #f1f8e9; /* Light Green Tint */
-            border-left: 3px solid var(--accent-color);
-            border-radius: 4px;
-        }
-        .feedback-item p { margin: 0 0 5px 0; font-size: 0.9rem; color: #333; font-style: italic; }
-        .feedback-item span { font-size: 0.75rem; color: #666; font-weight: 500; }
-
-        /* --- Mobile Responsive --- */
-        .mobile-nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.4rem;
-            cursor: pointer;
-            color: var(--primary-color);
-        }
-
-        @media (max-width: 900px) {
-            .manage-layout { flex-direction: column; }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.active { transform: translateX(0); }
-            .main-content { margin-left: 0; width: 100%; padding: 20px; }
-            .mobile-nav-toggle { display: block; }
-            .header h1 { font-size: 1.1rem; }
-            .status-update-row { flex-direction: column; align-items: stretch; }
-        }
+        /* Mobile */
+        .mobile-nav-toggle { display: none; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--primary-color); }
+        @media (max-width: 900px) { .control-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .sidebar { transform: translateX(-100%); } .sidebar.active { transform: translateX(0); } .main-content { margin-left: 0; width: 100%; padding: 20px; } .mobile-nav-toggle { display: block; } }
     </style>
 </head>
 <body>
@@ -357,89 +109,101 @@
                 <button class="mobile-nav-toggle" id="sidebar-toggle">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <h1 id="main-header">Loading Group...</h1>
+                <h1 id="project-title-header">Manage Group</h1>
                 <div style="width: 24px;"></div>
             </header>
 
-            <div class="page-breadcrumb">
-                <a href="supervisor_dashboard.html"><i class="fa-solid fa-arrow-left"></i> Back to Tracking</a> &nbsp;/&nbsp; <span id="breadcrumb-student-name">Manage</span>
+            <div class="tabs-container">
+                <button class="tab-btn active" data-tab="tab-overview">Overview</button>
+                <button class="tab-btn" data-tab="tab-chat">Discussion</button>
+                <button class="tab-btn" data-tab="tab-files">Repository</button>
             </div>
 
-            <div class="manage-layout">
-                
-                <div class="main-col">
+            <div id="tab-overview" class="tab-content active">
+                <div class="control-grid">
                     
-                    <div class="card">
-                        <h3><i class="fa-solid fa-sliders" style="color: var(--accent-color);"></i> Project Control</h3>
-                        <p style="margin-bottom: 15px; font-size: 1rem;"><strong>Project Title:</strong> <span id="project-title" style="color: var(--primary-color);">Loading...</span></p>
-                        
-                        <div class="status-update-row">
-                            <label for="status-select" style="margin: 0; white-space: nowrap;">Update Status:</label>
-                            <select id="status-select" class="form-control">
-                                <option value="Pending: Proposal">Pending: Proposal</option>
-                                <option value="Active: Proposal Approved">Active: Proposal Approved</option>
-                                <option value="Active: Mid-term">Active: Mid-term</option>
-                                <option value="Active: Final Stage">Active: Final Stage</option>
-                                <option value="Completed">Completed</option>
-                            </select>
-                            <button id="update-status-btn" class="btn" style="width: auto;">Update</button>
+                    <div>
+                        <div class="card">
+                            <h3><i class="fa-solid fa-sliders"></i> Project Control</h3>
+                            <p style="margin-bottom: 10px;"><strong>Project:</strong> <span id="p-title">...</span></p>
+                            <p style="margin-bottom: 15px;"><strong>Students:</strong> <span id="p-students">...</span></p>
+                            
+                            <label>Update Status:</label>
+                            <div style="display:flex; gap:10px; margin-top:5px;">
+                                <select id="status-select" class="form-control">
+                                    <option value="Pending: Proposal">Pending: Proposal</option>
+                                    <option value="Active: Proposal Approved">Active: Proposal Approved</option>
+                                    <option value="Active: Mid-term">Active: Mid-term</option>
+                                    <option value="Active: Final Stage">Active: Final Stage</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                                <button id="btn-update-status" class="btn" style="width:auto;">Update</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3><i class="fa-regular fa-comment-dots"></i> Send Feedback</h3>
+                            <textarea id="feedback-text" class="form-control" rows="3" placeholder="Send formal advice/feedback..."></textarea>
+                            <button id="btn-send-feedback" class="btn" style="margin-top:10px;">Send Feedback</button>
                         </div>
                     </div>
 
-                    <div class="card">
-                        <h3><i class="fa-solid fa-file-arrow-down" style="color: var(--accent-color);"></i> Student Submissions</h3>
-                        <ul class="submission-list" id="submission-list">
-                            <li><p style="text-align: center; width: 100%; color: #999;">Loading submissions...</p></li>
-                        </ul>
-                    </div>
-
-                    <div class="card">
-                        <h3><i class="fa-solid fa-clock-rotate-left" style="color: var(--accent-color);"></i> Feedback History</h3>
-                        <div class="feedback-list" id="feedback-list">
-                            <p style="color: #999; font-size: 0.9rem;">Loading history...</p>
+                    <div>
+                        <div class="card">
+                            <h3><i class="fa-solid fa-calendar-plus"></i> Schedule Meeting</h3>
+                            <form id="meeting-form">
+                                <div class="form-group">
+                                    <label>Topic</label>
+                                    <input type="text" id="meet-topic" class="form-control" required>
+                                </div>
+                                <div style="display:flex; gap:10px;">
+                                    <div class="form-group" style="flex:1">
+                                        <label>Date</label>
+                                        <input type="date" id="meet-date" class="form-control" required>
+                                    </div>
+                                    <div class="form-group" style="flex:1">
+                                        <label>Time</label>
+                                        <input type="time" id="meet-time" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Link (Zoom/Meet)</label>
+                                    <input type="url" id="meet-link" class="form-control" placeholder="https://..." required>
+                                </div>
+                                <button type="submit" class="btn">Send Invite</button>
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="side-col">
-                    
-                    <div class="card">
-                        <h3><i class="fa-solid fa-calendar-plus" style="color: var(--accent-color);"></i> Schedule Meeting</h3>
-                        <form id="meeting-form">
-                            <div class="form-group">
-                                <label for="meeting-title">Topic</label>
-                                <input type="text" id="meeting-title" class="form-control" placeholder="e.g. Progress Review" required>
-                            </div>
-                            <div class="form-group" style="display: flex; gap: 10px;">
-                                <div style="flex: 1;">
-                                    <label>Date</label>
-                                    <input type="date" id="meeting-date" class="form-control" required>
-                                </div>
-                                <div style="flex: 1;">
-                                    <label>Time</label>
-                                    <input type="time" id="meeting-time" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="meeting-link">Google Meet / Zoom Link</label>
-                                <input type="url" id="meeting-link" class="form-control" placeholder="https://meet.google.com/..." required>
-                            </div>
-                            <button type="submit" class="btn" style="width: 100%;">
-                                <i class="fa-regular fa-calendar-check"></i> Send Invite
-                            </button>
-                        </form>
+            <div id="tab-chat" class="tab-content">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <span><i class="fa-solid fa-chalkboard-user"></i> Supervisor Chat</span>
+                    </div>
+                    <div class="chat-messages" id="chat-box">
+                        <div style="text-align: center; color: #999; margin-top: 20px;">Start discussion...</div>
+                    </div>
+                    <form id="chat-form" class="chat-input-area">
+                        <input type="text" id="chat-input" class="chat-input" placeholder="Type message..." required>
+                        <button type="submit" class="btn-send"><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="tab-files" class="tab-content">
+                <div class="card">
+                    <div style="background:#f0f9f4; padding:15px; border:2px dashed var(--accent-color); border-radius:8px; margin-bottom:20px;">
+                        <h4><i class="fa-solid fa-upload"></i> Upload Correction/Resource</h4>
+                        <input type="file" id="sup-file-input" accept=".pdf,.doc,.docx" style="margin:10px 0;">
+                        <button id="btn-sup-upload" class="btn" style="width:auto;">Upload</button>
                     </div>
 
-                    <div class="card">
-                        <h3><i class="fa-regular fa-comment-dots" style="color: var(--accent-color);"></i> Send Feedback</h3>
-                        <form id="feedback-form">
-                            <textarea id="feedback-textarea" class="form-control" rows="4" placeholder="Write advice or instructions for the group..." required></textarea>
-                            <button type="submit" class="btn" style="width: 100%; margin-top: 15px;">
-                                <i class="fa-solid fa-paper-plane"></i> Post Feedback
-                            </button>
-                        </form>
-                    </div>
-
+                    <h3><i class="fa-solid fa-folder-open"></i> Project Files</h3>
+                    <ul class="file-list" id="file-list-container">
+                        <li style="padding: 20px; text-align: center; color: #999;">Loading files...</li>
+                    </ul>
                 </div>
             </div>
 
@@ -451,11 +215,20 @@
             const sidebar = document.getElementById('sidebar');
             const toggleBtn = document.getElementById('sidebar-toggle');
             toggleBtn.addEventListener('click', () => sidebar.classList.toggle('active'));
-            
             document.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                }
+                if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('active')) sidebar.classList.remove('active');
+            });
+
+            // Tabs Logic
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.tab).classList.add('active');
+                });
             });
         });
     </script>
@@ -474,213 +247,178 @@
             appId: "1:373096235837:web:0ec03dea7ea526c52cbb54",
             measurementId: "G-MT5YR5NW39"
         };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let currentSupervisorId = null; 
-        let currentGroupStudentIds = []; 
-        let currentGroupStudentNames = []; 
+        let currentSupervisorId = null;
+        let currentSupervisorName = null;
+        let currentGroupStudentIds = [];
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const CURRENT_PROJECT_ID = urlParams.get('id');
 
-        function getProjectIdFromURL() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('id');
-        }
-        const CURRENT_PROJECT_ID = getProjectIdFromURL();
-
-        const mainHeader = document.getElementById('main-header');
-        const breadcrumbName = document.getElementById('breadcrumb-student-name');
-        const projectTitle = document.getElementById('project-title');
+        // Elements
         const statusSelect = document.getElementById('status-select');
-        const updateStatusBtn = document.getElementById('update-status-btn');
-        const submissionList = document.getElementById('submission-list');
-        const feedbackForm = document.getElementById('feedback-form');
-        const feedbackTextarea = document.getElementById('feedback-textarea');
-        const feedbackList = document.getElementById('feedback-list');
-        const meetingForm = document.getElementById('meeting-form');
-        const meetingTitle = document.getElementById('meeting-title');
-        const meetingDate = document.getElementById('meeting-date');
-        const meetingTime = document.getElementById('meeting-time');
-        const meetingLink = document.getElementById('meeting-link');
+        const chatBox = document.getElementById('chat-box');
+        const fileListContainer = document.getElementById('file-list-container');
 
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentSupervisorId = user.uid;
-                loadAllData();
+                await loadSupervisorInfo(user.uid);
+                await loadProjectData();
             } else {
                 window.location.href = 'login2.html';
             }
         });
 
-        async function loadProjectDetails() {
-            if (!CURRENT_PROJECT_ID) {
-                mainHeader.textContent = "Error: No Project ID";
-                return;
-            }
-            const projectRef = doc(db, "projects", CURRENT_PROJECT_ID);
-            const docSnap = await getDoc(projectRef);
+        async function loadSupervisorInfo(uid) {
+            const snap = await getDoc(doc(db, "users", uid));
+            if(snap.exists()) currentSupervisorName = snap.data().name;
+        }
 
-            if (docSnap.exists()) {
-                const project = docSnap.data();
-                currentGroupStudentIds = project.studentIds || []; 
-                currentGroupStudentNames = project.studentNames || []; 
+        async function loadProjectData() {
+            if (!CURRENT_PROJECT_ID) return;
+            const projectRef = doc(db, "projects", CURRENT_PROJECT_ID);
+            const snap = await getDoc(projectRef);
+
+            if (snap.exists()) {
+                const data = snap.data();
+                currentGroupStudentIds = data.studentIds || [];
                 
-                const studentNamesDisplay = currentGroupStudentNames.join(', ') || 'Group';
-                
-                mainHeader.textContent = `Manage Group`;
-                breadcrumbName.textContent = studentNamesDisplay;
-                projectTitle.textContent = project.title;
-                statusSelect.value = project.status;
-            } else {
-                mainHeader.textContent = "Error: Project Not Found";
+                document.getElementById('project-title-header').textContent = `Manage: ${data.title}`;
+                document.getElementById('p-title').textContent = data.title;
+                document.getElementById('p-students').textContent = data.studentNames.join(', ');
+                statusSelect.value = data.status;
+
+                initChat();
+                initFileRepo();
             }
         }
 
-        async function loadSubmissions() {
-            submissionList.innerHTML = '<li><p style="text-align: center; width: 100%; color: #999;">Loading...</p></li>';
-            const q = query(collection(db, "submissions"), where("projectId", "==", CURRENT_PROJECT_ID));
-            const querySnapshot = await getDocs(q);
-            
-            submissionList.innerHTML = "";
-            if (querySnapshot.empty) {
-                submissionList.innerHTML = '<li><p style="text-align: center; width: 100%; color: #999;">No submissions found.</p></li>';
-                return;
-            }
-            
-            querySnapshot.forEach((doc) => {
-                const submission = doc.data();
-                const li = document.createElement('li');
-                let iconClass = 'fa-regular fa-file';
-                let iconColor = '#777';
-                
-                if (submission.fileName) {
-                    if (submission.fileName.endsWith('.pdf')) { iconClass = 'fa-solid fa-file-pdf icon-pdf'; iconColor = '#d32f2f'; }
-                    else if (submission.fileName.match(/\.(ppt|pptx)$/)) { iconClass = 'fa-solid fa-file-powerpoint icon-ppt'; iconColor = '#f57c00'; }
-                    else if (submission.fileName.match(/\.(doc|docx)$/)) { iconClass = 'fa-solid fa-file-word'; iconColor = '#1976d2'; }
-                    else if (submission.fileName.match(/\.(jpg|jpeg|png)$/)) { iconClass = 'fa-solid fa-file-image'; iconColor = '#388e3c'; }
-                }
-                
-                const date = submission.timestamp ? submission.timestamp.toDate().toLocaleDateString() : 'N/A';
+        // --- 1. OVERVIEW FUNCTIONS ---
+        document.getElementById('btn-update-status').addEventListener('click', async () => {
+            await updateDoc(doc(db, "projects", CURRENT_PROJECT_ID), { status: statusSelect.value });
+            alert("Status Updated!");
+        });
 
-                li.innerHTML = `
-                    <i class="${iconClass}" style="color: ${iconColor}; font-size: 1.5rem;"></i>
-                    <div class="submission-info">
-                        <span class="submission-name">${submission.fileName || 'Untitled File'}</span>
-                        <span class="submission-meta">Uploaded: ${date}</span>
-                    </div>
-                    <a href="${submission.fileURL}" class="btn-download" target="_blank" download="${submission.fileName || 'download'}">
-                        <i class="fa-solid fa-download"></i>
-                    </a>`;
-                submissionList.appendChild(li);
+        document.getElementById('btn-send-feedback').addEventListener('click', async () => {
+            const txt = document.getElementById('feedback-text').value;
+            if(!txt) return;
+            await addDoc(collection(db, "feedback"), {
+                projectId: CURRENT_PROJECT_ID, senderId: currentSupervisorId, message: txt, timestamp: Timestamp.now(), isRead: false
+            });
+            alert("Feedback Sent!");
+            document.getElementById('feedback-text').value = "";
+        });
+
+        document.getElementById('meeting-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const date = document.getElementById('meet-date').value;
+            const time = document.getElementById('meet-time').value;
+            const dt = Timestamp.fromDate(new Date(`${date}T${time}`));
+            
+            await addDoc(collection(db, "meetings"), {
+                projectId: CURRENT_PROJECT_ID,
+                studentIds: currentGroupStudentIds,
+                supervisorId: currentSupervisorId,
+                title: document.getElementById('meet-topic').value,
+                meetLink: document.getElementById('meet-link').value,
+                meetingTime: dt,
+                isRead: false,
+                createdAt: Timestamp.now()
+            });
+            alert("Meeting Invitation Sent!");
+            e.target.reset();
+        });
+
+        // --- 2. CHAT FUNCTIONS ---
+        function initChat() {
+            const q = query(collection(db, "projects", CURRENT_PROJECT_ID, "messages"), orderBy("timestamp", "asc"));
+            onSnapshot(q, (snapshot) => {
+                chatBox.innerHTML = "";
+                snapshot.forEach(doc => {
+                    const msg = doc.data();
+                    const isOwn = msg.senderId === currentSupervisorId;
+                    const div = document.createElement('div');
+                    div.className = `message ${isOwn ? 'own' : 'other'}`;
+                    const sender = isOwn ? 'You' : msg.senderName;
+                    div.innerHTML = `<span class="msg-sender">${sender}</span>${msg.text}`;
+                    chatBox.appendChild(div);
+                });
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+
+            document.getElementById('chat-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const input = document.getElementById('chat-input');
+                const text = input.value.trim();
+                if(!text) return;
+                await addDoc(collection(db, "projects", CURRENT_PROJECT_ID, "messages"), {
+                    text: text, senderId: currentSupervisorId, senderName: currentSupervisorName, timestamp: Timestamp.now()
+                });
+                input.value = "";
             });
         }
 
-        function loadFeedback() {
-            feedbackList.innerHTML = '<p style="color: #999;">Loading...</p>';
-            const q = query(collection(db, "feedback"), 
-                            where("projectId", "==", CURRENT_PROJECT_ID),
-                            orderBy("timestamp", "desc"));
-            
-            onSnapshot(q, (querySnapshot) => {
-                feedbackList.innerHTML = "";
-                if (querySnapshot.empty) {
-                    feedbackList.innerHTML = '<p style="color: #999;">No feedback provided yet.</p>';
-                    return;
-                }
-                querySnapshot.forEach((doc) => {
-                    const fb = doc.data();
-                    const feedbackCard = document.createElement('div');
-                    feedbackCard.className = 'feedback-item';
-                    const date = fb.timestamp ? fb.timestamp.toDate().toLocaleString('en-UK', { day: 'numeric', month: 'short', hour: '2-digit', minute:'2-digit'}) : '';
+        // --- 3. REPOSITORY FUNCTIONS ---
+        function initFileRepo() {
+            const q = query(collection(db, "projects", CURRENT_PROJECT_ID, "files"), orderBy("timestamp", "desc"));
+            onSnapshot(q, (snapshot) => {
+                fileListContainer.innerHTML = "";
+                if(snapshot.empty) fileListContainer.innerHTML = '<li style="padding:20px;text-align:center;">No files.</li>';
+                
+                snapshot.forEach(doc => {
+                    const f = doc.data();
+                    const li = document.createElement('li');
+                    li.className = 'file-item';
                     
-                    feedbackCard.innerHTML = `
-                        <p>"${fb.message}"</p>
-                        <span><i class="fa-regular fa-clock"></i> ${date}</span>`;
-                    feedbackList.appendChild(feedbackCard);
+                    let icon = 'fa-file';
+                    if(f.name.includes('.pdf')) icon = 'fa-file-pdf';
+                    else if(f.name.includes('.doc')) icon = 'fa-file-word';
+
+                    const uploader = f.uploaderId === currentSupervisorId ? "You" : f.uploaderName;
+                    const date = f.timestamp ? f.timestamp.toDate().toLocaleDateString() : '';
+
+                    li.innerHTML = `
+                        <div style="display:flex; align-items:center;">
+                            <i class="fa-solid ${icon} file-icon"></i>
+                            <div>
+                                <span style="font-weight:600; display:block;">${f.category || 'File'} - ${f.name}</span>
+                                <span style="font-size:0.8rem; color:#888;">By ${uploader} on ${date}</span>
+                            </div>
+                        </div>
+                        <a href="${f.url}" download="${f.name}" class="btn-download"><i class="fa-solid fa-download"></i> Download</a>
+                    `;
+                    fileListContainer.appendChild(li);
                 });
+            });
+
+            // Supervisor Upload
+            const supFile = document.getElementById('sup-file-input');
+            document.getElementById('btn-sup-upload').addEventListener('click', () => {
+                if(!supFile.files[0]) return alert("Select file");
+                const file = supFile.files[0];
+                if(file.size > 1024*1024) return alert("File too large >1MB");
+                
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    await addDoc(collection(db, "projects", CURRENT_PROJECT_ID, "files"), {
+                        name: file.name, url: e.target.result, category: "Supervisor Resource",
+                        uploaderId: currentSupervisorId, uploaderName: currentSupervisorName, timestamp: Timestamp.now()
+                    });
+                    alert("Uploaded!");
+                    supFile.value = "";
+                };
+                reader.readAsDataURL(file);
             });
         }
 
-        updateStatusBtn.addEventListener('click', async () => {
-            const newStatus = statusSelect.value;
-            const projectRef = doc(db, "projects", CURRENT_PROJECT_ID);
-            updateStatusBtn.textContent = "Updating...";
-            updateStatusBtn.disabled = true;
-            try {
-                await updateDoc(projectRef, { status: newStatus });
-                alert("Status updated successfully!");
-            } catch (error) {
-                console.error("Error updating status: ", error);
-                alert("Failed to update status.");
-            } finally {
-                updateStatusBtn.textContent = "Update";
-                updateStatusBtn.disabled = false;
-            }
-        });
-
-        feedbackForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const message = feedbackTextarea.value;
-            if (!message.trim()) return;
-            try {
-                await addDoc(collection(db, "feedback"), {
-                    projectId: CURRENT_PROJECT_ID,
-                    senderId: currentSupervisorId,
-                    message: message,
-                    timestamp: Timestamp.now(),
-                    isRead: false
-                });
-                feedbackTextarea.value = "";
-            } catch (error) {
-                console.error("Error submitting feedback: ", error);
-            }
-        });
-        
-        meetingForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const dateStr = meetingDate.value;
-            const timeStr = meetingTime.value;
-            if (!dateStr || !timeStr) return;
-            
-            const dateTimeStr = `${dateStr}T${timeStr}`;
-            const meetingTimestamp = Timestamp.fromDate(new Date(dateTimeStr));
-
-            try {
-                await addDoc(collection(db, "meetings"), {
-                    projectId: CURRENT_PROJECT_ID,
-                    studentIds: currentGroupStudentIds, 
-                    supervisorId: currentSupervisorId,
-                    title: meetingTitle.value,
-                    meetLink: meetingLink.value,
-                    meetingTime: meetingTimestamp,
-                    createdAt: Timestamp.now(),
-                    isRead: false 
-                });
-                alert("Meeting invite sent!");
-                meetingForm.reset();
-            } catch (error) {
-                console.error("Error scheduling meeting: ", error);
-                alert("Failed to schedule meeting.");
-            }
-        });
-
-        function loadAllData() {
-            if (CURRENT_PROJECT_ID) {
-                loadProjectDetails();
-                loadSubmissions();
-                loadFeedback();
-            } else {
-                mainHeader.textContent = "Error: Invalid Link";
-            }
-        }
-        
-        // Logout
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
             signOut(auth).then(() => window.location.href = 'login2.html');
         });
-
     </script>
 </body>
 </html>
