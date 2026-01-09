@@ -4,22 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Project Workspace - UFTB Hub</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <style>
-        /* --- Reset & Base --- */
-        :root {
-            --sidebar-bg: #0d2a5c; --sidebar-hover: #163a7a; --primary-color: #0d2a5c;
-            --accent-color: #009639; --text-muted: #7e8299; --bg-color: #f4f7fa;
-            --sidebar-width: 260px; --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
+        /* (Previous CSS remains same - No change needed in CSS) */
+        :root { --sidebar-bg: #0d2a5c; --sidebar-hover: #163a7a; --primary-color: #0d2a5c; --accent-color: #009639; --text-muted: #7e8299; --bg-color: #f4f7fa; --sidebar-width: 260px; --card-shadow: 0 4px 15px rgba(0,0,0,0.08); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--bg-color); color: #444; }
         .dashboard-layout { display: flex; min-height: 100vh; }
-
-        /* Sidebar */
         .sidebar { width: var(--sidebar-width); background-color: var(--sidebar-bg); color: #e0e0e0; position: fixed; height: 100vh; left: 0; top: 0; z-index: 1000; }
         .sidebar-header { padding: 30px 20px; text-align: center; background: rgba(0,0,0,0.1); }
         .sidebar-logo-img { width: 90px; margin-bottom: 12px; }
@@ -31,11 +23,8 @@
         .sidebar-nav a i { width: 25px; margin-right: 12px; font-size: 1.1rem; }
         .sidebar-nav a.active i { color: var(--accent-color); }
         .main-content { margin-left: var(--sidebar-width); flex: 1; padding: 30px; width: calc(100% - var(--sidebar-width)); }
-        
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: #fff; padding: 18px 30px; border-radius: 12px; box-shadow: var(--card-shadow); border-top: 4px solid var(--accent-color); }
         .header h1 { font-size: 1.3rem; color: var(--primary-color); font-weight: 700; }
-
-        /* Tabs */
         .tabs-container { display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; }
         .tab-btn { padding: 10px 20px; border: none; background: none; font-size: 1rem; font-weight: 600; color: #777; cursor: pointer; position: relative; transition: 0.3s; }
         .tab-btn.active { color: var(--accent-color); }
@@ -43,37 +32,56 @@
         .tab-content { display: none; animation: fadeIn 0.5s; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Chat */
         .chat-container { background: #fff; border-radius: 12px; box-shadow: var(--card-shadow); height: 500px; display: flex; flex-direction: column; overflow: hidden; }
-        .chat-header { padding: 15px; background: var(--primary-color); color: #fff; font-weight: 600; display: flex; justify-content: space-between; }
+        .chat-header { padding: 15px; background: var(--primary-color); color: #fff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
         .chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #f5f7fb; display: flex; flex-direction: column; gap: 10px; }
         .message { max-width: 70%; padding: 10px 15px; border-radius: 10px; font-size: 0.9rem; position: relative; word-wrap: break-word; }
         .message.own { align-self: flex-end; background: var(--accent-color); color: #fff; }
         .message.other { align-self: flex-start; background: #fff; border: 1px solid #ddd; color: #333; }
-        .msg-sender { font-size: 0.7rem; display: block; margin-bottom: 3px; font-weight: 600; opacity: 0.8; }
+        .msg-sender { font-size: 0.7rem; display: block; margin-bottom: 3px; opacity: 0.8; font-weight: 600; }
+        /* Delete Button Style */
+        .msg-delete { cursor: pointer; margin-left: 10px; color: #ffcccc; font-size: 0.8rem; transition: 0.2s; }
+        .msg-delete:hover { color: #fff; }
+        .other .msg-delete { color: #ff0000; opacity: 0.5; } 
+        .other .msg-delete:hover { opacity: 1; }
+
         .chat-input-area { padding: 15px; background: #fff; border-top: 1px solid #eee; display: flex; gap: 10px; }
         .chat-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; }
         .btn-send { background: var(--primary-color); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
-
-        /* Files */
         .repo-card { background: #fff; padding: 25px; border-radius: 12px; box-shadow: var(--card-shadow); }
         .upload-section { margin-bottom: 25px; padding: 20px; background: #f8f9fa; border: 2px dashed #ddd; border-radius: 8px; text-align: center; }
         .file-list { list-style: none; }
         .file-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; border-bottom: 1px solid #eee; transition: 0.2s; }
         .file-item:hover { background: #fcfcfc; }
         .file-icon { font-size: 1.5rem; margin-right: 15px; color: var(--primary-color); }
-        .btn-download { padding: 6px 12px; background: rgba(0, 150, 57, 0.1); color: var(--accent-color); text-decoration: none; border-radius: 4px; font-size: 0.85rem; font-weight: 600; }
+        .file-info { flex: 1; }
+        .file-name { font-weight: 600; color: #333; display: block; }
+        .file-meta { font-size: 0.8rem; color: #888; }
+        .file-actions { display: flex; gap: 10px; align-items: center; }
+        .btn-action { padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; text-decoration: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
+        .btn-view { background: rgba(33, 150, 243, 0.1); color: #2196f3; }
+        .btn-view:hover { background: #2196f3; color: white; }
+        .btn-download { background: rgba(0, 150, 57, 0.1); color: var(--accent-color); }
+        .btn-download:hover { background: var(--accent-color); color: white; }
+        .btn-delete { background: rgba(255, 0, 0, 0.1); color: #d32f2f; }
+        .btn-delete:hover { background: #d32f2f; color: white; }
         .btn-upload { padding: 10px 20px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 10px; }
         .btn-upload:disabled { background: #ccc; cursor: not-allowed; }
-
-        /* Mobile */
+        #upload-status { margin-top: 15px; display: none; }
+        .progress-bar { width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden; margin-top: 5px; }
+        .progress-fill { height: 100%; background: var(--accent-color); width: 0%; transition: width 0.3s; animation: loading 1.5s infinite ease-in-out; }
+        @keyframes loading { 0% { width: 0%; margin-left: 0; } 50% { width: 100%; margin-left: 0; } 100% { width: 0%; margin-left: 100%; } }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; width: 90%; height: 90%; max-width: 1000px; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        .modal-header { padding: 15px; background: var(--primary-color); color: white; display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { flex: 1; background: #f4f4f4; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .close-modal { font-size: 1.5rem; cursor: pointer; color: white; }
+        .modal-body iframe, .modal-body img { width: 100%; height: 100%; border: none; object-fit: contain; }
         .mobile-nav-toggle { display: none; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--primary-color); }
         @media (max-width: 768px) { .sidebar { transform: translateX(-100%); } .sidebar.active { transform: translateX(0); } .main-content { margin-left: 0; width: 100%; padding: 20px; } .mobile-nav-toggle { display: block; } }
     </style>
 </head>
 <body>
-
     <div class="dashboard-layout">
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -90,7 +98,6 @@
                 <li><a href="#" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
             </ul>
         </nav>
-
         <main class="main-content">
             <header class="header">
                 <button class="mobile-nav-toggle" id="sidebar-toggle">
@@ -99,13 +106,11 @@
                 <h1 id="project-title-header">Loading Project...</h1>
                 <div style="width: 24px;"></div>
             </header>
-
             <div class="tabs-container">
                 <button class="tab-btn active" data-tab="tab-overview">Overview</button>
                 <button class="tab-btn" data-tab="tab-chat">Discussion</button>
                 <button class="tab-btn" data-tab="tab-files">Repository</button>
             </div>
-
             <div id="tab-overview" class="tab-content active">
                 <div class="repo-card">
                     <h3><i class="fa-solid fa-circle-info" style="color: var(--accent-color);"></i> Project Details</h3>
@@ -114,28 +119,21 @@
                     <p><strong>Team Members:</strong> <span id="project-members">Loading...</span></p>
                 </div>
             </div>
-
             <div id="tab-chat" class="tab-content">
                 <div class="chat-container">
-                    <div class="chat-header">
-                        <span><i class="fa-regular fa-comments"></i> Group Chat</span>
-                    </div>
-                    <div class="chat-messages" id="chat-box">
-                        <div style="text-align: center; color: #999; margin-top: 20px;">Connecting...</div>
-                    </div>
+                    <div class="chat-header"><span><i class="fa-regular fa-comments"></i> Group Chat</span></div>
+                    <div class="chat-messages" id="chat-box"><div style="text-align: center; color: #999; margin-top: 20px;">Start discussion...</div></div>
                     <form id="chat-form" class="chat-input-area">
                         <input type="text" id="chat-input" class="chat-input" placeholder="Type a message..." required autocomplete="off">
                         <button type="submit" class="btn-send"><i class="fa-solid fa-paper-plane"></i></button>
                     </form>
                 </div>
             </div>
-
             <div id="tab-files" class="tab-content">
                 <div class="repo-card">
                     <div class="upload-section">
                         <h3><i class="fa-solid fa-cloud-arrow-up"></i> Upload Files</h3>
                         <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">PDF, DOCX (Max 800KB)</p>
-                        
                         <input type="file" id="file-input" accept=".pdf,.doc,.docx,.ppt,.pptx" style="margin-bottom: 10px;">
                         <br>
                         <select id="file-type" style="padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
@@ -146,30 +144,33 @@
                         </select>
                         <br>
                         <button id="btn-upload-file" class="btn-upload">Upload File</button>
+                        <div id="upload-status">
+                            <small style="color: var(--accent-color); font-weight: 600;">Processing & Uploading...</small>
+                            <div class="progress-bar"><div class="progress-fill"></div></div>
+                        </div>
                     </div>
-
                     <h3><i class="fa-solid fa-folder-open"></i> File List</h3>
                     <ul class="file-list" id="file-list-container">
                         <li style="padding: 20px; text-align: center; color: #999;">Loading files...</li>
                     </ul>
                 </div>
             </div>
-
+            <div id="view-modal" class="modal-overlay">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span id="modal-title">File Preview</span>
+                        <i class="fa-solid fa-xmark close-modal"></i>
+                    </div>
+                    <div class="modal-body" id="modal-body-content"></div>
+                </div>
+            </div>
         </main>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const sidebar = document.getElementById('sidebar');
             const toggleBtn = document.getElementById('sidebar-toggle');
             toggleBtn.addEventListener('click', () => sidebar.classList.toggle('active'));
-            document.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                }
-            });
-
-            // Tabs Logic
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
             tabBtns.forEach(btn => {
@@ -180,13 +181,16 @@
                     document.getElementById(btn.dataset.tab).classList.add('active');
                 });
             });
+            document.querySelector('.close-modal').addEventListener('click', () => {
+                document.getElementById('view-modal').style.display = 'none';
+                document.getElementById('modal-body-content').innerHTML = '';
+            });
         });
     </script>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-        import { getFirestore, collection, query, where, getDocs, doc, getDoc, addDoc, onSnapshot, orderBy, Timestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc, addDoc, onSnapshot, orderBy, Timestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyACtq2K0jfHyR4q538BPW37cH67DOJAx98",
@@ -197,21 +201,21 @@
             appId: "1:373096235837:web:0ec03dea7ea526c52cbb54",
             measurementId: "G-MT5YR5NW39"
         };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
         let currentUserId = null;
         let currentUserName = null;
-        
-        // UI Elements
+        let currentProjectId = null;
+
         const chatBox = document.getElementById('chat-box');
         const chatForm = document.getElementById('chat-form');
         const chatInput = document.getElementById('chat-input');
         const fileListContainer = document.getElementById('file-list-container');
         const fileInput = document.getElementById('file-input');
         const uploadBtn = document.getElementById('btn-upload-file');
+        const uploadStatus = document.getElementById('upload-status');
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -227,165 +231,157 @@
             try {
                 const docSnap = await getDoc(doc(db, "users", uid));
                 if(docSnap.exists()) currentUserName = docSnap.data().name;
-            } catch (e) { console.error("User load error:", e); }
+            } catch (e) { console.error(e); }
         }
 
         async function loadProjectData(uid) {
             try {
                 const q = query(collection(db, "projects"), where("studentIds", "array-contains", uid));
                 const snapshot = await getDocs(q);
-                
                 if (snapshot.empty) {
                     document.getElementById('project-title-header').textContent = "No Active Project";
                     document.querySelector('.tabs-container').style.display = 'none';
                     return;
                 }
-
                 const project = snapshot.docs[0].data();
-                const currentProjectId = snapshot.docs[0].id; // Capture ID explicitly
-
-                // Overview Data
+                currentProjectId = snapshot.docs[0].id;
                 document.getElementById('project-title-header').textContent = project.title;
                 document.getElementById('project-status').textContent = project.status || 'Active';
                 document.getElementById('project-members').textContent = project.studentNames.join(', ');
-                
                 if(project.supervisorId) {
-                    getDoc(doc(db, "users", project.supervisorId)).then(supSnap => {
-                        if(supSnap.exists()) document.getElementById('project-supervisor').textContent = supSnap.data().name;
-                    });
+                    getDoc(doc(db, "users", project.supervisorId)).then(s => { if(s.exists()) document.getElementById('project-supervisor').textContent = s.data().name; });
                 }
-
-                // Initialize features with confirmed ID
                 initChat(currentProjectId);
                 initFileRepo(currentProjectId);
-
-            } catch (error) {
-                console.error("Project Load Error:", error);
-                alert("Error loading project. Please refresh.");
-            }
+            } catch (error) { console.error(error); }
         }
 
-        // --- FEATURE 1: REAL-TIME CHAT (Firestore Only) ---
         function initChat(projectId) {
             const messagesRef = collection(db, "projects", projectId, "messages");
             const q = query(messagesRef, orderBy("timestamp", "asc"));
-
             onSnapshot(q, (snapshot) => {
                 chatBox.innerHTML = "";
-                if (snapshot.empty) {
-                    chatBox.innerHTML = '<div style="text-align: center; color: #999; margin-top: 20px;">Start discussion...</div>';
-                    return;
-                }
-
-                snapshot.forEach(doc => {
-                    const msg = doc.data();
+                snapshot.forEach(docSnap => {
+                    const msg = docSnap.data();
+                    const msgId = docSnap.id;
                     const div = document.createElement('div');
                     const isOwn = msg.senderId === currentUserId;
-                    
                     div.className = `message ${isOwn ? 'own' : 'other'}`;
-                    const time = msg.timestamp ? msg.timestamp.toDate().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
+                    const time = msg.timestamp ? msg.timestamp.toDate().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
                     
-                    div.innerHTML = `<span class="msg-sender">${isOwn ? 'You' : msg.senderName}</span>${msg.text}<span style="font-size:0.6rem; display:block; text-align:right; opacity:0.7;">${time}</span>`;
+                    // Delete Button Logic (Only sender can delete)
+                    let deleteBtn = '';
+                    if(isOwn) {
+                        deleteBtn = `<i class="fa-solid fa-trash-can msg-delete" onclick="deleteMessage('${projectId}', '${msgId}')"></i>`;
+                    }
+
+                    div.innerHTML = `<span class="msg-sender">${isOwn?'You':msg.senderName} ${deleteBtn}</span>${msg.text}<span style="font-size:0.6rem;display:block;text-align:right;">${time}</span>`;
                     chatBox.appendChild(div);
                 });
                 chatBox.scrollTop = chatBox.scrollHeight;
             });
-
             chatForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const text = chatInput.value.trim();
                 if (!text) return;
-
-                try {
-                    await addDoc(messagesRef, {
-                        text: text, senderId: currentUserId, senderName: currentUserName, timestamp: Timestamp.now()
-                    });
-                    chatInput.value = "";
-                } catch (error) {
-                    console.error("Msg error:", error);
-                    alert("Chat failed. Check internet.");
-                }
+                await addDoc(messagesRef, { text, senderId: currentUserId, senderName: currentUserName, timestamp: Timestamp.now() });
+                chatInput.value = "";
             });
         }
 
-        // --- FEATURE 2: FILE REPOSITORY (Base64) ---
+        // Global function for message deletion
+        window.deleteMessage = async (projectId, msgId) => {
+            if(confirm("Delete this message?")) {
+                await deleteDoc(doc(db, "projects", projectId, "messages", msgId));
+            }
+        };
+
         function initFileRepo(projectId) {
             const filesRef = collection(db, "projects", projectId, "files");
             const q = query(filesRef, orderBy("timestamp", "desc"));
-
             onSnapshot(q, (snapshot) => {
                 fileListContainer.innerHTML = "";
-                if(snapshot.empty) {
-                    fileListContainer.innerHTML = '<li style="padding:20px; text-align:center; color:#999;">No files uploaded yet.</li>';
-                    return;
-                }
-
-                snapshot.forEach(doc => {
-                    const file = doc.data();
+                if(snapshot.empty) { fileListContainer.innerHTML = '<li style="padding:20px;text-align:center;">No files.</li>'; return; }
+                snapshot.forEach(docSnap => {
+                    const file = docSnap.data();
+                    const fileId = docSnap.id;
                     const li = document.createElement('li');
                     li.className = 'file-item';
                     
                     let icon = 'fa-file';
                     if(file.name.includes('.pdf')) icon = 'fa-file-pdf';
                     else if(file.name.includes('.doc')) icon = 'fa-file-word';
-
                     const date = file.timestamp ? file.timestamp.toDate().toLocaleDateString() : 'N/A';
+
+                    let viewBtn = '';
+                    if(file.name.toLowerCase().endsWith('.pdf') || file.name.match(/\.(jpeg|jpg|png)$/)) {
+                         viewBtn = `<button class="btn-action btn-view" onclick="viewFile('${file.url}', '${file.name}')"><i class="fa-solid fa-eye"></i> View</button>`;
+                    }
+
+                    // Delete Button (Only Uploader can delete)
+                    let deleteBtn = '';
+                    if(file.uploaderId === currentUserId) {
+                        deleteBtn = `<button class="btn-action btn-delete" onclick="deleteFile('${projectId}', '${fileId}')"><i class="fa-solid fa-trash"></i></button>`;
+                    }
 
                     li.innerHTML = `
                         <div style="display:flex; align-items:center;">
                             <i class="fa-solid ${icon} file-icon"></i>
                             <div class="file-info">
-                                <span style="font-weight:600; display:block; color:#333;">${file.category} - ${file.name}</span>
-                                <span style="font-size:0.8rem; color:#888;">By ${file.uploaderName} on ${date}</span>
+                                <span class="file-name">${file.category} - ${file.name}</span>
+                                <span class="file-meta">By ${file.uploaderName} on ${date}</span>
                             </div>
                         </div>
-                        <a href="${file.url}" download="${file.name}" class="btn-download"><i class="fa-solid fa-download"></i> Download</a>
+                        <div class="file-actions">
+                            ${viewBtn}
+                            <a href="${file.url}" download="${file.name}" class="btn-action btn-download"><i class="fa-solid fa-download"></i></a>
+                            ${deleteBtn}
+                        </div>
                     `;
+                    // Event Listeners need to be attached directly or via global functions
+                    if(viewBtn) li.querySelector('.btn-view').addEventListener('click', () => openViewModal(file.url, file.name));
                     fileListContainer.appendChild(li);
                 });
             });
 
-            // Handle File Upload (Base64)
-            uploadBtn.addEventListener('click', async () => {
+            // Global Delete File
+            window.deleteFile = async (pId, fId) => {
+                if(confirm("Permanently delete this file?")) {
+                    await deleteDoc(doc(db, "projects", pId, "files", fId));
+                }
+            };
+
+            uploadBtn.addEventListener('click', () => {
                 const file = fileInput.files[0];
                 const category = document.getElementById('file-type').value;
-
                 if (!file) { alert("Please select a file!"); return; }
-                
-                // Size Check (800KB Limit for Firestore)
-                if (file.size > 800 * 1024) { 
-                    alert("File too large! Max 800KB allowed for Firestore storage."); 
-                    return; 
-                }
-
+                if (file.size > 800 * 1024) { alert("File too large! Max 800KB."); return; }
                 uploadBtn.disabled = true;
-                uploadBtn.textContent = "Uploading...";
-
+                uploadStatus.style.display = 'block';
                 const reader = new FileReader();
                 reader.onload = async (e) => {
                     const base64Url = e.target.result;
                     try {
-                        await addDoc(filesRef, {
-                            name: file.name,
-                            url: base64Url,
-                            category: category,
-                            uploaderId: currentUserId,
-                            uploaderName: currentUserName,
-                            timestamp: Timestamp.now()
+                        await addDoc(collection(db, "projects", currentProjectId, "files"), {
+                            name: file.name, url: base64Url, category: category, uploaderId: currentUserId, uploaderName: currentUserName, timestamp: Timestamp.now()
                         });
                         alert("File uploaded!");
-                        fileInput.value = ""; // Reset
-                    } catch (err) {
-                        console.error("Upload error:", err);
-                        alert("Upload failed. Try a smaller file.");
-                    } finally {
-                        uploadBtn.disabled = false;
-                        uploadBtn.textContent = "Upload File";
-                    }
+                        fileInput.value = "";
+                    } catch (err) { alert("Upload failed."); } 
+                    finally { uploadBtn.disabled = false; uploadStatus.style.display = 'none'; }
                 };
-                reader.readAsDataURL(file); // Converts to Base64 String
+                reader.readAsDataURL(file);
             });
         }
+
+        window.openViewModal = (url, name) => {
+            const modal = document.getElementById('view-modal');
+            const modalBody = document.getElementById('modal-body-content');
+            document.getElementById('modal-title').textContent = name;
+            modal.style.display = 'flex';
+            if(name.toLowerCase().endsWith('.pdf')) modalBody.innerHTML = `<iframe src="${url}"></iframe>`;
+            else modalBody.innerHTML = `<img src="${url}">`;
+        };
 
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
