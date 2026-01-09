@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capstone Repository - Supervisor</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- Brand Styles --- */
+        :root { --brand-blue: #0d2a5c; --brand-green: #009639; --bg-color: #f4f7fa; --text-color: #333; --sidebar-width: 260px; --card-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-width); background-color: var(--brand-blue); color: #fff; position: fixed; height: 100vh; left: 0; top: 0; z-index: 1000; }
+        .sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.1); }
+        .sidebar-logo-img { width: 85px; margin-bottom: 12px; }
+        .sidebar-header h2 { font-size: 1.3rem; font-weight: 700; color: #fff; margin: 0; }
+        .sidebar-role { font-size: 0.8rem; color: #4caf50; margin-top: 5px; font-weight: 500; }
+        .sidebar-nav { list-style: none; padding: 20px 0; }
+        .sidebar-nav a { display: flex; align-items: center; padding: 14px 25px; color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; border-left: 4px solid transparent; transition: 0.3s; }
+        .sidebar-nav a:hover { background-color: rgba(255,255,255,0.1); color: #fff; }
+        .sidebar-nav a.active { background: linear-gradient(90deg, rgba(0, 150, 57, 0.2) 0%, transparent 100%); color: #fff; border-left-color: var(--brand-green); }
+        .sidebar-nav a i { width: 25px; margin-right: 12px; font-size: 1.1rem; }
+        .sidebar-nav a.active i { color: var(--brand-green); }
+
+        /* Main Content */
+        .main-content { margin-left: var(--sidebar-width); flex: 1; padding: 30px; width: calc(100% - var(--sidebar-width)); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: #fff; padding: 20px 30px; border-radius: 12px; box-shadow: var(--card-shadow); border-top: 4px solid var(--brand-green); }
+        .header h1 { font-size: 1.5rem; color: var(--brand-blue); font-weight: 700; }
+
+        /* Filter Bar */
+        .filter-bar { background: #fff; padding: 20px; border-radius: 12px; box-shadow: var(--card-shadow); margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
+        .search-box { flex: 2; position: relative; min-width: 200px; }
+        .search-box input { width: 100%; padding: 12px 15px 12px 40px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; }
+        .filter-select { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px; min-width: 150px; outline: none; }
+
+        /* Project Grid */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        .project-card { background: #fff; border-radius: 12px; padding: 25px; box-shadow: var(--card-shadow); transition: 0.3s; border-top: 4px solid transparent; cursor: pointer; position: relative; overflow: hidden; }
+        .project-card:hover { transform: translateY(-5px); border-top-color: var(--brand-green); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        
+        .card-icon { width: 50px; height: 50px; background: rgba(13, 42, 92, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--brand-blue); margin-bottom: 15px; }
+        .card-title { font-size: 1.1rem; font-weight: 700; color: var(--brand-blue); margin-bottom: 8px; line-height: 1.4; }
+        .card-meta { font-size: 0.85rem; color: #666; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+        .card-status { position: absolute; top: 20px; right: 20px; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+        .status-active { background: #e3f2fd; color: #1565c0; }
+        .status-completed { background: #e8f5e9; color: #2e7d32; }
+
+        /* File List Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(3px); }
+        .modal-content { background: white; width: 90%; max-width: 700px; max-height: 80vh; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; animation: zoomIn 0.3s; }
+        @keyframes zoomIn { from {transform: scale(0.95); opacity:0;} to {transform: scale(1); opacity:1;} }
+        .modal-header { padding: 20px; background: var(--brand-blue); color: white; display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 20px; overflow-y: auto; background: #f8f9fa; }
+        
+        .file-item { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eee; transition: 0.2s; }
+        .file-item:hover { transform: translateX(5px); border-color: var(--brand-green); }
+        .file-info { display: flex; align-items: center; gap: 15px; }
+        .file-icon { font-size: 1.5rem; color: #ff5252; }
+        .file-name { font-weight: 600; color: #333; display: block; font-size: 0.95rem; }
+        .file-date { font-size: 0.75rem; color: #888; }
+        .btn-view-file { padding: 6px 12px; background: rgba(0, 150, 57, 0.1); color: var(--brand-green); border: none; border-radius: 4px; cursor: pointer; font-weight: 600; text-decoration: none; }
+        .btn-view-file:hover { background: var(--brand-green); color: white; }
+
+        /* PDF Viewer Modal */
+        .pdf-modal-content { width: 95%; height: 90vh; max-width: 1000px; background: #fff; display: flex; flex-direction: column; }
+        .pdf-frame { flex: 1; width: 100%; border: none; background: #eee; }
+
+        .mobile-nav-toggle { display: none; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--brand-blue); }
+        @media (max-width: 768px) { .sidebar { transform: translateX(-100%); } .sidebar.active { transform: translateX(0); } .main-content { margin-left: 0; width: 100%; padding: 20px; } .mobile-nav-toggle { display: block; } }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="https://uftb.ac.bd/uploads/settings/17663114198452.png" alt="UFTB Logo" class="sidebar-logo-img">
+                <h2>UFTB Hub</h2>
+                <div class="sidebar-role">Supervisor Panel</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="supervisor_dashboard.html"><i class="fa-solid fa-users-viewfinder"></i> Student Tracking</a></li>
+                <li><a href="create_project.html"><i class="fa-solid fa-folder-plus"></i> Create Project</a></li>
+                <li><a href="upload_slides.html"><i class="fa-solid fa-upload"></i> Upload Slides</a></li>
+                <li><a href="add_questions.html"><i class="fa-solid fa-plus-circle"></i> Add Questions</a></li>
+                <li><a href="supervisor_repository.html" class="active"><i class="fa-solid fa-book-bookmark"></i> View Repository</a></li>
+                <li><a href="supervisor_profile.html"><i class="fa-solid fa-user-gear"></i> Profile</a></li>
+                <li><a href="#" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <button class="mobile-nav-toggle" id="sidebar-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h1>Capstone Repository</h1>
+                <div style="width:20px;"></div>
+            </header>
+
+            <div class="filter-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="search-input" placeholder="Search by Project Title or Student Name...">
+                </div>
+                <select id="status-filter" class="filter-select">
+                    <option value="All">All Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+
+            <div id="project-grid" class="project-grid">
+                <p style="grid-column: 1/-1; text-align: center; color: #777;">Loading projects...</p>
+            </div>
+
+            <div id="files-modal" class="modal-overlay">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modal-project-title">Project Files</h3>
+                        <span class="close-modal" onclick="closeModal('files-modal')" style="cursor:pointer; font-size:1.5rem;">&times;</span>
+                    </div>
+                    <div class="modal-body" id="files-list-container">
+                        </div>
+                </div>
+            </div>
+
+            <div id="pdf-view-modal" class="modal-overlay">
+                <div class="modal-content pdf-modal-content">
+                    <div class="modal-header">
+                        <h3 id="pdf-modal-title">File Preview</h3>
+                        <span class="close-modal" onclick="closeModal('pdf-view-modal')" style="cursor:pointer; font-size:1.5rem;">&times;</span>
+                    </div>
+                    <iframe id="pdf-frame" class="pdf-frame" src=""></iframe>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            document.getElementById('sidebar-toggle').addEventListener('click', () => sidebar.classList.toggle('active'));
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+        import { getFirestore, collection, query, getDocs, orderBy, where } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACtq2K0jfHyR4q538BPW37cH67DOJAx98",
+            authDomain: "uftb-hub.firebaseapp.com",
+            projectId: "uftb-hub",
+            storageBucket: "uftb-hub.firebasestorage.app",
+            messagingSenderId: "373096235837",
+            appId: "1:373096235837:web:0ec03dea7ea526c52cbb54",
+            measurementId: "G-MT5YR5NW39"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let allProjects = [];
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) window.location.href = 'login2.html';
+            else loadProjects();
+        });
+
+        // 1. Load All Projects
+        async function loadProjects() {
+            const grid = document.getElementById('project-grid');
+            try {
+                // Fetch all projects (assuming collection name is 'projects')
+                const q = query(collection(db, "projects"), orderBy("title"));
+                const snapshot = await getDocs(q);
+                
+                allProjects = [];
+                snapshot.forEach(doc => allProjects.push({ id: doc.id, ...doc.data() }));
+
+                renderProjects(allProjects);
+            } catch (e) {
+                console.error(e);
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: red;">Error loading projects.</p>';
+            }
+        }
+
+        // 2. Render Cards
+        function renderProjects(projects) {
+            const grid = document.getElementById('project-grid');
+            grid.innerHTML = "";
+
+            if (projects.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #777;">No projects found.</p>';
+                return;
+            }
+
+            projects.forEach(p => {
+                const statusClass = p.status === 'Completed' ? 'status-completed' : 'status-active';
+                const statusText = p.status || 'Active';
+                const members = p.studentNames ? p.studentNames.join(', ') : 'No members';
+
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.innerHTML = `
+                    <span class="card-status ${statusClass}">${statusText}</span>
+                    <div class="card-icon"><i class="fa-solid fa-folder-open"></i></div>
+                    <div class="card-title">${p.title}</div>
+                    <div class="card-meta"><i class="fa-solid fa-users"></i> ${members}</div>
+                    <div class="card-meta"><i class="fa-solid fa-calendar-alt"></i> Batch: ${p.batch || 'N/A'}</div>
+                `;
+                card.addEventListener('click', () => openFilesModal(p.id, p.title));
+                grid.appendChild(card);
+            });
+        }
+
+        // 3. Open Files Modal & Fetch Subcollection
+        window.openFilesModal = async (projectId, projectTitle) => {
+            document.getElementById('modal-project-title').textContent = projectTitle;
+            const listContainer = document.getElementById('files-list-container');
+            listContainer.innerHTML = '<p style="text-align:center;">Loading files...</p>';
+            
+            document.getElementById('files-modal').style.display = 'flex';
+
+            try {
+                // Fetch files from subcollection 'files' inside the project doc
+                const filesRef = collection(db, "projects", projectId, "files");
+                const q = query(filesRef, orderBy("timestamp", "desc"));
+                const snapshot = await getDocs(q);
+
+                listContainer.innerHTML = "";
+                
+                if (snapshot.empty) {
+                    listContainer.innerHTML = '<p style="text-align:center; color:#777;">No files uploaded in this repository.</p>';
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    const f = doc.data();
+                    const date = f.timestamp ? f.timestamp.toDate().toLocaleDateString() : 'N/A';
+                    
+                    let icon = 'fa-file';
+                    if(f.name.includes('.pdf')) icon = 'fa-file-pdf';
+                    else if(f.name.includes('.doc')) icon = 'fa-file-word';
+                    else if(f.name.includes('.zip')) icon = 'fa-file-zipper';
+
+                    const item = document.createElement('div');
+                    item.className = 'file-item';
+                    item.innerHTML = `
+                        <div class="file-info">
+                            <i class="fa-solid ${icon} file-icon"></i>
+                            <div>
+                                <span class="file-name">${f.category || 'File'} - ${f.name}</span>
+                                <span class="file-date">Uploaded: ${date} by ${f.uploaderName}</span>
+                            </div>
+                        </div>
+                        <button class="btn-view-file" onclick="viewFile('${f.url}', '${f.name}')">
+                            <i class="fa-solid fa-eye"></i> View
+                        </button>
+                    `;
+                    listContainer.appendChild(item);
+                });
+
+            } catch (e) {
+                console.error(e);
+                listContainer.innerHTML = '<p style="color:red;">Error fetching files.</p>';
+            }
+        };
+
+        // 4. View File in PDF Modal
+        window.viewFile = (url, name) => {
+            const modal = document.getElementById('pdf-view-modal');
+            const frame = document.getElementById('pdf-frame');
+            const title = document.getElementById('pdf-modal-title');
+
+            title.textContent = name;
+            
+            // Check if image
+            if (name.match(/\.(jpeg|jpg|png|gif)$/i) || url.startsWith('data:image')) {
+                frame.style.display = 'none'; // Hide iframe
+                // Create image element dynamically if needed or just use iframe for simplicity (iframe handles images too usually)
+                // Better approach for clarity:
+                let imgContent = document.createElement('img');
+                imgContent.src = url;
+                imgContent.style.width = '100%';
+                imgContent.style.height = '100%';
+                imgContent.style.objectFit = 'contain';
+                
+                // Clear previous body content except header (structure is fixed, so let's stick to iframe for PDF)
+                // For this code, let's stick to iframe for everything as browsers handle PDF/Img in iframe well.
+                frame.style.display = 'block';
+                frame.src = url;
+            } else {
+                frame.style.display = 'block';
+                frame.src = url;
+            }
+            
+            modal.style.display = 'flex';
+        };
+
+        window.closeModal = (id) => {
+            document.getElementById(id).style.display = 'none';
+            if(id === 'pdf-view-modal') document.getElementById('pdf-frame').src = '';
+        };
+
+        // 5. Search & Filter Logic
+        const searchInput = document.getElementById('search-input');
+        const statusFilter = document.getElementById('status-filter');
+
+        function filterProjects() {
+            const term = searchInput.value.toLowerCase();
+            const status = statusFilter.value;
+
+            const filtered = allProjects.filter(p => {
+                const matchesSearch = p.title.toLowerCase().includes(term) || 
+                                      (p.studentNames && p.studentNames.some(n => n.toLowerCase().includes(term)));
+                const matchesStatus = status === 'All' ? true : 
+                                      (status === 'Active' ? (!p.status || p.status.includes('Active')) : p.status === status);
+                
+                return matchesSearch && matchesStatus;
+            });
+            renderProjects(filtered);
+        }
+
+        searchInput.addEventListener('input', filterProjects);
+        statusFilter.addEventListener('change', filterProjects);
+
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => window.location.href = 'login2.html');
+        });
+    </script>
+</body>
+</html>
